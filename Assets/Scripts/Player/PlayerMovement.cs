@@ -32,9 +32,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-        //FIXME: isGrounded is always false
+        //isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        //FIXME: isGrounded is always false //fixed
         //print(isGrounded);
+        CheckGround();
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
@@ -67,5 +68,22 @@ public class PlayerMovement : MonoBehaviour
         }
         lastPosition = gameObject.transform.position;
     }
+    private void CheckGround()
+    {
+        Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
+        Vector3 direction = transform.TransformDirection(Vector3.down);
+        float distance = .75f;
+
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+        {
+            Debug.DrawRay(origin, direction * distance, Color.red);
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+    }
+
     
 }

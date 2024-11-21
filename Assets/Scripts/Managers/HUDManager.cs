@@ -71,7 +71,7 @@ public class HUDManager : MonoBehaviour
     }
     public void UnDisplayHint()
     {
-        print("unsdisplayed");
+        //print("unsdisplayed");
         KeyHintUI.sprite = transparentUI;
         KeyHintTextUI.text = "";
     }
