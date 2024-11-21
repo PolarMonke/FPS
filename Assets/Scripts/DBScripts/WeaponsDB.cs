@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.SqliteClient;
 using System.Data;
+using System.IO;
 
 public class WeaponsDB : MonoBehaviour
 {
@@ -13,12 +14,8 @@ public class WeaponsDB : MonoBehaviour
     private const string COL_MODEL = "Model";
     private const string COL_AMMO_TYPE = "AmmoType";
 
-    private IDbConnection _connection = null;
-	private IDbCommand _command = null;
-	private IDataReader _reader = null;
-	private string _sqlString;
-
-		public bool _createNewTable = false;
+    private string dbPath;
+    private IDbConnection connection = null;
 
     private void Awake()
     {
@@ -28,6 +25,58 @@ public class WeaponsDB : MonoBehaviour
         }
         else{
             Instance = this;
+            dbPath = Application.dataPath + "/DataBases/weapons.sqlite";
+            if (!File.Exists(dbPath))
+            {
+                Debug.LogError("Database file not found at: " + dbPath);
+                return;
+            }
+            OpenConnection();
         }
+    }
+
+    private bool OpenConnection()
+    {
+        string connectionString = $"URI=file:{dbPath}";
+        connection = new SqliteConnection(connectionString);
+        try
+        {
+            connection.Open();
+            Debug.Log("Weapon Database connection opened successfully.");
+            return true;
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error opening weapon database connection: {e.Message}");
+            return false;
+        }
+    }
+
+    public string GetAmmoTypeByWeapon(string weaponModel)
+    {
+        string ammoType = null;
+        if (connection == null || connection.State != ConnectionState.Open)
+        {
+            if (!OpenConnection()) return null;
+        }
+        try
+        {
+            using (IDbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = $"SELECT {COL_AMMO_TYPE} FROM {SQL_TABLE_NAME} WHERE {COL_MODEL} = '{weaponModel}'";
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                if (reader.Read())
+                {
+                    ammoType = reader.GetString(0);
+                }
+                }
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("GetAmmoTypeByWeapon error: " + e.Message);
+        }
+        return ammoType;
     }
 }

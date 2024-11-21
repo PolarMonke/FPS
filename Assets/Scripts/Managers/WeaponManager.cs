@@ -20,7 +20,7 @@ public class WeaponManager : MonoBehaviour
     private int totalSniperRifleAmmo = 100;
 
     private void Awake()
-    {
+    {   
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -37,6 +37,7 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
+        print(WeaponsDB.Instance.GetAmmoTypeByWeapon("AK74"));
         foreach (GameObject weaponSlot in WeaponSlots)
         {
             if (weaponSlot == activeWeaponSlot)
@@ -146,26 +147,36 @@ public class WeaponManager : MonoBehaviour
     }
     public int CheckAmmoLeft(WeaponModel weaponModel)
     {
-        switch (weaponModel)
+        string model = weaponModel.ToString();
+        string ammoType = WeaponsDB.Instance.GetAmmoTypeByWeapon(model);
+        switch (ammoType)
         {
-            case WeaponModel.Colt1911:
+            case "PistolAmmo":
                 return WeaponManager.Instance.totalPistolAmmo;
-            case WeaponModel.AK74:
+            case "RifleAmmo":
                 return WeaponManager.Instance.totalRifleAmmo;
-            //Add other weapons 
+            case "ShotgunAmmo":
+                return WeaponManager.Instance.totalShotgunAmmo;
+            case "SniperRifleAmmo":
+                return WeaponManager.Instance.totalSniperRifleAmmo;
             default:
                 return 0;
         }
     }
     internal void DecreaseTotalAmmo(WeaponModel weaponModel, int ammoToLoad)
     {
-        switch (weaponModel)
+        string model = weaponModel.ToString();
+        string ammoType = WeaponsDB.Instance.GetAmmoTypeByWeapon(model);
+        switch (ammoType)
         {
-            case WeaponModel.Colt1911:
+            case "PistolAmmo":
                 totalPistolAmmo -= ammoToLoad; break;
-            case WeaponModel.AK74:
+            case "RifleAmmo":
                 totalRifleAmmo -= ammoToLoad; break;
-            //Add other weapons 
+            case "ShotgunAmmo":
+                totalShotgunAmmo -= ammoToLoad; break;
+            case "SniperRifleAmmo":
+                totalShotgunAmmo -= ammoToLoad; break;
         }
     }
 }
