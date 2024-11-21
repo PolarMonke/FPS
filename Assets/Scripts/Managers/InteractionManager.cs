@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractionManager : MonoBehaviour
 {
@@ -32,8 +33,10 @@ public class InteractionManager : MonoBehaviour
             {
                 hoveredWeapon = objectHitByRaycast.GetComponent<Weapon>();
                 hoveredWeapon.GetComponent<Outline>().enabled = true;
+                HUDManager.Instance.DisplayHint(hoveredWeapon.weaponModel.ToString());
                 if (Input.GetKeyDown(KeyCode.F))
                 {
+                    HUDManager.Instance.UnDisplayHint();
                     WeaponManager.Instance.PickupWeapon(objectHitByRaycast.gameObject);
                 }
                 
@@ -42,16 +45,19 @@ public class InteractionManager : MonoBehaviour
             else
             {
                 hoveredWeapon.GetComponent<Outline>().enabled = false;
+                HUDManager.Instance.UnDisplayHint();
             }
 
             if (objectHitByRaycast.GetComponent<AmmoCrate>())
             {
                 hoveredAmmoCrate = objectHitByRaycast.GetComponent<AmmoCrate>();
                 hoveredAmmoCrate.GetComponent<Outline>().enabled = true;
+                HUDManager.Instance.DisplayHint(hoveredAmmoCrate.ammoType.ToString() + "\n" + hoveredAmmoCrate.ammoAmount.ToString());
                 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     WeaponManager.Instance.PickupAmmo(hoveredAmmoCrate);
+                    HUDManager.Instance.UnDisplayHint();
                     Destroy(objectHitByRaycast.gameObject);
                 }
                 
@@ -60,6 +66,7 @@ public class InteractionManager : MonoBehaviour
             else
             {
                 hoveredAmmoCrate.GetComponent<Outline>().enabled = false;
+                HUDManager.Instance.UnDisplayHint();
             }
         }
     }

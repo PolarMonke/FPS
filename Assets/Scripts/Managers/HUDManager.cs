@@ -19,6 +19,11 @@ public class HUDManager : MonoBehaviour
 
     public Sprite transparentUI;
 
+    public Image KeyHintUI;
+    public TextMeshProUGUI KeyHintTextUI;
+
+    public Sprite fKeyHint;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -59,4 +64,15 @@ public class HUDManager : MonoBehaviour
             ammoUI.text = $"";
         }
     }  
+    public void DisplayHint(string text)
+    {
+        KeyHintUI.sprite = fKeyHint;
+        KeyHintTextUI.text = text;
+    }
+    public void UnDisplayHint()
+    {
+        print("unsdisplayed");
+        KeyHintUI.sprite = transparentUI;
+        KeyHintTextUI.text = "";
+    }
 }

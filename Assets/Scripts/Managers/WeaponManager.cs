@@ -37,7 +37,6 @@ public class WeaponManager : MonoBehaviour
 
     private void Update()
     {
-        print(WeaponsDB.Instance.GetAmmoTypeByWeapon("AK74"));
         foreach (GameObject weaponSlot in WeaponSlots)
         {
             if (weaponSlot == activeWeaponSlot)
