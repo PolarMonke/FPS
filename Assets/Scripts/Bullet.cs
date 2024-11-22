@@ -17,13 +17,15 @@ public class Bullet : MonoBehaviour
         if (objectIHit.gameObject.CompareTag("Target"))
         {
             print("hit" + objectIHit.gameObject.name + $"\nDealt {_damage} damage");
-            
             Destroy(gameObject);
         }
         if (objectIHit.gameObject.CompareTag("Wall"))
         {
-            print("hit a wall");
-            //CreateBulletImpactEffect(objectIHit);
+            Destroy(gameObject);
+        }
+        if (objectIHit.gameObject.CompareTag("Enemy"))
+        {
+            objectIHit.gameObject.GetComponent<Enemy>().TakeDamage(_damage);
             Destroy(gameObject);
         }
     }

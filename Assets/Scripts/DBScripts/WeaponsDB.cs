@@ -8,8 +8,7 @@ using System.IO;
 public class WeaponsDB : MonoBehaviour
 {
     public static WeaponsDB Instance { get; set; }
-
-    private const string SQL_DB_NAME = "Weapons";
+    
     private const string SQL_TABLE_NAME = "Weapons";
     private const string COL_MODEL = "Model";
     private const string COL_AMMO_TYPE = "AmmoType";
