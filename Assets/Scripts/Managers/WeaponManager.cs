@@ -75,9 +75,6 @@ public class WeaponManager : MonoBehaviour
 ;
         pickedupWeapon.transform.localPosition = new Vector3(weapon.spawnPosition.x, weapon.spawnPosition.y, weapon.spawnPosition.z);
         pickedupWeapon.transform.localRotation = Quaternion.Euler(weapon.spawnRotation.x, weapon.spawnRotation.y, weapon.spawnRotation.z);
-        print(weapon.spawnRotation.x);
-        print(weapon.spawnRotation.y);
-        print(weapon.spawnRotation.z);
 
 
         weapon.isActiveWeapon = true;
