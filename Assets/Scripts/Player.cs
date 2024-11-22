@@ -19,9 +19,9 @@ public class Player : MonoBehaviour
             print($"player hit\ndealt {damageAmount}");
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        print(other.tag + " trigger entered");
         if (other.CompareTag("ZombieHand"))
         {
             TakeDamage(other.GetComponent<ZombieHand>().damage);

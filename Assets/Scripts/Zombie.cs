@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class Zombie : MonoBehaviour
 {
-    public ZombieHand zombieHandR;
-    public ZombieHand zombieHandL;
+    public ZombieHand zombieHand;
 
     public int zombieDamage = 10;
 
     private void Start()
     {
-        zombieHandL.damage = zombieDamage;
-        zombieHandR.damage = zombieDamage;
+        zombieHand.damage = zombieDamage;
     }
 
 }
