@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     private Animator animator;
 
     private NavMeshAgent navAgent;
+    
+    public bool isDead = false;
 
     private float despawnTime = 30f;
 
@@ -37,6 +39,9 @@ public class Enemy : MonoBehaviour
             {
                 animator.SetTrigger("Die2");
             }
+
+            isDead = true;
+
             StartCoroutine(DestroyZombieAfterTime(despawnTime));
         }
         else

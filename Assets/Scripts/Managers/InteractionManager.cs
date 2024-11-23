@@ -31,6 +31,12 @@ public class InteractionManager : MonoBehaviour
             GameObject objectHitByRaycast = hit.transform.gameObject;
             if (objectHitByRaycast.GetComponent<Weapon>() && objectHitByRaycast.GetComponent<Weapon>().isActiveWeapon == false)
             {
+
+                if (hoveredWeapon)
+                {
+                    hoveredWeapon.GetComponent<Outline>().enabled = false;
+                }
+
                 hoveredWeapon = objectHitByRaycast.GetComponent<Weapon>();
                 hoveredWeapon.GetComponent<Outline>().enabled = true;
                 HUDManager.Instance.DisplayHint(hoveredWeapon.weaponModel.ToString());
@@ -50,6 +56,12 @@ public class InteractionManager : MonoBehaviour
 
             if (objectHitByRaycast.GetComponent<AmmoCrate>())
             {
+
+                if (hoveredAmmoCrate)
+                {
+                    hoveredAmmoCrate.GetComponent<Outline>().enabled = false;
+                }
+
                 hoveredAmmoCrate = objectHitByRaycast.GetComponent<AmmoCrate>();
                 hoveredAmmoCrate.GetComponent<Outline>().enabled = true;
                 HUDManager.Instance.DisplayHint(hoveredAmmoCrate.ammoType.ToString() + "\n" + hoveredAmmoCrate.ammoAmount.ToString());
