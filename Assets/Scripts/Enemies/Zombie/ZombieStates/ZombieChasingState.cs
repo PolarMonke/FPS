@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class ZombieChasingState : StateMachineBehaviour
 {
 
-    Transform player;
-    NavMeshAgent agent;
+    protected Transform player;
+    protected NavMeshAgent agent;
 
     public float chaseSpeed = 6f;
 
@@ -24,10 +24,7 @@ public class ZombieChasingState : StateMachineBehaviour
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!SoundManager.Instance.zombieChannel.isPlaying)
-        {
-            SoundManager.Instance.zombieChannel.PlayOneShot(SoundManager.Instance.zombieChasing);
-        }
+        playSound();
 
         agent.SetDestination(player.position);
         animator.transform.LookAt(player);
@@ -48,6 +45,18 @@ public class ZombieChasingState : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         agent.SetDestination(agent.transform.position);
+        stopSound();
+    }
+
+    protected virtual void playSound()
+    {
+        if (!SoundManager.Instance.zombieChannel.isPlaying)
+        {
+            SoundManager.Instance.zombieChannel.PlayOneShot(SoundManager.Instance.zombieChasing);
+        }
+    }
+    protected virtual void stopSound()
+    {
         SoundManager.Instance.zombieChannel.Stop();
     }
 }

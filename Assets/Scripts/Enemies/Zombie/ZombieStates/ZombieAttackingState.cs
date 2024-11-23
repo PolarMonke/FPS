@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ZombieAttackingState : StateMachineBehaviour
 {
-    Transform player;
-    NavMeshAgent agent;
+    protected Transform player;
+    protected NavMeshAgent agent;
 
     public float stopAttackingDistance = 2.5f;
 
@@ -20,13 +21,8 @@ public class ZombieAttackingState : StateMachineBehaviour
     
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!SoundManager.Instance.zombieChannel.isPlaying)
-        {
-            SoundManager.Instance.zombieChannel.PlayOneShot(SoundManager.Instance.zombieAttacking);
-        }
-
         LookAtPlayer();
-
+        playSound();
         float distanceFromPlayer = Vector3.Distance(player.position, animator.transform.position);
         if (distanceFromPlayer > stopAttackingDistance)
         {
@@ -34,7 +30,7 @@ public class ZombieAttackingState : StateMachineBehaviour
         }
     }
 
-    private void LookAtPlayer()
+    protected void LookAtPlayer()
     {
         Vector3 direction = player.position - agent.transform.position;
         agent.transform.rotation = Quaternion.LookRotation(direction);
@@ -43,7 +39,19 @@ public class ZombieAttackingState : StateMachineBehaviour
         agent.transform.rotation = Quaternion.Euler(0,yRotation,0);
 
     }
-    private void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    protected void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    {
+        stopSound();
+    }
+
+    protected virtual void playSound()
+    {
+        if (!SoundManager.Instance.zombieChannel.isPlaying)
+        {
+            SoundManager.Instance.zombieChannel.PlayOneShot(SoundManager.Instance.zombieAttacking);
+        }
+    }
+    protected virtual void stopSound()
     {
         SoundManager.Instance.zombieChannel.Stop();
     }

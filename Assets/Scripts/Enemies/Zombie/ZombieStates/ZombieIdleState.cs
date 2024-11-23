@@ -7,7 +7,7 @@ public class ZombieIdleState : StateMachineBehaviour
     float timer;
     public float idleTime = 0f;
 
-    Transform player;
+    protected Transform player;
 
     public float detectionAreaRadius = 18f;
 

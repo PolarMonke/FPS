@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
 
     public static SoundManager Instance { get; set; }
 
+    [Header("Guns")]
     public AudioSource ShootingChannel;
     public AudioSource ReloadingChannel;
 
@@ -19,7 +20,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip AK74Shot;
     public AudioClip AK74ReloadingSound;
 
-    
+    [Header("Zombie")]
     public AudioSource zombieChannel;
 
     public AudioClip zombieWalking;
@@ -27,6 +28,17 @@ public class SoundManager : MonoBehaviour
     public AudioClip zombieAttacking;
     public AudioClip zombieHurt;
     public AudioClip zombieDying;
+
+    [Header("MZombie")]
+    public AudioSource mZombieChannel;
+
+    public AudioClip mZombieWalking1;
+    public AudioClip mZombieWalking2;
+    public AudioClip mZombieChasing;
+    public AudioClip mZombieAttacking;
+    public AudioClip mZombieHurt1;
+    public AudioClip mZombieHurt2;
+    public AudioClip mZombieDying;
 
     
 
