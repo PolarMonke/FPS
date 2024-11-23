@@ -5,26 +5,21 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private int HP = 100;
-    private Animator animator;
+    [SerializeField] protected int HP = 100;
+    protected Animator animator;
 
-    private NavMeshAgent navAgent;
+    protected NavMeshAgent navAgent;
     
     public bool isDead = false;
 
-    private float despawnTime = 30f;
+    protected float despawnTime = 30f;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
     }
-    void Update()
-    {
-        
-    }
-
-    public void TakeDamage(int damageAmount)
+    public virtual void TakeDamage(int damageAmount)
     {
         HP -= damageAmount;
 
@@ -42,7 +37,7 @@ public class Enemy : MonoBehaviour
 
             isDead = true;
 
-            StartCoroutine(DestroyZombieAfterTime(despawnTime));
+            StartCoroutine(DestroyEnemyAfterTime(despawnTime));
         }
         else
         {
@@ -50,7 +45,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public IEnumerator DestroyZombieAfterTime(float delay)
+    public virtual IEnumerator DestroyEnemyAfterTime(float delay)
     {
         yield return new WaitForSeconds(delay);
         Destroy(gameObject);

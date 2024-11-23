@@ -18,6 +18,16 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip AK74Shot;
     public AudioClip AK74ReloadingSound;
+
+    
+    public AudioSource zombieChannel;
+
+    public AudioClip zombieWalking;
+    public AudioClip zombieChasing;
+    public AudioClip zombieAttacking;
+    public AudioClip zombieHurt;
+    public AudioClip zombieDying;
+
     
 
     private void Awake()
