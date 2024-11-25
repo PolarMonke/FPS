@@ -73,9 +73,14 @@ public class Weapon : MonoBehaviour
     {
         if (isActiveWeapon)
         {
+            gameObject.layer = LayerMask.NameToLayer("WeaponRender");
             foreach (Transform child in transform)
             {
                 child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+                foreach (Transform toddler in child)
+                {
+                    toddler.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+                }
             }
             if (Input.GetMouseButtonDown(1))
             {
@@ -126,9 +131,14 @@ public class Weapon : MonoBehaviour
         }
         else
         {
+            gameObject.layer = LayerMask.NameToLayer("Default");
             foreach (Transform child in transform)
             {
                 child.gameObject.layer = LayerMask.NameToLayer("Default");
+                foreach (Transform toddler in child)
+                {
+                    toddler.gameObject.layer = LayerMask.NameToLayer("Default");
+                }
             }
         }
     }
