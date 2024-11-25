@@ -27,13 +27,13 @@ public class Player : MonoBehaviour
         HP -= damageAmount;
         if (HP <= 0)
         {
-            print("player dead");
+            SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerDead);
             KillPlayer();
         }
         else
         {
-            print($"player hit\ndealt {damageAmount}");
             StartCoroutine(BloodyScreenEffect());
+            SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerHurt);
             playerHealthUI.text = $"Health{HP}";
         }
     }

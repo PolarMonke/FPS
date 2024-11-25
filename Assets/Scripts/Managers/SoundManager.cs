@@ -8,6 +8,12 @@ public class SoundManager : MonoBehaviour
 
     public static SoundManager Instance { get; set; }
 
+    [Header("Player")]
+    public AudioSource playerChannel;
+
+    public AudioClip playerHurt;
+    public AudioClip playerDead;
+
     [Header("Guns")]
     public AudioSource ShootingChannel;
     public AudioSource ReloadingChannel;
@@ -40,6 +46,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip mZombieHurt2;
     public AudioClip mZombieDying;
 
+    
     
 
     private void Awake()
