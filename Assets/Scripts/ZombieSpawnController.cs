@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ZombieSpawnController : MonoBehaviour
 {
@@ -20,6 +22,10 @@ public class ZombieSpawnController : MonoBehaviour
 
     public GameObject zombiePrefab;
 
+    public TextMeshProUGUI currentWaveUI;
+    public TextMeshProUGUI waveOverUI;
+    public TextMeshProUGUI coolDownCounterUI;
+
     private void Start()
     {
         currentZombiesPerWave = initializeZombiesPerWave;
@@ -31,6 +37,7 @@ public class ZombieSpawnController : MonoBehaviour
     {
         currentZombiesAlive.Clear();
         currentWave++;
+        currentWaveUI.text = $"Wave {currentWave.ToString()}";
         StartCoroutine(SpawnWave());
     }
 
@@ -78,12 +85,15 @@ public class ZombieSpawnController : MonoBehaviour
         {
             coolDownCounter = waveCoolDown;
         }   
+        coolDownCounterUI.text = coolDownCounter.ToString("F0");
     }
     private IEnumerator WaveCoolDown()
     {
         inCoolDown = true;
+        waveOverUI.gameObject.SetActive(true);
         yield return new WaitForSeconds(waveCoolDown);
         inCoolDown = false;
+        waveOverUI.gameObject.SetActive(false);
         currentZombiesPerWave *= waveMultiplier;
         StartNextWave();
     }
