@@ -6,7 +6,7 @@ public class MZombieAttackingState : ZombieAttackingState
 {
     protected override void playSound()
     {
-        if (!SoundManager.Instance.zombieChannel.isPlaying)
+        if (!SoundManager.Instance.mZombieChannel.isPlaying)
         {
             SoundManager.Instance.mZombieChannel.PlayOneShot(SoundManager.Instance.mZombieAttacking);
         }

@@ -39,7 +39,7 @@ public class ZombieAttackingState : StateMachineBehaviour
         agent.transform.rotation = Quaternion.Euler(0,yRotation,0);
 
     }
-    protected void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
+    public override void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         stopSound();
     }

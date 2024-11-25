@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     
     public bool isDead = false;
 
-    protected float despawnTime = 30f;
+    public float despawnTime = 30f;
 
     void Start()
     {
