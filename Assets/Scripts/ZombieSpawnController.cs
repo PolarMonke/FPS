@@ -29,7 +29,7 @@ public class ZombieSpawnController : MonoBehaviour
     private void Start()
     {
         currentZombiesPerWave = initializeZombiesPerWave;
-
+        waveOverUI.text = LanguagesDB.Instance.GetText("WaveOverText");
         StartNextWave();
     }
 
@@ -37,7 +37,7 @@ public class ZombieSpawnController : MonoBehaviour
     {
         currentZombiesAlive.Clear();
         currentWave++;
-        currentWaveUI.text = $"Wave {currentWave.ToString()}";
+        currentWaveUI.text = $"{LanguagesDB.Instance.GetText("Wave")} {currentWave.ToString()}";
         StartCoroutine(SpawnWave());
     }
 

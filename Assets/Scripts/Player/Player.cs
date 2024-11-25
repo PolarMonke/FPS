@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        playerHealthUI.text = $"Health: {HP}";
+        playerHealthUI.text = $"{LanguagesDB.Instance.GetText("Health")} {HP}";
     } 
 
     public void TakeDamage(int damageAmount)
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(BloodyScreenEffect());
             SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerHurt);
-            playerHealthUI.text = $"Health{HP}";
+            playerHealthUI.text = $"{LanguagesDB.Instance.GetText("Health")} {HP}";
         }
     }
 
@@ -92,6 +92,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator ShowGameOverUI()
     {
+        gameOverUI.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("GameOver");
         yield return new WaitForSeconds(1f);
         gameOverUI.gameObject.SetActive(true);
     }
