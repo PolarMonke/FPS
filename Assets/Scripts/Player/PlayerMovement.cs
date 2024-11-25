@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
 
     private bool isGrounded;
-    private bool isMoving;
+    //private bool isMoving;
 
     private Vector3 lastPosition = new Vector3(0f,0f,0f);
     
@@ -55,14 +55,14 @@ public class PlayerMovement : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-        if (lastPosition != gameObject.transform.position && isGrounded == true)
-        {
-            isMoving = true;
-        }
-        else 
-        {
-            isMoving = false;
-        }
+        //if (lastPosition != gameObject.transform.position && isGrounded == true)
+        //{
+            //isMoving = true;
+        //}
+        //else 
+        //{
+            //isMoving = false;
+        //}
         lastPosition = gameObject.transform.position;
     }
     private void CheckGround()

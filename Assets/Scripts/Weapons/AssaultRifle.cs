@@ -8,7 +8,7 @@ public class AssaultRifle : Weapon
 
     private bool isSpraying = false;
 
-    protected void Update()
+    protected override void Update()
     {
         foreach (Transform child in transform)
         {

@@ -69,7 +69,7 @@ public class Weapon : MonoBehaviour
         spreadIntensity = hipSpreadIntensity;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (isActiveWeapon)
         {
