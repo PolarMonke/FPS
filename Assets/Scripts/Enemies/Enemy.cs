@@ -39,6 +39,9 @@ public class Enemy : MonoBehaviour
 
     public virtual IEnumerator DestroyEnemyAfterTime(float delay)
     {
+        Vector3 spawnPosition = transform.position;
+        spawnPosition.y += 0.3f;
+        LootManager.Instance.SpawnRandomLoot(spawnPosition);
         yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }

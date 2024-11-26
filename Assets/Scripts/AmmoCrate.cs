@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class AmmoCrate : MonoBehaviour
 {
-    public int ammoAmount = 100;
+    private int minAmmoAmount = 10;
+    private int maxAmmoAmount = 150;
+
+    public int ammoAmount;
     public AmmoType ammoType;
 
     public enum AmmoType
@@ -13,5 +16,12 @@ public class AmmoCrate : MonoBehaviour
         PistolAmmo,
         ShotgunAmmo,
         SniperRifleAmmo
+    }
+
+    private void Start()
+    {
+        ammoType = (AmmoType)Random.Range(0, System.Enum.GetValues(typeof(AmmoType)).Length);
+
+        ammoAmount = Random.Range(minAmmoAmount, maxAmmoAmount + 1);
     }
 }
