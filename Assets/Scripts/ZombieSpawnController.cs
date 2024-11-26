@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class ZombieSpawnController : MonoBehaviour
 {
@@ -29,7 +30,8 @@ public class ZombieSpawnController : MonoBehaviour
     private void Start()
     {
         currentZombiesPerWave = initializeZombiesPerWave;
-        waveOverUI.text = LanguagesDB.Instance.GetText("WaveOverText");
+        string waveOverText = LanguagesDB.Instance.GetText("WaveOverText");
+        waveOverUI.text = waveOverText;
         StartNextWave();
     }
 
