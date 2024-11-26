@@ -25,15 +25,7 @@ public class Enemy : MonoBehaviour
 
         if (HP <= 0)
         {
-            int randomValue = Random.Range(0,2);
-            if (randomValue == 0)
-            {
-                animator.SetTrigger("Die1");
-            }
-            else
-            {
-                animator.SetTrigger("Die2");
-            }
+            animator.SetTrigger("Die");
 
             isDead = true;
 
@@ -51,15 +43,5 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 2.5f);
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 18f);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 21f);
-    }
+    
 }
