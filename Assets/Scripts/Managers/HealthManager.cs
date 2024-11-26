@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootManager : MonoBehaviour
+public class HealthManager : MonoBehaviour
 {
-    public static LootManager Instance { get; set; }
+    public static HealthManager Instance { get; set; }
+
+    public Player player;
 
     private void Awake()
     {

@@ -9,6 +9,7 @@ public class InteractionManager : MonoBehaviour
 
     private Weapon hoveredWeapon = null;
     private AmmoCrate hoveredAmmoCrate = null;
+    private HealthKit hoveredHealthKit = null;
 
     private void Awake()
     {
@@ -80,6 +81,34 @@ public class InteractionManager : MonoBehaviour
                 hoveredAmmoCrate.GetComponent<Outline>().enabled = false;
                 HUDManager.Instance.UnDisplayHint();
             }
+
+            if (objectHitByRaycast.GetComponent<HealthKit>())
+            {
+
+                if (hoveredHealthKit)
+                {
+                    hoveredHealthKit.GetComponent<Outline>().enabled = false;
+                }
+
+                hoveredHealthKit = objectHitByRaycast.GetComponent<HealthKit>();
+                hoveredHealthKit.GetComponent<Outline>().enabled = true;
+                HUDManager.Instance.DisplayHint("HealthKit" + "\n" + hoveredHealthKit.healthAmount.ToString());
+                
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    HealthManager.Instance.player.Heal(hoveredHealthKit.healthAmount);
+                    HUDManager.Instance.UnDisplayHint();
+                    Destroy(objectHitByRaycast.gameObject);
+                }
+                
+            }
+            else if(hoveredHealthKit == null) {}
+            else
+            {
+                hoveredHealthKit.GetComponent<Outline>().enabled = false;
+                HUDManager.Instance.UnDisplayHint();
+            }
+            
         }
     }
 }

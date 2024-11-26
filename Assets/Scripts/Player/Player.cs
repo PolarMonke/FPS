@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    private int maxHP = 100;
     public int HP = 100;
 
     public GameObject bloodScreen;
@@ -95,5 +96,15 @@ public class Player : MonoBehaviour
         gameOverUI.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("GameOver");
         yield return new WaitForSeconds(1f);
         gameOverUI.gameObject.SetActive(true);
+    }
+
+    public void Heal(int hpAmount)
+    {
+        if (HP < maxHP)
+        {   
+            int healAmount = System.Math.Min(hpAmount, maxHP - HP);
+            HP += healAmount;
+            playerHealthUI.text = $"{LanguagesDB.Instance.GetText("Health")} {HP}";
+        }
     }
 }
