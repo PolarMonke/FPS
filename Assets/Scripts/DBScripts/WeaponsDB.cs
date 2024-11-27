@@ -22,7 +22,8 @@ public class WeaponsDB : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else{
+        else
+        {
             Instance = this;
             dbPath = Application.dataPath + "/DataBases/weapons.sqlite";
             if (!File.Exists(dbPath))

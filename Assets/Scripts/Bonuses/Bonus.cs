@@ -19,20 +19,20 @@ public class Bonus : MonoBehaviour
 
     protected bool _isActive = false;
 
+    public Bonus(string name, string description, string imagePath, int duration)
+    {
+        _name = name;
+        _description = description;
+        _imagePath = imagePath;
+        _duration = duration;
+    }
+
     protected void Start()
     {
         Name.text = _name;
         Description.text = _description;
         BGImage.sprite = Resources.Load<Sprite>(_imagePath);
         Duration.text = _duration.ToString();
-    }
-
-    public void Initialize(BonusManager.BonusData data)
-    {
-        Name.text = data.Name;
-        Description.text = data.Description;
-        BGImage.sprite = data.BGImage;
-        Duration.text = data.Duration;
     }
 
     void Update()
