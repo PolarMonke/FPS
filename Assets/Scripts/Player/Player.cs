@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private int maxHP = 100;
+    public int maxHP = 100;
     public int HP = 100;
 
     public GameObject bloodScreen;
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        playerHealthUI.text = $"{LanguagesDB.Instance.GetText("Health")} {HP}";
+        UpdateHP();
     } 
 
     public void TakeDamage(int damageAmount)
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(BloodyScreenEffect());
             SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerHurt);
-            playerHealthUI.text = $"{LanguagesDB.Instance.GetText("Health")} {HP}";
+            UpdateHP();
         }
     }
 
@@ -104,7 +104,11 @@ public class Player : MonoBehaviour
         {   
             int healAmount = System.Math.Min(hpAmount, maxHP - HP);
             HP += healAmount;
-            playerHealthUI.text = $"{LanguagesDB.Instance.GetText("Health")} {HP}";
+            UpdateHP();
         }
+    }
+    public void UpdateHP()
+    {
+        playerHealthUI.text = $"{LanguagesDB.Instance.GetText("Health")} {HP}";
     }
 }
