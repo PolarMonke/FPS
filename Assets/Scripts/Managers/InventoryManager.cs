@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
 
-public class PauseManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
-    public static PauseManager Instance { get; set; }
+    public static InventoryManager Instance { get; set; }
+
+    private bool isPaused = false;
+    public GameObject inventoryMenu;
 
     private void Awake()
     {
@@ -18,12 +22,9 @@ public class PauseManager : MonoBehaviour
         }
     }
 
-    private bool isPaused = false;
-    public GameObject pauseMenu;
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             isPaused = !isPaused;
             PauseGame(isPaused);
@@ -33,7 +34,7 @@ public class PauseManager : MonoBehaviour
     void PauseGame(bool pause)
     {
         Time.timeScale = pause ? 0f : 1f;
-        pauseMenu.SetActive(pause);
+        inventoryMenu.SetActive(pause);
         Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = pause; 
     }

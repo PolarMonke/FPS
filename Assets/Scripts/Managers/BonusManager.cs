@@ -20,6 +20,8 @@ public class BonusManager : MonoBehaviour
     private List<Bonus> activeBonuses = new List<Bonus>();
     private Dictionary<string, Bonus> bonusByName = new Dictionary<string, Bonus>();
 
+    public Inventory inventory;
+
     public enum BonusTypes
     {
         Double,
@@ -60,6 +62,7 @@ public class BonusManager : MonoBehaviour
                 bonusInstance.GetComponent<ThoseWhoKnowBonus>().Create(name, description, imagePath, duration);
                 bonusInstance.GetComponent<ThoseWhoKnowBonus>().CloneBonus(bonusScript);
                 bonusInstance.GetComponent<ThoseWhoKnowBonus>().pickedUp = true;
+                inventory.AddToInventory(bonusInstance.GetComponent<ThoseWhoKnowBonus>());
                 break;
             }
             default:
@@ -69,6 +72,7 @@ public class BonusManager : MonoBehaviour
         }
         bonusScript.enabled = false;
         bonusInstance.GetComponent<Animator>().SetTrigger("FadeOut");
+        
     }
 
 }

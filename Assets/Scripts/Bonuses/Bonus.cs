@@ -42,6 +42,13 @@ public class Bonus : MonoBehaviour
 
             pickedUp = !pickedUp;
         }   
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(BGImage.rectTransform, Input.mousePosition))
+            {
+                OnBonusClicked();
+            }
+        }
         if (_isActive)
         {
             DoItsThing();
@@ -60,6 +67,12 @@ public class Bonus : MonoBehaviour
         BGImage = bonus.BGImage;
         Duration = bonus.Duration;
         bonusAnimator = bonus.bonusAnimator;
+    }
+
+     public void OnBonusClicked()
+    {
+        Debug.Log("Bonus clicked!");
+        _isActive = true;
     }
 
     protected virtual void DoItsThing()
