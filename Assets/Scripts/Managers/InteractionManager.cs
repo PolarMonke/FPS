@@ -10,6 +10,7 @@ public class InteractionManager : MonoBehaviour
     private Weapon hoveredWeapon = null;
     private AmmoCrate hoveredAmmoCrate = null;
     private HealthKit hoveredHealthKit = null;
+    private MysteryBox hoveredMysteryBox = null;
 
     private void Awake()
     {
@@ -109,6 +110,32 @@ public class InteractionManager : MonoBehaviour
                 HUDManager.Instance.UnDisplayHint();
             }
             
+            if (objectHitByRaycast.GetComponent<MysteryBox>())
+            {
+
+                if (hoveredMysteryBox)
+                {
+                    hoveredMysteryBox.GetComponent<Outline>().enabled = false;
+                }
+
+                hoveredMysteryBox = objectHitByRaycast.GetComponent<MysteryBox>();
+                hoveredMysteryBox.GetComponent<Outline>().enabled = true;
+                HUDManager.Instance.DisplayHint("Mystery box");                     //localize
+                
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    BonusManager.Instance.AddToInventory(hoveredMysteryBox.bonusType);
+                    HUDManager.Instance.UnDisplayHint();
+                    Destroy(objectHitByRaycast.gameObject);
+                }
+                
+            }
+            else if(hoveredMysteryBox == null) {}
+            else
+            {
+                hoveredMysteryBox.GetComponent<Outline>().enabled = false;
+                HUDManager.Instance.UnDisplayHint();
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class Bonus : MonoBehaviour
 {
@@ -16,10 +17,13 @@ public class Bonus : MonoBehaviour
     public TextMeshProUGUI Description;
     public Image BGImage;
     public TextMeshProUGUI Duration;
+    
+    public Animator bonusAnimator;
 
+    public bool pickedUp = false;
     protected bool _isActive = false;
 
-    public Bonus(string name, string description, string imagePath, int duration)
+    public void Create(string name, string description, string imagePath, int duration)
     {
         _name = name;
         _description = description;
@@ -27,16 +31,17 @@ public class Bonus : MonoBehaviour
         _duration = duration;
     }
 
-    protected void Start()
-    {
-        Name.text = _name;
-        Description.text = _description;
-        BGImage.sprite = Resources.Load<Sprite>(_imagePath);
-        Duration.text = _duration.ToString();
-    }
-
     void Update()
     {
+        if (pickedUp)
+        {
+            Name.text = _name;
+            Description.text = _description;
+            BGImage.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Textures/Bonuses/" + _imagePath);
+            Duration.text = _duration.ToString();
+
+            pickedUp = !pickedUp;
+        }   
         if (_isActive)
         {
             DoItsThing();
@@ -46,6 +51,15 @@ public class Bonus : MonoBehaviour
     public void SetActive()
     {
         _isActive = true;
+    }
+
+    public void CloneBonus(Bonus bonus)
+    {
+        Name = bonus.Name;
+        Description = bonus.Description;
+        BGImage = bonus.BGImage;
+        Duration = bonus.Duration;
+        bonusAnimator = bonus.bonusAnimator;
     }
 
     protected virtual void DoItsThing()

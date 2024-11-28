@@ -55,17 +55,13 @@ public class BonusesDB : MonoBehaviour
         }
     }
 
-    public Bonus GetBonusByName(string name)
+    public (string, string, string, int) GetBonusByName(string name)
     {
         string bonusName = "";
         string bonusDesc = "";
         string bonusSprite = "";
         int bonusDuration = 0;
-
-        if (connection == null || connection.State != ConnectionState.Open)
-        {
-            if (!OpenConnection()) return null;
-        }
+        
         try
         {
             using (IDbCommand command = connection.CreateCommand())
@@ -111,7 +107,7 @@ public class BonusesDB : MonoBehaviour
 
         if (name == BonusManager.BonusTypes.Those.ToString())
         {
-            return new ThoseWhoKnowBonus(bonusName, bonusDesc, bonusSprite, bonusDuration);
+            return (bonusName, bonusDesc, bonusSprite, bonusDuration);
         }
         else
         {

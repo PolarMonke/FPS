@@ -9,8 +9,6 @@ public class ThoseWhoKnowBonus : Bonus
     public Player player;
     public PlayerMovement playerMovement;
 
-    public ThoseWhoKnowBonus(string name, string description, string imagePath, int duration) : base(name, description, imagePath, duration) { }
-
     protected override void DoItsThing()
     {
         BuffPlayer();
