@@ -105,7 +105,7 @@ public class BonusesDB : MonoBehaviour
             Debug.LogError("GetAmmoTypeByWeapon error: " + e.Message);
         }
 
-        if (name == BonusManager.BonusTypes.Those.ToString())
+        if (name == Bonus.BonusTypes.Those.ToString())
         {
             return (bonusName, bonusDesc, bonusSprite, bonusDuration);
         }

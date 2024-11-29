@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using static BonusManager;
 public class Inventory : MonoBehaviour
 {
-    private Dictionary<Bonus, int> bonuses = new Dictionary<Bonus, int>();
+    private Dictionary<Bonus.BonusTypes, int> bonuses = new Dictionary<Bonus.BonusTypes, int>();
     
     public Transform inventoryPanel;
     public GameObject inventorySlotPrefab;
@@ -19,22 +19,42 @@ public class Inventory : MonoBehaviour
     
     private void CreateInventoryGrid()
     {
+        RectTransform panelRect = inventoryPanel.GetComponent<RectTransform>();
+
+        if (panelRect == null)
+        {
+            Debug.LogError("Inventory Panel does not have a RectTransform!");
+            return;
+        }
+
+        float slotWidth = inventorySlotPrefab.GetComponent<RectTransform>().rect.width;
+        float slotHeight = inventorySlotPrefab.GetComponent<RectTransform>().rect.height;
+
+
         for (int i = 0; i < numRows * numColumns; i++)
         {
             GameObject slot = Instantiate(inventorySlotPrefab, inventoryPanel);
             slot.name = "Slot " + i;
             InventorySlot slotScript = slot.GetComponent<InventorySlot>();
+            if (slotScript == null)
+            {
+                Debug.LogError("InventorySlot component missing from prefab!");
+                continue; 
+            }
 
             inventorySlots.Add(slotScript);
             slotScript.slotIndex = i;
-            
 
             RectTransform rect = slot.GetComponent<RectTransform>();
-            rect.anchoredPosition = new Vector2( i % numColumns * (rect.rect.width + 5f) , -(i / numColumns) * (rect.rect.height + 5f));
+
+            float x = 200 + i % numColumns * (slotWidth + 200f);
+            float y = -200 + -(i / numColumns) * (slotHeight + 200f);
+
+            rect.anchoredPosition = new Vector2(x, y);
         }
     }
 
-    public void AddToInventory(Bonus bonus)
+    public void AddToInventory(Bonus.BonusTypes bonus)
     {
         if (bonuses.ContainsKey(bonus))
         {
@@ -47,7 +67,7 @@ public class Inventory : MonoBehaviour
         UpdateUI();
     }
 
-    public void RemoveFromInventory(Bonus bonus)
+    public void RemoveFromInventory(Bonus.BonusTypes bonus)
     {
         if (bonuses.ContainsKey(bonus))
         {
@@ -67,7 +87,7 @@ public class Inventory : MonoBehaviour
             slot.ClearSlot();
         }
 
-        foreach (KeyValuePair<Bonus, int> kvp in bonuses)
+        foreach (KeyValuePair<Bonus.BonusTypes, int> kvp in bonuses)
         {
             int slotIndex = FindEmptySlot();
             if (slotIndex != -1)

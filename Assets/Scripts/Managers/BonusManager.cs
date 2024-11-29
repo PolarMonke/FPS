@@ -22,14 +22,6 @@ public class BonusManager : MonoBehaviour
 
     public Inventory inventory;
 
-    public enum BonusTypes
-    {
-        Double,
-        Invincible,
-        Chill,
-        Those,
-    }
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -42,38 +34,24 @@ public class BonusManager : MonoBehaviour
         }
     }
 
-    public void AddToInventory(BonusTypes bonusName)
+    public void AddToInventory(Bonus.BonusTypes bonusType)
     {
-        //Bonus bonusToAdd = BonusesDB.Instance.GetBonusByName(bonusName.ToString());
         string name;
         string description;
         string imagePath;
         int duration;
-        (name, description, imagePath, duration) = BonusesDB.Instance.GetBonusByName(bonusName.ToString());
+        (name, description, imagePath, duration) = BonusesDB.Instance.GetBonusByName(bonusType.ToString());
 
         GameObject bonusInstance = Instantiate(bonusPrefab);
         bonusInstance.transform.SetParent(bonusCanvas.transform, false);
         Bonus bonusScript = bonusInstance.GetComponent<Bonus>();
-        switch (bonusName)
-        {
-            case BonusTypes.Those:
-            {
-                bonusInstance.AddComponent<ThoseWhoKnowBonus>();
-                bonusInstance.GetComponent<ThoseWhoKnowBonus>().Create(name, description, imagePath, duration);
-                bonusInstance.GetComponent<ThoseWhoKnowBonus>().CloneBonus(bonusScript);
-                bonusInstance.GetComponent<ThoseWhoKnowBonus>().pickedUp = true;
-                inventory.AddToInventory(bonusInstance.GetComponent<ThoseWhoKnowBonus>());
-                break;
-            }
-            default:
-            {
-                throw new NotImplementedException();
-            }
-        }
-        bonusScript.enabled = false;
+        bonusScript.Create(name, description, imagePath, duration);
         bonusInstance.GetComponent<Animator>().SetTrigger("FadeOut");
-        
+        inventory.AddToInventory(bonusType);
+        Destroy(bonusInstance);
     }
+
+
 
 }
 

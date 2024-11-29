@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 1746467238342813591}
   m_Layer: 0
   m_Name: Bonus
-  m_TagString: Untagged
+  m_TagString: Bonus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -494,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2aed7f3aeaa78c46b5869cf0a1b5fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bonusType: 0
   Name: {fileID: 4337732358118202288}
   Description: {fileID: 1550625887088050839}
   BGImage: {fileID: 888144134734526066}

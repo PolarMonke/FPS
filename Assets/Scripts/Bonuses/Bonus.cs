@@ -7,6 +7,15 @@ using UnityEditor;
 
 public class Bonus : MonoBehaviour
 {
+    public enum BonusTypes
+    {
+        Double,
+        Invincible,
+        Chill,
+        Those,
+    }
+
+    public BonusTypes bonusType;
 
     protected string _name;
     protected string _description;
