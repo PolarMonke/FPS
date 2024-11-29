@@ -2,37 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
 public class ThoseWhoKnowBonus : Bonus
 {
-    public Player player;
-    public PlayerMovement playerMovement;
+    private void Start()
+    {
+        bonusType = BonusTypes.Those;
+    }
 
     protected override void DoItsThing()
     {
+        MoveToUI();
         BuffPlayer();
         StartCoroutine(WaitTillEnd());
-        DeBuffPlayer();
         _isActive = false;
     }
 
     private void BuffPlayer()
     {
-        player.maxHP *= 2;
-        player.HP = player.maxHP;
-        player.UpdateHP();
+        HealthManager.Instance.player.maxHP *= 2;
+        HealthManager.Instance.player.HP = HealthManager.Instance.player.maxHP;
+        HealthManager.Instance.player.UpdateHP();
 
-        playerMovement.speed *= 2;        
+        SpeedManager.Instance.playerMovement.speed *= 3; 
+        SpeedManager.Instance.playerMovement.jumpHeight *= 2;      
     }
 
     private void DeBuffPlayer()
     {
-        player.maxHP /= 2;
-        player.HP = player.maxHP;
-        player.UpdateHP();
+        HealthManager.Instance.player.maxHP /= 2;
+        HealthManager.Instance.player.HP = HealthManager.Instance.player.maxHP;
+        HealthManager.Instance.player.UpdateHP();
 
-        playerMovement.speed /= 2;
+        SpeedManager.Instance.playerMovement.speed /= 3;
+        SpeedManager.Instance.playerMovement.jumpHeight /= 2;  
     }
 
     private IEnumerator WaitTillEnd()
@@ -45,5 +50,6 @@ public class ThoseWhoKnowBonus : Bonus
             yield return new WaitForSeconds(1f);
             timeLeft -= 1f;
         }
+        DeBuffPlayer();
     }
 }

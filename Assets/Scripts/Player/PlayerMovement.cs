@@ -81,6 +81,13 @@ public class PlayerMovement : MonoBehaviour
             isGrounded = false;
         }
     }
-
+    public void MultiplySpeed(int multiplier)
+    {
+        speed *= multiplier;
+    }
+    public void DivideSpeed(int divisor)
+    {
+        speed /= divisor;
+    }
     
 }

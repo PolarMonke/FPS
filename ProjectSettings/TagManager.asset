@@ -12,6 +12,7 @@ TagManager:
   - Waypoints
   - ZombieHand
   - Bonus
+  - BonusUI
   layers:
   - Default
   - TransparentFX

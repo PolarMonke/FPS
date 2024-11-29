@@ -66,6 +66,7 @@ public class Bonus : MonoBehaviour
 
     public void SetActive()
     {
+        InventoryManager.Instance.RemoveFromInventory(bonusType);
         _isActive = true;
     }
 
@@ -78,14 +79,20 @@ public class Bonus : MonoBehaviour
         bonusAnimator = bonus.bonusAnimator;
     }
 
-     public void OnBonusClicked()
+    public void OnBonusClicked()
     {
-        Debug.Log("Bonus clicked!");
-        _isActive = true;
+        SetActive();
+        print("bonus clicked");
     }
 
     protected virtual void DoItsThing()
     {
         
+    }
+
+    protected void MoveToUI()
+    {
+        GameObject UI = GameObject.FindGameObjectWithTag("BonusUI");
+        gameObject.transform.parent = UI.transform;
     }
 }

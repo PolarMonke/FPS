@@ -20,8 +20,6 @@ public class BonusManager : MonoBehaviour
     private List<Bonus> activeBonuses = new List<Bonus>();
     private Dictionary<string, Bonus> bonusByName = new Dictionary<string, Bonus>();
 
-    public Inventory inventory;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -47,7 +45,7 @@ public class BonusManager : MonoBehaviour
         Bonus bonusScript = bonusInstance.GetComponent<Bonus>();
         bonusScript.Create(name, description, imagePath, duration);
         bonusInstance.GetComponent<Animator>().SetTrigger("FadeOut");
-        inventory.AddToInventory(bonusType);
+        InventoryManager.Instance.AddToInventory(bonusType);
         Destroy(bonusInstance);
     }
 

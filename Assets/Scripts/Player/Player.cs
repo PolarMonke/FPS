@@ -111,4 +111,13 @@ public class Player : MonoBehaviour
     {
         playerHealthUI.text = $"{LanguagesDB.Instance.GetText("Health")} {HP}";
     }
+    
+    public void MultiplyMaxHP(int multiplier)
+    {
+        maxHP *= multiplier;
+    }
+    public void DivideMaxHP(int divisor)
+    {
+        maxHP /= divisor;
+    }
 }
