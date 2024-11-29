@@ -45,7 +45,14 @@ public class ZombiePatrolingState : StateMachineBehaviour
             Vector3 nextPosition = waypointsList[Random.Range(0,waypointsList.Count)].position;
             agent.SetDestination(nextPosition);
         }
-
+        // if (BonusManager.Instance.dummySpawned)
+        // {
+        //     player = GameObject.FindGameObjectWithTag("Dummy").transform;
+        // }
+        // if (!BonusManager.Instance.dummySpawned && player == GameObject.FindGameObjectWithTag("Dummy").transform)
+        // {
+        //     player = GameObject.FindGameObjectWithTag("Player").transform;
+        // }
         timer += Time.deltaTime;
         if (timer > patrolingTime)
         {

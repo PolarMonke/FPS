@@ -20,6 +20,8 @@ public class BonusManager : MonoBehaviour
     private List<Bonus> activeBonuses = new List<Bonus>();
     private Dictionary<string, Bonus> bonusByName = new Dictionary<string, Bonus>();
 
+    public bool dummySpawned = false;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)

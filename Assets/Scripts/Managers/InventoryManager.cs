@@ -104,7 +104,6 @@ public class InventoryManager : MonoBehaviour
 
     public void RemoveFromInventory(Bonus.BonusTypes bonus)
     {
-
         bonuses[bonus] -= 1;
         if (bonuses[bonus] <= 0)
         {

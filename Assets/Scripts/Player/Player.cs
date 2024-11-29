@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public GameObject gameOverUI;
 
     public bool isDead;
+    public bool isInvincible;
 
     private void Start()
     {
@@ -25,17 +26,20 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        HP -= damageAmount;
-        if (HP <= 0)
+        if (!isInvincible)
         {
-            SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerDead);
-            KillPlayer();
-        }
-        else
-        {
-            StartCoroutine(BloodyScreenEffect());
-            SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerHurt);
-            UpdateHP();
+            HP -= damageAmount;
+            if (HP <= 0)
+            {
+                SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerDead);
+                KillPlayer();
+            }
+            else
+            {
+                StartCoroutine(BloodyScreenEffect());
+                SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerHurt);
+                UpdateHP();
+            }
         }
     }
 

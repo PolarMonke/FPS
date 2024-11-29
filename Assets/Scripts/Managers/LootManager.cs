@@ -8,6 +8,7 @@ public class LootManager : MonoBehaviour
 
     public HealthKit healthKit;
     public AmmoCrate ammoCrate;
+    public MysteryBox mysteryBox;
 
     private void Awake()
     {
@@ -25,7 +26,11 @@ public class LootManager : MonoBehaviour
     {
         double randomNumber = Random.Range(0f, 1f);
 
-        if (randomNumber < 0.3)
+        if (randomNumber < 0.1)
+        {
+            Instantiate(mysteryBox, spawnPosition, Quaternion.identity);
+        }
+        else if (randomNumber < 0.3)
         {
             Instantiate(healthKit, spawnPosition, Quaternion.identity);
         }

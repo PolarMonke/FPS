@@ -24,7 +24,14 @@ public class ZombieIdleState : StateMachineBehaviour
         {
             animator.SetBool("isPatroling", true);
         }
-
+        // if (BonusManager.Instance.dummySpawned)
+        // {
+        //     player = GameObject.FindGameObjectWithTag("Dummy").transform;
+        // }
+        // if (!BonusManager.Instance.dummySpawned && player == GameObject.FindGameObjectWithTag("Dummy").transform)
+        // {
+        //     player = GameObject.FindGameObjectWithTag("Player").transform;
+        // }
         float distanceFromPlayer = Vector3.Distance(player.position, animator.transform.position);
         if (distanceFromPlayer < detectionAreaRadius)
         {

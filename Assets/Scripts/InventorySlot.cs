@@ -36,6 +36,33 @@ public class InventorySlot : MonoBehaviour
                 Destroy(bonusScript);
                 break;
             }
+            case Bonus.BonusTypes.Double:
+            {
+                bonusInstance.AddComponent<DoubleBonus>();
+                bonusInstance.GetComponent<DoubleBonus>().Create(name, description, imagePath, duration);
+                bonusInstance.GetComponent<DoubleBonus>().CloneBonus(bonusScript);
+                bonusInstance.GetComponent<DoubleBonus>().pickedUp = true;
+                Destroy(bonusScript);
+                break;
+            }
+            case Bonus.BonusTypes.Chill:
+            {
+                bonusInstance.AddComponent<ChillGuyBonus>();
+                bonusInstance.GetComponent<ChillGuyBonus>().Create(name, description, imagePath, duration);
+                bonusInstance.GetComponent<ChillGuyBonus>().CloneBonus(bonusScript);
+                bonusInstance.GetComponent<ChillGuyBonus>().pickedUp = true;
+                Destroy(bonusScript);
+                break;
+            }
+            case Bonus.BonusTypes.Invincible:
+            {
+                bonusInstance.AddComponent<InvincibleBonus>();
+                bonusInstance.GetComponent<InvincibleBonus>().Create(name, description, imagePath, duration);
+                bonusInstance.GetComponent<InvincibleBonus>().CloneBonus(bonusScript);
+                bonusInstance.GetComponent<InvincibleBonus>().pickedUp = true;
+                Destroy(bonusScript);
+                break;
+            }
         }
         //UnityEditorInternal.ComponentUtility.MoveComponentUp(amount);
         amount.text = "x" + count.ToString();

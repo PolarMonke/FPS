@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
+using Unity.VisualScripting;
 
 public class ZombieSpawnController : MonoBehaviour
 {
@@ -98,6 +99,23 @@ public class ZombieSpawnController : MonoBehaviour
         waveOverUI.gameObject.SetActive(false);
         currentZombiesPerWave *= waveMultiplier;
         StartNextWave();
+    }
+
+    private void KillAllEnemies()
+    {
+        foreach (Enemy zombie in currentZombiesAlive)
+        {
+            if (!zombie.isDead)
+            {
+                zombie.isDead = true;
+            }
+        }
+    }
+
+    public void DoubleAndGiveItToTheNextWave()
+    {
+        KillAllEnemies();
+        initializeZombiesPerWave *= 2;
     }
 
 }

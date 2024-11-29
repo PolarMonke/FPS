@@ -9,7 +9,7 @@ public class MysteryBox : MonoBehaviour
 
     void Start()
     {
-        bonusType = Bonus.BonusTypes.Those;//(BonusTypes)Random.Range(0, System.Enum.GetValues(typeof(BonusTypes)).Length);        
+        bonusType = (Bonus.BonusTypes)Random.Range(0, System.Enum.GetValues(typeof(Bonus.BonusTypes)).Length);        
     }
 
 }

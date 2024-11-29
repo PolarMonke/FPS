@@ -13,6 +13,8 @@ TagManager:
   - ZombieHand
   - Bonus
   - BonusUI
+  - Dummy
+  - DummySpawn
   layers:
   - Default
   - TransparentFX
