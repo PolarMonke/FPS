@@ -4,9 +4,6 @@ using UnityEditor.Animations;
 
 public class BonusUI : MonoBehaviour
 {
-    public float verticalSpacing = 200f;
-    public float verticalPadding = 100f; 
-
     public List<GameObject> bonusSlots = new List<GameObject>();
 
     public void PutBonusIntoSlot(GameObject bonusInstance)
@@ -21,29 +18,18 @@ public class BonusUI : MonoBehaviour
             }
         }
     }
-
-    public void AlignChildrenVertically()
+    
+    public bool AllSlotsAreFull()
     {
-        List<Bonus> bonuses = new List<Bonus>();
-
-        for(int i = 0; i < gameObject.transform.childCount; i++)
+        for(int i = 0; i < bonusSlots.Count; i++)
         {
-            Bonus bonus = gameObject.transform.GetChild(i).GetComponent<Bonus>();
-            if (bonus != null)
+            bool isEmpty = bonusSlots[i].transform.childCount == 0;
+            if(isEmpty)
             {
-                bonuses.Add(bonus);
+                return false;
             }
         }
-
-        RectTransform canvasRect = GetComponent<RectTransform>();
-        float yPosition = canvasRect.rect.height - verticalPadding;
-        float xPosition = verticalPadding;
-
-        for (int i = 0; i < bonuses.Count; i++)
-        {   
-            RectTransform child = bonuses[i].GetComponent<RectTransform>();
-            bonuses[i].GetComponent<RectTransform>().position = new Vector3(xPosition, yPosition - i * verticalSpacing, child.position.z);
-        }
+        return true;
     }
 }
 

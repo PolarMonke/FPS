@@ -53,11 +53,14 @@ public class Bonus : MonoBehaviour
 
             pickedUp = !pickedUp;
         }   
-        if (Input.GetMouseButtonDown(0) && !_isActive)
+        if (!GameObject.FindGameObjectWithTag("BonusUI").GetComponent<BonusUI>().AllSlotsAreFull())
         {
-            if (RectTransformUtility.RectangleContainsScreenPoint(BGImage.rectTransform, Input.mousePosition))
+            if (Input.GetMouseButtonDown(0) && !_isActive)
             {
-                OnBonusClicked();
+                if (RectTransformUtility.RectangleContainsScreenPoint(BGImage.rectTransform, Input.mousePosition))
+                {
+                    OnBonusClicked();
+                }
             }
         }
         if (_isActivated)
