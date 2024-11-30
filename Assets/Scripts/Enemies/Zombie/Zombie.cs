@@ -43,4 +43,17 @@ public class Zombie : Enemy
         }
     }
 
+    public override void Die()
+    {
+        HP = 0;
+
+        animator.SetTrigger("Die1");
+
+        isDead = true;
+
+        SoundManager.Instance.zombieChannel.PlayOneShot(SoundManager.Instance.zombieDying);
+
+        StartCoroutine(DestroyEnemyAfterTime(despawnTime));
+    }
+
 }

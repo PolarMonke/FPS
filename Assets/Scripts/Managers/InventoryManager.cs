@@ -82,7 +82,7 @@ public class InventoryManager : MonoBehaviour
 
             RectTransform rect = slot.GetComponent<RectTransform>();
 
-            float x = 200 + i % numColumns * (slotWidth + 200f);
+            float x = 200 + i % numColumns * (slotWidth + 400f);
             float y = -200 + -(i / numColumns) * (slotHeight + 200f);
 
             rect.anchoredPosition = new Vector2(x, y);

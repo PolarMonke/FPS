@@ -46,11 +46,18 @@ public class BonusManager : MonoBehaviour
         bonusInstance.transform.SetParent(bonusCanvas.transform, false);
         Bonus bonusScript = bonusInstance.GetComponent<Bonus>();
         bonusScript.Create(name, description, imagePath, duration);
+        bonusScript.pickedUp = true;
         bonusInstance.GetComponent<Animator>().SetTrigger("FadeOut");
+        
         InventoryManager.Instance.AddToInventory(bonusType);
-        Destroy(bonusInstance);
+        StartCoroutine(DestroyBonus(bonusInstance));
     }
 
+    private IEnumerator DestroyBonus(GameObject bonusInstance)
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(bonusInstance);
+    }
 
 
 }

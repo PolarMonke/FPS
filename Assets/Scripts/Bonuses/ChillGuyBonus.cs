@@ -11,16 +11,16 @@ public class ChillGuyBonus : Bonus
 
     private void Start()
     {
-        bonusType = BonusTypes.Invincible;
+        bonusType = BonusTypes.Chill;
         dummySpawn = GameObject.FindGameObjectWithTag("DummySpawn").GetComponent<DummySpawn>();
     }
 
     protected override void DoItsThing()
     {
+        _isActive = true;
         MoveToUI();
         SpawnChillGuy();
         StartCoroutine(WaitTillEnd());
-        _isActive = false;
     }
 
     private void SpawnChillGuy()
@@ -31,6 +31,7 @@ public class ChillGuyBonus : Bonus
     private void DeSpawnChillGuy()
     {
         dummySpawn.RemoveDummy();
+        Deactivate();
     }
 
     private IEnumerator WaitTillEnd()

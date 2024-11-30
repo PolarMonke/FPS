@@ -14,10 +14,10 @@ public class ThoseWhoKnowBonus : Bonus
 
     protected override void DoItsThing()
     {
+        _isActive = true;
         MoveToUI();
         BuffPlayer();
         StartCoroutine(WaitTillEnd());
-        _isActive = false;
     }
 
     private void BuffPlayer()
@@ -38,6 +38,8 @@ public class ThoseWhoKnowBonus : Bonus
 
         SpeedManager.Instance.playerMovement.speed /= 3;
         SpeedManager.Instance.playerMovement.jumpHeight /= 2;  
+
+        Deactivate();
     }
 
     private IEnumerator WaitTillEnd()

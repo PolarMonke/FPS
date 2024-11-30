@@ -105,10 +105,7 @@ public class ZombieSpawnController : MonoBehaviour
     {
         foreach (Enemy zombie in currentZombiesAlive)
         {
-            if (!zombie.isDead)
-            {
-                zombie.isDead = true;
-            }
+            zombie.Die();    
         }
     }
 

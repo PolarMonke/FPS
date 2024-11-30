@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class InvincibleBonus : Bonus
 {
+
     private void Start()
     {
         bonusType = BonusTypes.Invincible;
@@ -14,6 +15,7 @@ public class InvincibleBonus : Bonus
 
     protected override void DoItsThing()
     {
+        _isActive = true;
         MoveToUI();
         BuffPlayer();
         StartCoroutine(WaitTillEnd());
@@ -28,6 +30,7 @@ public class InvincibleBonus : Bonus
     private void DeBuffPlayer()
     {
         HealthManager.Instance.player.isInvincible = false;
+        Deactivate();
     }
 
     private IEnumerator WaitTillEnd()

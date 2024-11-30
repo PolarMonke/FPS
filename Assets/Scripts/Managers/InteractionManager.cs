@@ -113,13 +113,7 @@ public class InteractionManager : MonoBehaviour
             if (objectHitByRaycast.GetComponent<MysteryBox>())
             {
 
-                if (hoveredMysteryBox)
-                {
-                    hoveredMysteryBox.GetComponent<Outline>().enabled = false;
-                }
-
                 hoveredMysteryBox = objectHitByRaycast.GetComponent<MysteryBox>();
-                hoveredMysteryBox.GetComponent<Outline>().enabled = true;
                 HUDManager.Instance.DisplayHint("Mystery box");                     //localize
                 
                 if (Input.GetKeyDown(KeyCode.F))
@@ -133,7 +127,6 @@ public class InteractionManager : MonoBehaviour
             else if(hoveredMysteryBox == null) {}
             else
             {
-                hoveredMysteryBox.GetComponent<Outline>().enabled = false;
                 HUDManager.Instance.UnDisplayHint();
             }
         }

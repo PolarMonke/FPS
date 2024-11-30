@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using UnityEditor.MPE;
 
 public class Bonus : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class Bonus : MonoBehaviour
     public Animator bonusAnimator;
 
     public bool pickedUp = false;
+    protected bool _isActivated = false;
     protected bool _isActive = false;
 
     public void Create(string name, string description, string imagePath, int duration)
@@ -51,23 +53,24 @@ public class Bonus : MonoBehaviour
 
             pickedUp = !pickedUp;
         }   
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !_isActive)
         {
             if (RectTransformUtility.RectangleContainsScreenPoint(BGImage.rectTransform, Input.mousePosition))
             {
                 OnBonusClicked();
             }
         }
-        if (_isActive)
+        if (_isActivated)
         {
             DoItsThing();
+            _isActivated = false;
         }
     }
 
     public void SetActive()
     {
         InventoryManager.Instance.RemoveFromInventory(bonusType);
-        _isActive = true;
+        _isActivated = true;
     }
 
     public void CloneBonus(Bonus bonus)
@@ -93,6 +96,14 @@ public class Bonus : MonoBehaviour
     protected void MoveToUI()
     {
         GameObject UI = GameObject.FindGameObjectWithTag("BonusUI");
-        gameObject.transform.parent = UI.transform;
+        //transform.SetParent(UI.transform);
+        //UI.GetComponent<BonusUI>().AlignChildrenVertically();
+        UI.GetComponent<BonusUI>().PutBonusIntoSlot(gameObject);
+    }
+
+    protected void Deactivate()
+    {
+        _isActivated = false;
+        Destroy(gameObject);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected int HP = 100;
+    public int HP = 100;
     protected Animator animator;
 
     protected NavMeshAgent navAgent;
@@ -46,5 +46,16 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
+
+    public virtual void Die()
+    {
+        HP = 0;
+
+        animator.SetTrigger("Die");
+
+        isDead = true;
+
+        StartCoroutine(DestroyEnemyAfterTime(despawnTime));
+    }
     
 }

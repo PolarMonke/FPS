@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class DummySpawn : MonoBehaviour
@@ -8,7 +9,7 @@ public class DummySpawn : MonoBehaviour
 
     public void SpawnDummy()
     {
-        Instantiate(dummyPrefab);
+        Instantiate(dummyPrefab);    
     }
     public void RemoveDummy()
     {

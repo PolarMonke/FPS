@@ -14,8 +14,10 @@ public class DoubleBonus : Bonus
 
     protected override void DoItsThing()
     {
+        _isActive = true;
         MoveToUI();
         ManipulateWaves();
+        Deactivate();
     }
 
     private void ManipulateWaves()
