@@ -96,9 +96,10 @@ GameObject:
   - component: {fileID: 1586899823582154392}
   - component: {fileID: 239991967012237421}
   - component: {fileID: 2192200048174224719}
+  - component: {fileID: 3455925611455669412}
   m_Layer: 0
   m_Name: Bennelli_M4
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -211,7 +212,7 @@ MonoBehaviour:
   magCapacity: 8
   ammoLeft: 8
   reloadTime: 0.5
-  bulletDamage: 3
+  bulletDamage: 10
   fireRate: 1
   hipSpreadIntensity: 3
   inScopeSpreadIntensity: 2
@@ -224,6 +225,24 @@ MonoBehaviour:
   spawnPosition: {x: 0.69, y: -0.55, z: 1.41}
   spawnRotation: {x: 0, y: 180, z: 0}
   bulletsPerShot: 9
+--- !u!114 &3455925611455669412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106529456144367193}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1985104869764033560
 GameObject:
   m_ObjectHideFlags: 0

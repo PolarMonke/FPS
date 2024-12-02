@@ -13,7 +13,8 @@ public class Weapon : MonoBehaviour
     {
         Colt1911,
         AK74,
-        M4
+        M4,
+        M107
     }
     public bool isActiveWeapon;
     public WeaponModel weaponModel;
