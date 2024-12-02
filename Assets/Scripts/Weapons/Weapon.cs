@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,8 @@ public class Weapon : MonoBehaviour
     public enum WeaponModel
     {
         Colt1911,
-        AK74
+        AK74,
+        M4
     }
     public bool isActiveWeapon;
     public WeaponModel weaponModel;
@@ -73,76 +75,99 @@ public class Weapon : MonoBehaviour
     {
         if (isActiveWeapon)
         {
-            gameObject.layer = LayerMask.NameToLayer("WeaponRender");
-            foreach (Transform child in transform)
-            {
-                child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
-                foreach (Transform toddler in child)
-                {
-                    toddler.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
-                }
-            }
-            if (Input.GetMouseButtonDown(1))
-            {
-                animator.SetTrigger(EnterScopeAnimation);
-                spreadIntensity = inScopeSpreadIntensity;
-                inScope = true;
-                HUDManager.Instance.middleDot.SetActive(false);
-            }
-            if (Input.GetMouseButtonUp(1))
-            {
-                animator.SetTrigger(ExitScopeAnimation);
-                spreadIntensity = hipSpreadIntensity;
-                inScope = false;
-                HUDManager.Instance.middleDot.SetActive(true);
-            }
+            WeaponSpawn();
+            GoToScope();
 
             readyToShoot = ammoLeft > 0;
-
-            if (Input.GetKeyDown(KeyCode.R) && !isReloading && WeaponManager.Instance.CheckAmmoLeft(weaponModel) > 0 && ammoLeft != magCapacity)
-            {   
-                StartCoroutine(Reload());
-                SoundManager.Instance.PlayReloadingSound(weaponModel);
-                if (inScope)
-                {
-                    animator.SetTrigger(reloadInScopeAnimation);
-                }
-                else
-                {
-                    animator.SetTrigger(reloadAnimation);
-                }
-                
-            } 
-
-            isShooting = Input.GetKeyDown(KeyCode.Mouse0);
-            if (isShooting && ammoLeft == 0)
-            {
-                SoundManager.Instance.emptyMagSound.Play();
-            }
-            if (isShooting && readyToShoot && !isReloading && Time.time >= nextFireTime)
-            {
-                
-                FireWeapon();
-                if (isShooting) 
-                {
-                    nextFireTime = Time.time + 1f * fireRate; 
-                }
-            }
+            ReloadIfNeeded();
+            Shoot();
         }
         else
         {
-            gameObject.layer = LayerMask.NameToLayer("Default");
-            foreach (Transform child in transform)
+            WeaponDespawn();
+        }
+    }
+
+    protected void WeaponDespawn()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Default");
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = LayerMask.NameToLayer("Default");
+            foreach (Transform toddler in child)
             {
-                child.gameObject.layer = LayerMask.NameToLayer("Default");
-                foreach (Transform toddler in child)
-                {
-                    toddler.gameObject.layer = LayerMask.NameToLayer("Default");
-                }
+                toddler.gameObject.layer = LayerMask.NameToLayer("Default");
             }
         }
     }
-    protected IEnumerator Reload()
+
+    protected virtual void Shoot()
+    {
+        isShooting = Input.GetKeyDown(KeyCode.Mouse0);
+        if (isShooting && ammoLeft == 0)
+        {
+            SoundManager.Instance.emptyMagSound.Play();
+        }
+        if (isShooting && readyToShoot && !isReloading && Time.time >= nextFireTime)
+        {
+
+            FireWeapon();
+            if (isShooting)
+            {
+                nextFireTime = Time.time + 1f * fireRate;
+            }
+        }
+    }
+
+    protected virtual void ReloadIfNeeded()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && !isReloading && WeaponManager.Instance.CheckAmmoLeft(weaponModel) > 0 && ammoLeft != magCapacity)
+        {
+            StartCoroutine(Reload());
+            SoundManager.Instance.PlayReloadingSound(weaponModel);
+            if (inScope)
+            {
+                animator.SetTrigger(reloadInScopeAnimation);
+            }
+            else
+            {
+                animator.SetTrigger(reloadAnimation);
+            }
+        }
+    }
+
+    protected void GoToScope()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            animator.SetTrigger(EnterScopeAnimation);
+            spreadIntensity = inScopeSpreadIntensity;
+            inScope = true;
+            HUDManager.Instance.middleDot.SetActive(false);
+        }
+        if (Input.GetMouseButtonUp(1))
+        {
+            animator.SetTrigger(ExitScopeAnimation);
+            spreadIntensity = hipSpreadIntensity;
+            inScope = false;
+            HUDManager.Instance.middleDot.SetActive(true);
+        }
+    }
+
+    protected void WeaponSpawn()
+    {
+        gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+            foreach (Transform toddler in child)
+            {
+                toddler.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+            }
+        }
+    }
+
+    protected virtual IEnumerator Reload()
     {
         isReloading = true;
 
@@ -160,7 +185,7 @@ public class Weapon : MonoBehaviour
 
     
 
-    protected void FireWeapon()
+    protected virtual void FireWeapon()
     {
         muzzleEffect.GetComponent<ParticleSystem>().Play();
         if (inScope)

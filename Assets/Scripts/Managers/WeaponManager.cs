@@ -14,10 +14,10 @@ public class WeaponManager : MonoBehaviour
     public GameObject activeWeaponSlot;
 
     [Header("Ammo")]
-    private int totalPistolAmmo = 100;
-    private int totalRifleAmmo = 100;
-    private int totalShotgunAmmo = 100;
-    private int totalSniperRifleAmmo = 100;
+    public int totalPistolAmmo = 100;
+    public int totalRifleAmmo = 100;
+    public int totalShotgunAmmo = 100;
+    public int totalSniperRifleAmmo = 100;
 
     private void Awake()
     {   
