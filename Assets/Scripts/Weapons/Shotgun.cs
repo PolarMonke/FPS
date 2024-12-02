@@ -70,6 +70,7 @@ public class Shotgun : Weapon
         if (Input.GetKeyDown(KeyCode.Mouse0) || ammoToLoad == 0 || Input.GetKeyDown(KeyCode.Mouse1))
         {
             StopReloading();
+            SoundManager.Instance.PlayEndingReloadSound();
         }
         else 
         {

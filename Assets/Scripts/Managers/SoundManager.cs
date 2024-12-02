@@ -14,6 +14,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip playerHurt;
     public AudioClip playerDead;
 
+    public AudioClip catLaugh;
+
     [Header("Guns")]
     public AudioSource ShootingChannel;
     public AudioSource ReloadingChannel;
@@ -25,6 +27,13 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip AK74Shot;
     public AudioClip AK74ReloadingSound;
+
+    public AudioClip ShotgunShot;
+    public AudioClip ShotgunReloadingSound;
+    public AudioClip ShotgunFinishReloading;
+
+    public AudioClip SniperRifleShot;
+    public AudioClip SniperRifleReloadingSound;
 
     [Header("Zombie")]
     public AudioSource zombieChannel;
@@ -67,8 +76,14 @@ public class SoundManager : MonoBehaviour
             case WeaponModel.Colt1911:
                 ShootingChannel.PlayOneShot(Colt1911Shot);
                 break;
-             case WeaponModel.AK74:
+            case WeaponModel.AK74:
                 ShootingChannel.PlayOneShot(AK74Shot);
+                break;
+            case WeaponModel.M4:
+                ShootingChannel.PlayOneShot(ShotgunShot);
+                break;
+            case WeaponModel.M107:
+                ShootingChannel.PlayOneShot(SniperRifleShot);
                 break;
         }
     }
@@ -79,9 +94,19 @@ public class SoundManager : MonoBehaviour
             case WeaponModel.Colt1911:
                 ReloadingChannel.PlayOneShot(Colt1911ReloadingSound);
                 break;
-             case WeaponModel.AK74:
+            case WeaponModel.AK74:
                 ReloadingChannel.PlayOneShot(AK74ReloadingSound);
                 break;
+            case WeaponModel.M4:
+                ShootingChannel.PlayOneShot(ShotgunReloadingSound);
+                break;
+            case WeaponModel.M107:
+                ShootingChannel.PlayOneShot(SniperRifleReloadingSound);
+                break;
         }
+    }
+    public void PlayEndingReloadSound()
+    {
+        ShootingChannel.PlayOneShot(ShotgunFinishReloading);
     }
 }

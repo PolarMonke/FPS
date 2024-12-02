@@ -4,6 +4,7 @@ using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     public int HP = 100;
 
     public GameObject bloodScreen;
+    public GameObject cat;
 
     public TextMeshProUGUI playerHealthUI;
     public GameObject gameOverUI;
@@ -100,6 +102,18 @@ public class Player : MonoBehaviour
         gameOverUI.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("GameOver");
         yield return new WaitForSeconds(1f);
         gameOverUI.gameObject.SetActive(true);
+
+        int waveSurvived = GlobalReferences.Instance.waveNumber;
+        if (waveSurvived - 1 > SaveLoadManager.Instance.LoadHighScore() && waveSurvived-1 > 0)
+        {
+            SaveLoadManager.Instance.SaveHighScore(waveSurvived-1);
+        }
+        else
+        {
+            cat.gameObject.SetActive(true);
+            SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.catLaugh);
+        }
+        
     }
 
     public void Heal(int hpAmount)
