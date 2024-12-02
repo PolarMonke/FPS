@@ -67,7 +67,7 @@ public class Shotgun : Weapon
         }
         WeaponManager.Instance.DecreaseTotalAmmo(weaponModel, 1);
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) || ammoToLoad == 0)
+        if (Input.GetKeyDown(KeyCode.Mouse0) || ammoToLoad == 0 || Input.GetKeyDown(KeyCode.Mouse1))
         {
             StopReloading();
         }
