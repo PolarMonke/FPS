@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor.Animations;
+using System.Collections;
 
 public class BonusUI : MonoBehaviour
 {
@@ -14,10 +15,24 @@ public class BonusUI : MonoBehaviour
             if(isEmpty)
             {
                 bonusInstance.transform.SetParent(bonusSlots[i].transform);
-                bonusInstance.GetComponent<RectTransform>().localScale = new Vector3(2f,2f,1f);
+                ForceScale(bonusInstance, new Vector3(4f,4f,1f));
+                //bonusInstance.GetComponent<RectTransform>().localScale = new Vector3(2f,2f,1f);
             }
         }
     }
+
+    private void ForceScale(GameObject obj, Vector3 scale)
+    {
+        StartCoroutine(ForceScaleCoroutine(obj, scale));
+    }
+
+    private IEnumerator ForceScaleCoroutine(GameObject obj, Vector3 scale)
+    {
+        yield return new WaitForSeconds(1f);
+        obj.GetComponent<RectTransform>().localPosition = new Vector3(0f,0f,0f);
+        obj.GetComponent<RectTransform>().localScale = scale;
+    }
+
     
     public bool AllSlotsAreFull()
     {
