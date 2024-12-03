@@ -35,6 +35,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip SniperRifleShot;
     public AudioClip SniperRifleReloadingSound;
 
+    public AudioClip TvorahShot;
+
     [Header("Zombie")]
     public AudioSource zombieChannel;
 
@@ -84,6 +86,9 @@ public class SoundManager : MonoBehaviour
                 break;
             case WeaponModel.M107:
                 ShootingChannel.PlayOneShot(SniperRifleShot);
+                break;
+            case WeaponModel.TvorahGun:
+                ShootingChannel.PlayOneShot(TvorahShot);
                 break;
         }
     }

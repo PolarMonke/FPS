@@ -14,7 +14,8 @@ public class Weapon : MonoBehaviour
         Colt1911,
         AK74,
         M4,
-        M107
+        M107,
+        TvorahGun
     }
     public bool isActiveWeapon;
     public WeaponModel weaponModel;
