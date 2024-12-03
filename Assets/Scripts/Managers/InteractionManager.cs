@@ -66,7 +66,7 @@ public class InteractionManager : MonoBehaviour
 
                 hoveredAmmoCrate = objectHitByRaycast.GetComponent<AmmoCrate>();
                 hoveredAmmoCrate.GetComponent<Outline>().enabled = true;
-                HUDManager.Instance.DisplayHint(hoveredAmmoCrate.ammoType.ToString() + "\n" + hoveredAmmoCrate.ammoAmount.ToString());
+                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText(hoveredAmmoCrate.ammoType.ToString()) + "\n" + hoveredAmmoCrate.ammoAmount.ToString());
                 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -93,7 +93,7 @@ public class InteractionManager : MonoBehaviour
 
                 hoveredHealthKit = objectHitByRaycast.GetComponent<HealthKit>();
                 hoveredHealthKit.GetComponent<Outline>().enabled = true;
-                HUDManager.Instance.DisplayHint("HealthKit" + "\n" + hoveredHealthKit.healthAmount.ToString());
+                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("HealthKit") + "\n" + hoveredHealthKit.healthAmount.ToString());
                 
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -114,7 +114,7 @@ public class InteractionManager : MonoBehaviour
             {
 
                 hoveredMysteryBox = objectHitByRaycast.GetComponent<MysteryBox>();
-                HUDManager.Instance.DisplayHint("Mystery box");                     //localize
+                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("MysteryBox"));                     //localize
                 
                 if (Input.GetKeyDown(KeyCode.F))
                 {

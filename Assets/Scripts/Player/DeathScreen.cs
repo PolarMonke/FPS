@@ -1,15 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DeathScreen : MonoBehaviour
 {
     public UnityEngine.UI.Image fadeImage;
     public float fadeDuration = 7.0f;
+    
+    public TextMeshProUGUI mainMenuButtonText;
  
     public void StartFade()
     {
         fadeImage.gameObject.SetActive(true);
+        mainMenuButtonText.text = LanguagesDB.Instance.GetText("ToMainMenu");
         StartCoroutine(FadeOut());
     }
  

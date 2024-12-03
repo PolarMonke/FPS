@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
     public static PauseManager Instance { get; set; }
+
+    public TextMeshProUGUI mainMenuButtonText;
 
     private void Awake()
     {
@@ -16,6 +19,7 @@ public class PauseManager : MonoBehaviour
         {
             Instance = this;
         }
+        mainMenuButtonText.text = LanguagesDB.Instance.GetText("ToMainMenu");
     }
 
     private bool isPaused = false;

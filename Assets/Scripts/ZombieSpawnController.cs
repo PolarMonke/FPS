@@ -25,8 +25,11 @@ public class ZombieSpawnController : MonoBehaviour
     public GameObject zombiePrefab;
 
     public TextMeshProUGUI currentWaveUI;
+    public TextMeshProUGUI enemiesLeftUI;
     public TextMeshProUGUI waveOverUI;
     public TextMeshProUGUI coolDownCounterUI;
+
+    public List<Transform> spawnPoints;
 
     private void Start()
     {
@@ -55,8 +58,10 @@ public class ZombieSpawnController : MonoBehaviour
         for (int i = 0; i < currentZombiesPerWave; i++)
         {
             Vector3 spawnOffset = new Vector3(Random.Range(-1f,1f),0f,Random.Range(-1f,1f));
-            Vector3 spawnPosition = transform.position + spawnOffset;
-
+            
+            int randomIndex = Random.Range(0, spawnPoints.Count);
+            Vector3 spawnPosition = spawnPoints[randomIndex].position + spawnOffset;
+            
             var zombie = Instantiate(zombiePrefab, spawnPosition, Quaternion.identity);
 
             Enemy enemyScript = zombie.GetComponent<Zombie>();
@@ -95,6 +100,7 @@ public class ZombieSpawnController : MonoBehaviour
             coolDownCounter = waveCoolDown;
         }   
         coolDownCounterUI.text = coolDownCounter.ToString("F0");
+        enemiesLeftUI.text = LanguagesDB.Instance.GetText("EnemiesLeft") + currentZombiesAlive.Count;
     }
     private IEnumerator WaveCoolDown()
     {
