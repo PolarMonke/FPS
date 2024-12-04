@@ -89,8 +89,19 @@ public class Weapon : MonoBehaviour
             WeaponDespawn();
         }
     }
-
-    protected void WeaponDespawn()
+    protected void WeaponSpawn()
+    {
+        gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+            foreach (Transform toddler in child)
+            {
+                toddler.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
+            }
+        }
+    }
+    public void WeaponDespawn()
     {
         gameObject.layer = LayerMask.NameToLayer("Default");
         foreach (Transform child in transform)
@@ -101,6 +112,7 @@ public class Weapon : MonoBehaviour
                 toddler.gameObject.layer = LayerMask.NameToLayer("Default");
             }
         }
+        gameObject.GetComponent<Rigidbody>().isKinematic  = false;
     }
 
     protected virtual void Shoot()
@@ -156,18 +168,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    protected void WeaponSpawn()
-    {
-        gameObject.layer = LayerMask.NameToLayer("WeaponRender");
-        foreach (Transform child in transform)
-        {
-            child.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
-            foreach (Transform toddler in child)
-            {
-                toddler.gameObject.layer = LayerMask.NameToLayer("WeaponRender");
-            }
-        }
-    }
+    
 
     protected virtual IEnumerator Reload()
     {

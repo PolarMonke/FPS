@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
-public class CheseBonus : Bonus
+public class CheeseBonus : Bonus
 {
+    private DummySpawn dummySpawn;
 
     private void Start()
     {
-        bonusType = BonusTypes.Invincible;
+        bonusType = BonusTypes.Cheese;
+        dummySpawn = GameObject.FindGameObjectWithTag("DummySpawn").GetComponent<DummySpawn>();
     }
 
     protected override void DoItsThing()
@@ -24,12 +26,12 @@ public class CheseBonus : Bonus
 
     private void AddGun()
     {
-        HealthManager.Instance.player.isInvincible = true;
+        dummySpawn.SpawnGun();
     }
 
     private void RemoveGun()
     {
-        HealthManager.Instance.player.isInvincible = false;
+        dummySpawn.DestroyGun();
         Deactivate();
     }
 

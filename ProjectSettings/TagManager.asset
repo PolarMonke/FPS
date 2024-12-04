@@ -15,6 +15,7 @@ TagManager:
   - BonusUI
   - Dummy
   - DummySpawn
+  - SpecialWeapon
   layers:
   - Default
   - TransparentFX

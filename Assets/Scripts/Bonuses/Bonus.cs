@@ -14,7 +14,7 @@ public class Bonus : MonoBehaviour
         Invincible,
         Chill,
         Those,
-        Cheese
+        Cheese,
     }
 
     public BonusTypes bonusType;

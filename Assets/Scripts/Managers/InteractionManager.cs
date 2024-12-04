@@ -41,6 +41,7 @@ public class InteractionManager : MonoBehaviour
 
                 hoveredWeapon = objectHitByRaycast.GetComponent<Weapon>();
                 hoveredWeapon.GetComponent<Outline>().enabled = true;
+                hoveredWeapon.GetComponent<Rigidbody>().isKinematic  = true;
                 HUDManager.Instance.DisplayHint(hoveredWeapon.weaponModel.ToString());
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -114,7 +115,7 @@ public class InteractionManager : MonoBehaviour
             {
 
                 hoveredMysteryBox = objectHitByRaycast.GetComponent<MysteryBox>();
-                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("MysteryBox"));                     //localize
+                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("MysteryBox"));
                 
                 if (Input.GetKeyDown(KeyCode.F))
                 {

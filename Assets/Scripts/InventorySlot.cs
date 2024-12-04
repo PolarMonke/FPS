@@ -63,6 +63,15 @@ public class InventorySlot : MonoBehaviour
                 Destroy(bonusScript);
                 break;
             }
+            case Bonus.BonusTypes.Cheese:
+            {
+                bonusInstance.AddComponent<CheeseBonus>();
+                bonusInstance.GetComponent<CheeseBonus>().Create(name, description, imagePath, duration);
+                bonusInstance.GetComponent<CheeseBonus>().CloneBonus(bonusScript);
+                bonusInstance.GetComponent<CheeseBonus>().pickedUp = true;
+                Destroy(bonusScript);
+                break;
+            }
         }
         //UnityEditorInternal.ComponentUtility.MoveComponentUp(amount);
         amount.text = "x" + count.ToString();
