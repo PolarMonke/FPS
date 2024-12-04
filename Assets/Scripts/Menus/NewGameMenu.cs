@@ -26,14 +26,17 @@ public class NewGameMenu : MonoBehaviour
         {
             case "Easy":
             {
+                DifficulltyManager.Instance.difficulty = DifficulltyManager.Difficulties.Easy;
                 break;
             }
             case "Middle":
             {
+                DifficulltyManager.Instance.difficulty = DifficulltyManager.Difficulties.Middle;
                 break;
             }
             case "Hard":
             {
+                DifficulltyManager.Instance.difficulty = DifficulltyManager.Difficulties.Hard;
                 break;
             }
         }

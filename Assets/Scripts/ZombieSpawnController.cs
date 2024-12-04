@@ -12,7 +12,7 @@ public class ZombieSpawnController : MonoBehaviour
     public int currentZombiesPerWave;
 
     public float spawnDelay = 0.5f;
-    public int waveMultiplier = 2;
+    public int waveAdder = 5;
 
     public int currentWave = 0;
     public float waveCoolDown = 10f;
@@ -109,7 +109,7 @@ public class ZombieSpawnController : MonoBehaviour
         yield return new WaitForSeconds(waveCoolDown);
         inCoolDown = false;
         waveOverUI.gameObject.SetActive(false);
-        currentZombiesPerWave *= waveMultiplier;
+        currentZombiesPerWave += waveAdder;
         StartNextWave();
     }
 
