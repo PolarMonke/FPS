@@ -15,6 +15,7 @@ public class DeathScreen : MonoBehaviour
         fadeImage.gameObject.SetActive(true);
         mainMenuButtonText.text = LanguagesDB.Instance.GetText("ToMainMenu");
         StartCoroutine(FadeOut());
+        Cursor.lockState = CursorLockMode.None;
     }
  
     private IEnumerator FadeOut()

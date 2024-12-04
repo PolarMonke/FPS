@@ -5,12 +5,13 @@ using Mono.Data.SqliteClient;
 using System.Data;
 using System.IO;
 using System;
+using Unity.Services.Analytics;
 
 public class BonusesDB : MonoBehaviour
 {
     public static BonusesDB Instance { get; set; }
     
-    private const string SQL_TABLE_NAME = "BonusesBel";
+    public string SQL_TABLE_NAME = "BonusesBel";
     private const string COL_NAME = "Name";
     private const string COL_DESCRIPTION = "Description";
     private const string COL_IMAGE = "Image";
@@ -37,6 +38,7 @@ public class BonusesDB : MonoBehaviour
             }
             OpenConnection();
         }
+        DontDestroyOnLoad(this);
     }
     private bool OpenConnection()
     {

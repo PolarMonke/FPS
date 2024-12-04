@@ -7,13 +7,17 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public TMP_Text highScoreUI;
+    public TMP_Text NewGameText;
+    public TMP_Text ContinueText;
 
     string newGameScene = "NewGameOptions";
 
     void Start()
     {
         int highScore = SaveLoadManager.Instance.LoadHighScore();
-        highScoreUI.text = $"Top Wave Survived: {highScore}";
+        highScoreUI.text = $"{LanguagesDB.Instance.GetText("TopWave")}{highScore}";
+        NewGameText.text = LanguagesDB.Instance.GetText("NewGame");
+        ContinueText.text = LanguagesDB.Instance.GetText("Continue");
     }
 
     public void StartNewGame()

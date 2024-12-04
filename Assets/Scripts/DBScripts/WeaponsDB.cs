@@ -33,6 +33,7 @@ public class WeaponsDB : MonoBehaviour
             }
             OpenConnection();
         }
+       DontDestroyOnLoad(this);
     }
 
     private bool OpenConnection()

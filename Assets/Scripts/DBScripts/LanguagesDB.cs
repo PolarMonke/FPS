@@ -9,7 +9,7 @@ public class LanguagesDB : MonoBehaviour
 {
     public static LanguagesDB Instance { get; set; }
 
-    public const string SQL_TABLE_NAME = "Belarusian";
+    public string SQL_TABLE_NAME = "Belarusian";
     private const string COL_VARIABLE = "Variable";
     private const string COL_TEXT = "Text";
 
@@ -35,6 +35,7 @@ public class LanguagesDB : MonoBehaviour
             OpenConnection();
             LoadLanguageData();
         }
+        DontDestroyOnLoad(this);
     }
     private bool OpenConnection()
     {
