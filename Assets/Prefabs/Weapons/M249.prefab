@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a91585d8dc81dc04ca9e0aaaebaebcec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActiveWeapon: 1
+  isActiveWeapon: 0
   weaponModel: 4
   weaponImage: {fileID: 21300040, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
   ammoImage: {fileID: 21300000, guid: bd371c21c49b6274d8659287a9f23eac, type: 3}

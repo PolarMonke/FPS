@@ -300,6 +300,7 @@ MonoBehaviour:
   ShotgunFinishReloading: {fileID: 8300000, guid: 263d62ca4b1a6354092a2a6a6bd5240e, type: 3}
   SniperRifleShot: {fileID: 8300000, guid: 0f2ad3665eb190d49921e7b3f434c226, type: 3}
   SniperRifleReloadingSound: {fileID: 8300000, guid: 8db093c5cda44244785813d428a40e54, type: 3}
+  TvorahShot: {fileID: 8300000, guid: 67c10338a9339f940bfffb3fd95a131a, type: 3}
   zombieChannel: {fileID: 3806320225606556408}
   zombieWalking: {fileID: 8300000, guid: f1ff3e33006a291449618f6fc613e928, type: 3}
   zombieChasing: {fileID: 8300000, guid: e1e7f406c66d0c34f94726e83f3b5cbd, type: 3}

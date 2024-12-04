@@ -6,6 +6,7 @@ using UnityEngine;
 public class DummySpawn : MonoBehaviour
 {
     public GameObject dummyPrefab;
+    
 
     public void SpawnDummy()
     {

@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     public TMP_Text highScoreUI;
 
-    string newGameScene = "SampleScene";
+    string newGameScene = "NewGameOptions";
 
     void Start()
     {
