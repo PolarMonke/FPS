@@ -6,11 +6,11 @@ using System.Data;
 using System.IO;
 using System;
 
-public class CahractersDB : MonoBehaviour
+public class ChractersDB : MonoBehaviour
 {
-    public static CahractersDB Instance { get; set; }
+    public static ChractersDB Instance { get; set; }
     
-    public string SQL_TABLE_NAME = "Characters";
+    private string SQL_TABLE_NAME = "Characters";
     private const string COL_ID = "ID";
     private const string COL_NAME = "Name";
     private const string COL_WEAPON = "Weapon";
@@ -90,18 +90,71 @@ public class CahractersDB : MonoBehaviour
 
     public void SaveCharacter(CharacterData character)
     {
-        using (var command = connection.CreateCommand())
+        using (var command = connection.CreateCommand()) 
         {
-            command.CommandText = $"INSERT INTO {SQL_TABLE_NAME} ({COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS}) VALUES ({character.ID}, {character.Name}, {character.WeaponModel}, {character.BonusType})";
+            command.CommandText = $"INSERT INTO {SQL_TABLE_NAME} ({COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS}) VALUES (@ID, @Name, @Weapon, @Bonus)";
+            command.Parameters.Add(new SqliteParameter("@ID", character.ID));
+            command.Parameters.Add(new SqliteParameter("@Name", character.Name));
+            command.Parameters.Add(new SqliteParameter("@Weapon", character.WeaponModel));
+            command.Parameters.Add(new SqliteParameter("@Bonus", character.BonusType));
             command.ExecuteNonQuery();
         }
     }
     public void DeleteCharacter(int id)
     {
+        if (connection == null || connection.State != ConnectionState.Open)
+        {
+            if (!OpenConnection()) return; // Handle connection failure
+        }
         using (var command = connection.CreateCommand())
         {
             command.CommandText = $"DELETE FROM {SQL_TABLE_NAME} WHERE ID = {id}";
             command.ExecuteNonQuery();
         }
+        RenumberIDs();
     }
+
+
+    private void RenumberIDs() {
+        if (connection == null || connection.State != ConnectionState.Open)
+        {
+            if (!OpenConnection()) return;
+        }
+        try {
+            using (var command = connection.CreateCommand()) {
+                command.CommandText = $"UPDATE {SQL_TABLE_NAME} SET {COL_ID} = newID FROM (SELECT {COL_ID}, ROW_NUMBER() OVER (ORDER BY {COL_ID}) AS newID FROM {SQL_TABLE_NAME}) AS rownums WHERE rownums.{COL_ID} = {SQL_TABLE_NAME}.{COL_ID}";
+                command.ExecuteNonQuery();
+            }
+        } catch (Exception e) {
+            Debug.LogError($"RenumberIDs error: {e.Message}");
+        }
+
+    }
+
+    public int GetLastID()
+    {
+        int lastID = 0;
+        if (connection == null || connection.State != ConnectionState.Open)
+        {
+            if (!OpenConnection()) return 0;
+        }
+        try
+        {
+            using (IDbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = $"SELECT MAX({COL_ID}) FROM {SQL_TABLE_NAME}";
+                object result = command.ExecuteScalar();
+                if (result != DBNull.Value)
+                {
+                    lastID = Convert.ToInt32(result);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("GetLastID error: " + e.Message);
+        }
+        return lastID;
+    }
+
 }
