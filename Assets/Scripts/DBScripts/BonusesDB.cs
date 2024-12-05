@@ -5,7 +5,8 @@ using Mono.Data.SqliteClient;
 using System.Data;
 using System.IO;
 using System;
-using Unity.Services.Analytics;
+using UnityEditor;
+
 
 public class BonusesDB : MonoBehaviour
 {
@@ -110,4 +111,68 @@ public class BonusesDB : MonoBehaviour
         return (bonusName, bonusDesc, bonusSprite, bonusDuration);
     }
 
+    public Dictionary<string, string> GetAllBonusNames()
+    {
+        Dictionary<string, string> bonusNames = new Dictionary<string, string>();
+        if (connection == null || connection.State != ConnectionState.Open)
+        {
+            if (!OpenConnection()) return bonusNames;
+        }
+
+        try
+        {
+            using (IDbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = $"SELECT {COL_UNITED_NAME}, {COL_NAME} FROM {SQL_TABLE_NAME}";
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string unitedName = reader.GetString(0);
+                        string bonusName = reader.GetString(1);
+                        bonusNames.Add(unitedName, bonusName);
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("GetAllBonusNames error: " + e.Message);
+        }
+
+        return bonusNames;
+    }
+    
+    public Sprite GetSpriteByName(string name)
+    {
+        Sprite bonusSprite = null;
+        string spritePath = "";
+        if (connection == null || connection.State != ConnectionState.Open)
+        {
+            if (!OpenConnection()) return null;
+        }
+
+        try
+        {
+            using (IDbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = $"SELECT {COL_IMAGE} FROM {SQL_TABLE_NAME} WHERE {COL_UNITED_NAME} = '{name}'";
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        spritePath = reader.GetString(0);
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("GetAllBonusNames error: " + e.Message);
+        }
+
+        bonusSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Textures/Bonuses/" + spritePath);
+
+        return bonusSprite;
+    }
 }
