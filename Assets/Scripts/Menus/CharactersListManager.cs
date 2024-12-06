@@ -13,6 +13,12 @@ public class CharactersListManager : MonoBehaviour
     private List<CharacterData> characters = new List<CharacterData>();
     private int lastID;
 
+    private Dictionary<int, GameObject> characterEntries = new Dictionary<int, GameObject>();
+    private CharacterData selectedCharacter;
+    private Image selectionHighlight;
+    private Color selectedColor = Color.black;
+    private Color defaultColor = Color.gray;
+
     private void Start()
     {
         PopulateCharacterList();
@@ -46,5 +52,56 @@ public class CharactersListManager : MonoBehaviour
         characterEntry.transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = character.Name;
         characterEntry.transform.Find("WeaponImage").GetComponent<Image>().sprite = WeaponsDB.Instance.GetSpriteByName(character.WeaponModel);
         characterEntry.transform.Find("BonusImage").GetComponent<Image>().sprite = BonusesDB.Instance.GetSpriteByName(character.BonusType);
+        
+
+        Button selectButton = characterEntry.GetComponent<Button>();
+        if(selectButton != null)
+        {
+            int charID = character.ID;
+            selectButton.onClick.AddListener(() => SelectCharacter(charID));
+        }
+        
+        selectionHighlight = characterEntry.GetComponent<Image>();
+        if (selectionHighlight != null)
+        {
+            selectionHighlight.color = defaultColor;
+        }
+
+        characterEntries.Add(character.ID, characterEntry);
+    }
+
+    private void SelectCharacter(int id)
+    {
+        if (selectedCharacter != null)
+        {
+            if (characterEntries.TryGetValue(selectedCharacter.ID, out GameObject prevSelectedEntry))
+            {
+                Image prevHighlight = prevSelectedEntry.GetComponent<Image>();
+                if (prevHighlight != null)
+                {
+                    prevHighlight.color = defaultColor;
+                }
+            }
+        }
+
+        selectedCharacter = characters.Find(c => c.ID == id);
+        if (selectedCharacter != null)
+        {
+            if (characterEntries.TryGetValue(selectedCharacter.ID, out GameObject selectedEntry))
+            {
+                selectionHighlight = selectedEntry.transform.GetComponent<Image>();
+                if (selectionHighlight != null)
+                {
+                    selectionHighlight.color = selectedColor;
+                }
+                CharacterPresetManager.Instance.characterData = characters[id-1];
+                print(characters[id-1].Name);
+            }
+            else
+            {
+                Debug.LogError($"Could not find GameObject for character ID: {selectedCharacter.ID}");
+            }
+
+        }
     }
 }

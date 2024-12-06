@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class NewGameMenu : MonoBehaviour
 {
     string mainMenuScene = "MainMenu";
+    string characterMenuScene = "CharacterMenu";
     string Dust3Map = "Dust3";
     string TestMap = "TestMap";
 
@@ -39,17 +40,17 @@ public class NewGameMenu : MonoBehaviour
         {
             case "Easy":
             {
-                DifficulltyManager.Instance.difficulty = DifficulltyManager.Difficulties.Easy;
+                DifficulltyAndMapManager.Instance.difficulty = DifficulltyAndMapManager.Difficulties.Easy;
                 break;
             }
             case "Middle":
             {
-                DifficulltyManager.Instance.difficulty = DifficulltyManager.Difficulties.Middle;
+                DifficulltyAndMapManager.Instance.difficulty = DifficulltyAndMapManager.Difficulties.Middle;
                 break;
             }
             case "Hard":
             {
-                DifficulltyManager.Instance.difficulty = DifficulltyManager.Difficulties.Hard;
+                DifficulltyAndMapManager.Instance.difficulty = DifficulltyAndMapManager.Difficulties.Hard;
                 break;
             }
         }
@@ -58,15 +59,16 @@ public class NewGameMenu : MonoBehaviour
         {
             case "Dust3":
             {
-                SceneManager.LoadScene(Dust3Map);
+                DifficulltyAndMapManager.Instance.map = Dust3Map;
                 break;
             }
             case "TestMap":
             {
-                SceneManager.LoadScene(TestMap);
+                DifficulltyAndMapManager.Instance.map = TestMap;
                 break;
             }
         }
+        SceneManager.LoadScene(characterMenuScene);
     }
 
     public void BackToMainMenu()

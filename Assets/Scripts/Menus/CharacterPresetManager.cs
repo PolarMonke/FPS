@@ -2,19 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DifficulltyAndMapManager : MonoBehaviour
+public class CharacterPresetManager : MonoBehaviour
 {
-    public static DifficulltyAndMapManager Instance { get; set; }
+    public static CharacterPresetManager Instance { get; set; }
 
-    public enum Difficulties
-    {
-        Easy,
-        Middle,
-        Hard
-    }
-
-    public Difficulties difficulty;
-    public string map;
+    public CharacterData characterData;
 
     private void Awake()
     {
@@ -26,7 +18,6 @@ public class DifficulltyAndMapManager : MonoBehaviour
         {
             Instance = this;
         }
-
         DontDestroyOnLoad(this);
     }
 }

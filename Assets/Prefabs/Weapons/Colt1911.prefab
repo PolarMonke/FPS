@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8084664824094533266}
   - component: {fileID: 1862452615568672109}
   m_Layer: 6
-  m_Name: M1911
+  m_Name: Colt1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

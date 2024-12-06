@@ -17,19 +17,19 @@ public class WaveManager : MonoBehaviour
         else{
             Instance = this;
         }
-        switch (DifficulltyManager.Instance.difficulty)
+        switch (DifficulltyAndMapManager.Instance.difficulty)
         {
-            case DifficulltyManager.Difficulties.Easy:
+            case DifficulltyAndMapManager.Difficulties.Easy:
             {
                 waveController.waveAdder = 5;
                 break;
             }
-            case DifficulltyManager.Difficulties.Middle:
+            case DifficulltyAndMapManager.Difficulties.Middle:
             {
                 waveController.waveAdder = 10;
                 break;
             }
-            case DifficulltyManager.Difficulties.Hard:
+            case DifficulltyAndMapManager.Difficulties.Hard:
             {
                 waveController.waveAdder = 15;
                 break;

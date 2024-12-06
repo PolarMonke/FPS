@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1851211612734734581}
   - component: {fileID: -5380928177019606624}
   m_Layer: 0
-  m_Name: Bennelli_M4
+  m_Name: M4
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
