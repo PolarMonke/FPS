@@ -14,6 +14,11 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        UpdateLocalization();
+    }
+
+    public void UpdateLocalization()
+    {
         int highScore = SaveLoadManager.Instance.LoadHighScore();
         highScoreUI.text = $"{LanguagesDB.Instance.GetText("TopWave")}{highScore}";
         NewGameText.text = LanguagesDB.Instance.GetText("NewGame");

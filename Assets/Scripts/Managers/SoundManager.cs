@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 using static Weapon;
 
@@ -69,6 +70,18 @@ public class SoundManager : MonoBehaviour
         else{
             Instance = this;
         }
+        DontDestroyOnLoad(this);
+    }
+
+    public void SetVolume(float volume)
+    {
+        playerChannel.volume = volume;
+        ShootingChannel.volume = volume;
+        ReloadingChannel.volume = volume;
+        zombieChannel.volume = volume;
+        emptyMagSound.volume = volume;
+        zombieChannel.volume = volume;
+        mZombieChannel.volume = volume;
     }
 
     public void PlayShootingSound(WeaponModel weapon)
@@ -114,4 +127,6 @@ public class SoundManager : MonoBehaviour
     {
         ShootingChannel.PlayOneShot(ShotgunFinishReloading);
     }
+
+    
 }
