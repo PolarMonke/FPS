@@ -53,6 +53,12 @@ public class CharactersListManager : MonoBehaviour
         characterEntry.transform.Find("WeaponImage").GetComponent<Image>().sprite = WeaponsDB.Instance.GetSpriteByName(character.WeaponModel);
         characterEntry.transform.Find("BonusImage").GetComponent<Image>().sprite = BonusesDB.Instance.GetSpriteByName(character.BonusType);
         
+        Button deleteButton = characterEntry.transform.Find("DeleteButton").GetComponent<Button>();
+        if (deleteButton != null)
+        {
+            int charID = character.ID;
+            deleteButton.onClick.AddListener(() => DeleteCharacter(charID));
+        }
 
         Button selectButton = characterEntry.GetComponent<Button>();
         if(selectButton != null)
@@ -68,6 +74,23 @@ public class CharactersListManager : MonoBehaviour
         }
 
         characterEntries.Add(character.ID, characterEntry);
+    }
+
+    private void DeleteCharacter(int id)
+    {
+        ChractersDB.Instance.DeleteCharacter(id);
+
+        foreach (var kvp in characterEntries)
+        {
+            Destroy(kvp.Value);
+        }
+        characterEntries.Clear();
+        characters.Clear();
+        selectedCharacter = null;
+
+        lastID = 0; 
+
+        PopulateCharacterList();
     }
 
     private void SelectCharacter(int id)

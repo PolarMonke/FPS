@@ -121,11 +121,23 @@ public class ChractersDB : MonoBehaviour
             if (!OpenConnection()) return;
         }
         try {
-            using (var command = connection.CreateCommand()) {
-                command.CommandText = $"UPDATE {SQL_TABLE_NAME} SET {COL_ID} = newID FROM (SELECT {COL_ID}, ROW_NUMBER() OVER (ORDER BY {COL_ID}) AS newID FROM {SQL_TABLE_NAME}) AS rownums WHERE rownums.{COL_ID} = {SQL_TABLE_NAME}.{COL_ID}";
-                command.ExecuteNonQuery();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = $"SELECT ID FROM {SQL_TABLE_NAME}";
+                using (var reader = command.ExecuteReader())
+                {
+                    int newID = 1;
+                    while (reader.Read())
+                    {
+                        int oldID = reader.GetInt32(0);
+                        command.CommandText = $"UPDATE {SQL_TABLE_NAME} SET ID = {newID} WHERE ID = {oldID}";
+                        command.ExecuteNonQuery();
+                        newID++;
+                    }
+                }
             }
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             Debug.LogError($"RenumberIDs error: {e.Message}");
         }
 
