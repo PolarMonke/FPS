@@ -30,9 +30,7 @@ public class SettingsManager : MonoBehaviour
         {
             Instance = this;
         }
-        DontDestroyOnLoad(this);
     }
-    
     private void Start()
     {
         LoadSettings();
@@ -48,11 +46,22 @@ public class SettingsManager : MonoBehaviour
         volume = PlayerPrefs.GetFloat(VOLUME_KEY);
         ApplySettings();
     }
-    private void ApplySettings()
+    private void SetSettings()
     {
-        language = languagesDropdown.options[languagesDropdown.value].text.ToString();
+        if (languagesDropdown.options[languagesDropdown.value].text.ToString() == "Беларуская")
+        {
+            language = "Belarusian";
+        }
+        else
+        {
+            language = "English";
+        }
+        
         volume = volumeSlider.value;
 
+    }
+    private void ApplySettings()
+    {
         SoundManager.Instance.SetVolume(volume);
         LanguagesDB.Instance.SQL_TABLE_NAME = language;
         LanguagesDB.Instance.LoadLanguageData();
@@ -60,6 +69,7 @@ public class SettingsManager : MonoBehaviour
     }
     public void SaveSettings()
     {
+        SetSettings();
         PlayerPrefs.SetString(LANGUAGE_KEY, language);
         PlayerPrefs.SetFloat(VOLUME_KEY, volume);
         ApplySettings();
