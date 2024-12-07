@@ -6,7 +6,7 @@ public class CharacterPresetManager : MonoBehaviour
 {
     public static CharacterPresetManager Instance { get; set; }
 
-    public CharacterData characterData;
+    public CharacterData characterData = null;
 
     private void Awake()
     {

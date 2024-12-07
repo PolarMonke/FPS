@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public TMP_Text NewGameText;
     public TMP_Text ContinueText;
 
-    string newGameScene = "NewGameOptions";
+    private string newGameScene = "NewGameOptions";
 
     void Start()
     {
@@ -28,6 +28,11 @@ public class MainMenu : MonoBehaviour
     public void StartNewGame()
     {
         SceneManager.LoadScene(newGameScene);
+    }
+
+    public void ContinueGame()
+    {
+        SaveLoadManager.Instance.ContinueGame();
     }
 
     public void ExitApplication()

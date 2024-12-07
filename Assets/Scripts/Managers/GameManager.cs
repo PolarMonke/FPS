@@ -23,14 +23,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CharacterData character = CharacterPresetManager.Instance.characterData;
+        if (CharacterPresetManager.Instance.characterData != null)
+        {
+            CharacterData character = CharacterPresetManager.Instance.characterData;
+            GameObject weapon = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{character.WeaponModel}.prefab");
+            WeaponManager.Instance.PickupWeapon(Instantiate(weapon));
 
-        GameObject weapon = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{character.WeaponModel}.prefab");
-        WeaponManager.Instance.PickupWeapon(Instantiate(weapon));
-
-        Bonus.BonusTypes bonusType;
-        Enum.TryParse(character.BonusType, true, out bonusType);
-        BonusManager.Instance.AddToInventory(bonusType);
+            Bonus.BonusTypes bonusType;
+            Enum.TryParse(character.BonusType, true, out bonusType);
+            BonusManager.Instance.AddToInventory(bonusType);
+        }
     }
 
     public void ExitToMainMenu()
