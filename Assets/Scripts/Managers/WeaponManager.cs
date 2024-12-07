@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Xml.Schema;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEditor;
 using static Weapon;
+
+
 
 public class WeaponManager : MonoBehaviour
 {
@@ -19,13 +22,27 @@ public class WeaponManager : MonoBehaviour
     private int totalShotgunAmmo = 100;
     private int totalSniperRifleAmmo = 100;
 
+    public void SetAmmo(int totalPistolAmmo, int totalRifleAmmo, int totalShotgunAmmo, int totalSniperRifleAmmo)
+    {
+        this.totalPistolAmmo = totalPistolAmmo;
+        this.totalRifleAmmo = totalRifleAmmo;
+        this.totalShotgunAmmo = totalShotgunAmmo;
+        this.totalSniperRifleAmmo = totalSniperRifleAmmo;
+    }
+
+    public (int, int, int, int) GetAmmo()
+    {
+        return (totalPistolAmmo, totalRifleAmmo, totalShotgunAmmo, totalSniperRifleAmmo);
+    }
+
     private void Awake()
     {   
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
-        else{
+        else
+        {
             Instance = this;
         }
     }
@@ -34,6 +51,37 @@ public class WeaponManager : MonoBehaviour
     {
         activeWeaponSlot = WeaponSlots[0];
     }
+
+    public (string, string) GetWeaponSlotsWeapons()
+    {
+        string weaponSlot1 = null;
+        string weaponSlot2 = null;
+        if (WeaponSlots[0].transform.childCount != 0)
+        {
+            weaponSlot1 = WeaponSlots[0].transform.GetChild(0).GetComponent<Weapon>().weaponModel.ToString();
+        }
+        if (WeaponSlots[1].transform.childCount != 0)
+        {
+            weaponSlot2 = WeaponSlots[1].transform.GetChild(0).GetComponent<Weapon>().weaponModel.ToString();
+        }
+        return (weaponSlot1, weaponSlot2);
+    }
+
+    public void SetWeaponSlotsWeapons(string weapon1, string weapon2)
+    {
+        if (weapon1 != null)
+        {
+            GameObject weapon = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weapon1}.prefab");
+            PickupWeapon(Instantiate(weapon));
+        }
+        if (weapon2 != null)
+        {
+            GameObject weapon = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weapon2}.prefab");
+            SwitchActiveSlot(1);
+            PickupWeapon(Instantiate(weapon));
+            SwitchActiveSlot(0);
+        }
+    } 
 
     private void Update()
     {

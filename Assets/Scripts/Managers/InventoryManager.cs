@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Purchasing;
+
 
 public class InventoryManager : MonoBehaviour
 {
@@ -50,6 +52,47 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         CreateInventoryGrid();
+    }
+
+    public Dictionary<string, int> GetAllBonuses()
+    {
+        Dictionary<string, int> bonusesToGet = new Dictionary<string, int>();
+
+        foreach (KeyValuePair<Bonus.BonusTypes, int> bonus in bonuses)
+        {
+            string bonusType = bonus.Key.ToString();
+            int bonusValue = bonus.Value;
+
+            if (bonusesToGet.ContainsKey(bonusType))
+            {
+                Debug.LogError($"Duplicate bonus type found: {bonusType}. Overwriting value.");
+            }
+            bonusesToGet.Add(bonusType, bonusValue);
+        }
+        return bonusesToGet;
+    }
+
+    public void SetBonuses(Dictionary<string, int> bonusesToSet)
+    {
+        bonuses.Clear();
+        foreach (KeyValuePair<string, int> kvp in bonusesToSet)
+        {
+            string bonusTypeString = kvp.Key;
+            int bonusValue = kvp.Value;
+
+            if (Enum.TryParse(bonusTypeString, true, out Bonus.BonusTypes bonusType))
+            {
+                if (bonuses.ContainsKey(bonusType))
+                {
+                    Debug.LogError($"Duplicate bonus type found: {bonusType}. Overwriting value.");
+                }
+                bonuses.Add(bonusType, bonusValue);
+            }
+            else
+            {
+                Debug.LogError($"Invalid bonus type: {bonusTypeString}. Skipping.");
+            }
+        }
     }
     
     private void CreateInventoryGrid()

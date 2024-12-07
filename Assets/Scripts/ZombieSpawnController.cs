@@ -127,4 +127,15 @@ public class ZombieSpawnController : MonoBehaviour
         initializeZombiesPerWave *= 2;
     }
 
+     public void StartFromWave(int waveNumber)
+    {
+        if (waveNumber <= 0)
+        {
+            return;
+        }
+        currentWave = waveNumber - 1;
+        currentZombiesPerWave = initializeZombiesPerWave + (currentWave * waveAdder);
+        StartNextWave();
+    }
+
 }

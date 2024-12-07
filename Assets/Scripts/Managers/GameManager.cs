@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
         CharacterData character = CharacterPresetManager.Instance.characterData;
 
         GameObject weapon = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{character.WeaponModel}.prefab");
-        //GameObject weapon = Resources.Load<GameObject>($"Prefabs/Weapons/{character.WeaponModel}"); 
         WeaponManager.Instance.PickupWeapon(Instantiate(weapon));
 
         Bonus.BonusTypes bonusType;
@@ -36,6 +35,7 @@ public class GameManager : MonoBehaviour
 
     public void ExitToMainMenu()
     {
+        SaveLoadManager.Instance.SaveGame();
         SceneManager.LoadScene("MainMenu");
     }
 }

@@ -1,0 +1,15 @@
+{
+  "map": "Dust3",
+  "difficulty": "Middle",
+  "playerHP": 100,
+  "weaponSlot1": "AK74",
+  "weaponSlot2": null,
+  "totalPistolAmmo": 100,
+  "totalRifleAmmo": 100,
+  "totalShotgunAmmo": 100,
+  "totalSniperRifleAmmo": 100,
+  "bonuses": {
+    "Chill": 1
+  },
+  "wave": 1
+}
