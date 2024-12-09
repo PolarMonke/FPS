@@ -14,8 +14,8 @@ public class SkibidiBoss : Zombie
 
             isDead = true;
 
-            SoundManager.Instance.zombieChannel.PlayOneShot(SoundManager.Instance.zombieDying);
-
+            SoundManager.Instance.skibidiChannel.Stop();
+            
             StartCoroutine(DestroyEnemyAfterTime(despawnTime));
         }
         else

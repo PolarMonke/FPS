@@ -58,6 +58,10 @@ public class SoundManager : MonoBehaviour
     public AudioClip mZombieHurt2;
     public AudioClip mZombieDying;
 
+    [Header("Skibidi")]
+    public AudioSource skibidiChannel;
+    public AudioClip skibidiMusic;
+
     
     
 
