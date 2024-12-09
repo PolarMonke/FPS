@@ -454,7 +454,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55578e21127726f4baf15779556db44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  enemyType: 2
+  HP: 500
   isDead: 0
   despawnTime: 30
   zombieHand: {fileID: 8866895683612838357}
@@ -499,7 +500,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.8
-  m_BaseOffset: -0.01
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!1 &5186984850866658195

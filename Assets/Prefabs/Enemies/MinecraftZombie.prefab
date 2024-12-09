@@ -146,7 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964576a604dca7d43bd1399b6c168a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
+  enemyType: 1
+  HP: 200
   isDead: 0
   despawnTime: 1
   zombieHand: {fileID: 4601361539668588352}

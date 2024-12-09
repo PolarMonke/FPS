@@ -1437,6 +1437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aae71371093bfd4cacf4e63a34dea43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   HP: 40
   isDead: 0
   despawnTime: 30

@@ -8,11 +8,13 @@ using Unity.VisualScripting;
 
 public class ZombieSpawnController : MonoBehaviour
 {
-    public int initializeZombiesPerWave = 5;
-    public int currentZombiesPerWave;
+    public int initializeEnemiesPerWave = 5;
+    public int currentEnemiesPerWave;
 
     public float spawnDelay = 0.5f;
     public int waveAdder = 5;
+
+    public bool bossIsSpawned;
 
     public int currentWave = 0;
     public float waveCoolDown = 10f;
@@ -20,20 +22,23 @@ public class ZombieSpawnController : MonoBehaviour
     public bool inCoolDown;
     public float coolDownCounter;
 
-    public List<Enemy> currentZombiesAlive;
+    public List<Enemy> currentEnemiesAlive;
 
     public GameObject zombiePrefab;
+    public GameObject mZombiePrefab;
+    public GameObject skibidiPrefab;
 
     public TextMeshProUGUI currentWaveUI;
     public TextMeshProUGUI enemiesLeftUI;
     public TextMeshProUGUI waveOverUI;
     public TextMeshProUGUI coolDownCounterUI;
+    //public TextMeshProUGUI bossHPUI;
 
     public List<Transform> spawnPoints;
 
     private void Start()
     {
-        currentZombiesPerWave = initializeZombiesPerWave;
+        currentEnemiesPerWave = initializeEnemiesPerWave;
         string waveOverText = LanguagesDB.Instance.GetText("WaveOverText");
         waveOverUI.text = waveOverText;
         
@@ -44,7 +49,7 @@ public class ZombieSpawnController : MonoBehaviour
 
     private void StartNextWave()
     {
-        currentZombiesAlive.Clear();
+        currentEnemiesAlive.Clear();
         currentWave++;
 
         GlobalReferences.Instance.waveNumber = currentWave;
@@ -55,39 +60,60 @@ public class ZombieSpawnController : MonoBehaviour
 
     private IEnumerator SpawnWave()
     {
-        for (int i = 0; i < currentZombiesPerWave; i++)
+        for (int i = 0; i < currentEnemiesPerWave; i++)
         {
             Vector3 spawnOffset = new Vector3(Random.Range(-1f,1f),0f,Random.Range(-1f,1f));
             
             int randomIndex = Random.Range(0, spawnPoints.Count);
             Vector3 spawnPosition = spawnPoints[randomIndex].position + spawnOffset;
             
-            var zombie = Instantiate(zombiePrefab, spawnPosition, Quaternion.identity);
-
-            Enemy enemyScript = zombie.GetComponent<Zombie>();
-            currentZombiesAlive.Add(enemyScript);
-
+            
+            if (!bossIsSpawned && currentWave % 3 == 0)
+            {
+                var skibidi = Instantiate(skibidiPrefab, spawnPosition, Quaternion.identity);
+                Enemy enemyScript = skibidi.GetComponent<SkibidiBoss>();
+                currentEnemiesAlive.Add(enemyScript);
+                //bossHPUI.enabled = true;
+                bossIsSpawned = true;
+            }
+            else if (Random.value < 0.3)
+            {
+                var mZombie = Instantiate(mZombiePrefab, spawnPosition, Quaternion.identity);
+                Enemy enemyScript = mZombie.GetComponent<MZombie>();
+                currentEnemiesAlive.Add(enemyScript);
+            }
+            else
+            {
+                var zombie = Instantiate(zombiePrefab, spawnPosition, Quaternion.identity);
+                Enemy enemyScript = zombie.GetComponent<Zombie>();
+                currentEnemiesAlive.Add(enemyScript);
+            }
             yield return new WaitForSeconds(spawnDelay);
         }
     }
     
     private void Update()
     {
-        List<Enemy> zombiesToRemove = new List<Enemy>();
+        List<Enemy> enemiesToRemove = new List<Enemy>();
 
-        foreach (Enemy zombie in currentZombiesAlive)
+        foreach (Enemy enemy in currentEnemiesAlive)
         {
-            if (zombie.isDead)
+            if (enemy.isDead)
             {
-                zombiesToRemove.Add(zombie);
+                if (enemy.enemyType == Enemy.EnemyTypes.SkibidiBoss)
+                {
+                    //bossHPUI.enabled = false;
+                    bossIsSpawned = false;
+                }
+                enemiesToRemove.Add(enemy);
             }
         }
-        foreach (Enemy zombie in zombiesToRemove)
+        foreach (Enemy enemy in enemiesToRemove)
         {
-            currentZombiesAlive.Remove(zombie);
+            currentEnemiesAlive.Remove(enemy);
         }
-        zombiesToRemove.Clear();
-        if (currentZombiesAlive.Count == 0 && !inCoolDown)
+        enemiesToRemove.Clear();
+        if (currentEnemiesAlive.Count == 0 && !inCoolDown)
         {
             StartCoroutine(WaveCoolDown());
         }
@@ -100,7 +126,7 @@ public class ZombieSpawnController : MonoBehaviour
             coolDownCounter = waveCoolDown;
         }   
         coolDownCounterUI.text = coolDownCounter.ToString("F0");
-        enemiesLeftUI.text = LanguagesDB.Instance.GetText("EnemiesLeft") + currentZombiesAlive.Count;
+        enemiesLeftUI.text = LanguagesDB.Instance.GetText("EnemiesLeft") + currentEnemiesAlive.Count;
     }
     private IEnumerator WaveCoolDown()
     {
@@ -109,13 +135,13 @@ public class ZombieSpawnController : MonoBehaviour
         yield return new WaitForSeconds(waveCoolDown);
         inCoolDown = false;
         waveOverUI.gameObject.SetActive(false);
-        currentZombiesPerWave += waveAdder;
+        currentEnemiesPerWave += waveAdder;
         StartNextWave();
     }
 
     private void KillAllEnemies()
     {
-        foreach (Enemy zombie in currentZombiesAlive)
+        foreach (Enemy zombie in currentEnemiesAlive)
         {
             zombie.Die();    
         }
@@ -124,7 +150,7 @@ public class ZombieSpawnController : MonoBehaviour
     public void DoubleAndGiveItToTheNextWave()
     {
         KillAllEnemies();
-        initializeZombiesPerWave *= 2;
+        initializeEnemiesPerWave *= 2;
     }
 
      public void StartFromWave(int waveNumber)
@@ -134,7 +160,7 @@ public class ZombieSpawnController : MonoBehaviour
             return;
         }
         currentWave = waveNumber - 1;
-        currentZombiesPerWave = initializeZombiesPerWave + (currentWave * waveAdder);
+        currentEnemiesPerWave = initializeEnemiesPerWave + (currentWave * waveAdder);
         StartNextWave();
     }
 

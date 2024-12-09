@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    public EnemyTypes enemyType;
+
     public int HP = 100;
     protected Animator animator;
 
@@ -13,6 +15,13 @@ public class Enemy : MonoBehaviour
     public bool isDead = false;
 
     public float despawnTime = 30f;
+
+    public enum EnemyTypes
+    {
+        Zombie,
+        MinecraftZombie,
+        SkibidiBoss
+    }
 
     void Start()
     {
