@@ -15,6 +15,10 @@ public class CharacterCreator : MonoBehaviour
     public TMP_Dropdown weaponsDropdown;
     public TMP_Dropdown bonusesDropdown;
 
+    public TextMeshProUGUI namePlaceHolder;
+    public TextMeshProUGUI addButton;
+    public TextMeshProUGUI startButton;
+
     public CharactersListManager charactersListManager;
 
     private List<string> availableWeapons;
@@ -28,6 +32,9 @@ public class CharacterCreator : MonoBehaviour
     {
         AddWeapons();
         AddBonuses();
+        namePlaceHolder.text = LanguagesDB.Instance.GetText("EnterName");
+        addButton.text = LanguagesDB.Instance.GetText("Add");
+        startButton.text = LanguagesDB.Instance.GetText("StartGame");
     }
 
     private void AddWeapons()
