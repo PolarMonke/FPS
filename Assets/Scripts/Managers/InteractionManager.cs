@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class InteractionManager : MonoBehaviour
     private AmmoCrate hoveredAmmoCrate = null;
     private HealthKit hoveredHealthKit = null;
     private MysteryBox hoveredMysteryBox = null;
+    private WeaponCrate hoveredWeaponCrate = null;
 
     private void Awake()
     {
@@ -130,6 +132,28 @@ public class InteractionManager : MonoBehaviour
             {
                 HUDManager.Instance.UnDisplayHint();
             }
+
+            if (objectHitByRaycast.GetComponent<WeaponCrate>())
+            {
+
+                hoveredWeaponCrate = objectHitByRaycast.GetComponent<WeaponCrate>();
+                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("WeaponCrate"));
+                
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    string weapon = hoveredWeaponCrate.weaponModel.ToString();
+                    Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weapon}.prefab"), objectHitByRaycast.gameObject.transform.position, objectHitByRaycast.gameObject.transform.rotation);
+                    HUDManager.Instance.UnDisplayHint();
+                    Destroy(objectHitByRaycast.gameObject);
+                }
+                
+            }
+            else if(hoveredWeaponCrate == null) {}
+            else
+            {
+                HUDManager.Instance.UnDisplayHint();
+            }
         }
     }
+
 }

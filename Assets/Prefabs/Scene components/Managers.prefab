@@ -1268,6 +1268,7 @@ MonoBehaviour:
   healthKit: {fileID: 1987931642015774334, guid: 7e961bf8a4e0fa746ad4d35207943090, type: 3}
   ammoCrate: {fileID: 3818497596150830090, guid: 437ec311b8355344189ec51df666518d, type: 3}
   mysteryBox: {fileID: 390343380560062541, guid: 0e8eb747ad1ab2b46b1c50a02a2077c6, type: 3}
+  weaponCrate: {fileID: 1562355006197317527, guid: 2657c7edd790bf540a47cc47a1293484, type: 3}
 --- !u!1 &7616343928829154787
 GameObject:
   m_ObjectHideFlags: 0

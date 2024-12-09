@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.Rendering;
 using static Weapon;
 
 public class SoundManager : MonoBehaviour
@@ -86,6 +87,18 @@ public class SoundManager : MonoBehaviour
         emptyMagSound.volume = volume;
         zombieChannel.volume = volume;
         mZombieChannel.volume = volume;
+        skibidiChannel.volume = volume;
+    }
+    public void StopAllSounds()
+    {
+        playerChannel.Stop();
+        ShootingChannel.Stop();
+        ReloadingChannel.Stop();
+        zombieChannel.Stop();
+        emptyMagSound.Stop();
+        zombieChannel.Stop(); 
+        mZombieChannel.Stop(); 
+        skibidiChannel.Stop(); 
     }
 
     public void PlayShootingSound(WeaponModel weapon)
