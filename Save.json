@@ -1,19 +1,13 @@
 {
   "map": "TestMap",
   "difficulty": "Easy",
-  "playerHP": -10,
-  "weaponSlot1": "M4",
-  "weaponSlot2": "M4",
-  "totalPistolAmmo": 633,
-  "totalRifleAmmo": 970,
-  "totalShotgunAmmo": 358,
-  "totalSniperRifleAmmo": 631,
-  "bonuses": {
-    "Chill": 4,
-    "Those": 10,
-    "Cheese": 5,
-    "Double": 5,
-    "Invincible": 2
-  },
-  "wave": 3
+  "playerHP": 100,
+  "weaponSlot1": null,
+  "weaponSlot2": null,
+  "totalPistolAmmo": 100,
+  "totalRifleAmmo": 100,
+  "totalShotgunAmmo": 100,
+  "totalSniperRifleAmmo": 100,
+  "bonuses": {},
+  "wave": 1
 }
