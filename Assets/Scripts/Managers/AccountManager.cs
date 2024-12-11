@@ -12,8 +12,8 @@ public class AccountManager : MonoBehaviour
     public GameObject accountMenu;
     public GameObject accountInfoMenu;
     
-    private bool isLogged;
-
+    public bool isLogged;
+    public string username;
 
 
     private void Awake()
@@ -56,6 +56,7 @@ public class AccountManager : MonoBehaviour
     }
     public void LogIn(string username)
     {
+        this.username = username;
         isLogged = true;
         LoginManager.Instance.ExitLogin();
         LoginManager.Instance.ExitRegistration();
@@ -70,7 +71,7 @@ public class AccountManager : MonoBehaviour
     }
     public void DeleteAccount()
     {
-        string username = accountInfoMenu.gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
+        username = accountInfoMenu.gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
         UsersDB.Instance.DeleteUser(username);
         ExitAccountInfoMenu();
         LoginManager.Instance.EnterLogin();     

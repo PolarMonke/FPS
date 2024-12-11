@@ -1,16 +1,42 @@
 {
-  "User1":
-  {
-    "map": "Dust3",
-    "difficulty": "Easy",
-    "playerHP": -10,
-    "weaponSlot1": "M107",
-    "weaponSlot2": "Colt1911",
-    "totalPistolAmmo": 117,
-    "totalRifleAmmo": 353,
-    "totalShotgunAmmo": 100,
-    "totalSniperRifleAmmo": 255,
-    "bonuses": {},
-    "wave": 2
+  "User1": {
+    "username": null,
+    "saveData": null
+  },
+  "Bogdan": {
+    "username": "Bogdan",
+    "saveData": {
+      "map": "Dust3",
+      "difficulty": "Easy",
+      "playerHP": 100,
+      "weaponSlot1": "AK74",
+      "weaponSlot2": null,
+      "totalPistolAmmo": 100,
+      "totalRifleAmmo": 100,
+      "totalShotgunAmmo": 100,
+      "totalSniperRifleAmmo": 100,
+      "bonuses": {
+        "Chill": 1
+      },
+      "wave": 1
+    }
+  },
+  "Misha": {
+    "username": "Misha",
+    "saveData": {
+      "map": "TestMap",
+      "difficulty": "Hard",
+      "playerHP": 100,
+      "weaponSlot1": "M107",
+      "weaponSlot2": null,
+      "totalPistolAmmo": 100,
+      "totalRifleAmmo": 100,
+      "totalShotgunAmmo": 100,
+      "totalSniperRifleAmmo": 100,
+      "bonuses": {
+        "Double": 1
+      },
+      "wave": 1
+    }
   }
 }

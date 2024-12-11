@@ -1,13 +1,15 @@
 {
   "map": "Dust3",
   "difficulty": "Easy",
-  "playerHP": -10,
-  "weaponSlot1": "M107",
-  "weaponSlot2": "Colt1911",
-  "totalPistolAmmo": 117,
-  "totalRifleAmmo": 353,
+  "playerHP": 100,
+  "weaponSlot1": "AK74",
+  "weaponSlot2": null,
+  "totalPistolAmmo": 100,
+  "totalRifleAmmo": 100,
   "totalShotgunAmmo": 100,
-  "totalSniperRifleAmmo": 255,
-  "bonuses": {},
-  "wave": 2
+  "totalSniperRifleAmmo": 100,
+  "bonuses": {
+    "Chill": 1
+  },
+  "wave": 1
 }

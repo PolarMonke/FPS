@@ -12,7 +12,8 @@ public class SaveLoadManager : MonoBehaviour
 
     private string highScoreKey = "BestWaveSavedValue";
 
-    private string filePath = "Assets/Saves/Save.json";
+    private string saveFilePath = "Assets/Saves/Save.json";
+    public string savesFilePath = "Assets/Saves/Saves.json";
 
     public GameObject loadingScreenPrefab;
 
@@ -54,8 +55,6 @@ public class SaveLoadManager : MonoBehaviour
         saveData.difficulty = DifficulltyAndMapManager.Instance.difficulty.ToString();
 
         saveData.playerHP = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().HP;
-        //saveData.playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
-        //saveData.playerRotation = GameObject.FindGameObjectWithTag("Player").transform.rotation;
 
         int totalPistolAmmo, totalRifleAmmo, totalShotgunAmmo, totalSniperRifleAmmo;
         (totalPistolAmmo, totalRifleAmmo, totalShotgunAmmo, totalSniperRifleAmmo) = WeaponManager.Instance.GetAmmo();
@@ -71,12 +70,17 @@ public class SaveLoadManager : MonoBehaviour
 
         try
         {
-            File.WriteAllText(filePath, json);
-            Debug.Log("Game saved successfully to: " + filePath);
+            File.WriteAllText(saveFilePath, json);
+            Debug.Log("Game saved successfully to: " + saveFilePath);
         }
         catch (Exception e)
         {
             Debug.LogError($"Error saving game: {e.Message}");
+        }
+
+        if (AccountManager.Instance.isLogged)
+        {
+            SaveGameForUser(AccountManager.Instance.username, saveData);
         }
     }
 
@@ -86,14 +90,19 @@ public class SaveLoadManager : MonoBehaviour
     }
     public IEnumerator LoadGame()
     {
+        if (AccountManager.Instance.isLogged)
+        {
+            LoadGameFromUser(AccountManager.Instance.username);
+        }
+
         SaveData loadData = new SaveData();
         try
         {
-            if (!File.Exists(filePath))
+            if (!File.Exists(saveFilePath))
             {
-                Debug.LogError($"File not found: {filePath}");
+                Debug.LogError($"File not found: {saveFilePath}");
             }
-            string json = File.ReadAllText(filePath);
+            string json = File.ReadAllText(saveFilePath);
             loadData = JsonConvert.DeserializeObject<SaveData>(json);
         }
         catch (Exception e)
@@ -120,14 +129,67 @@ public class SaveLoadManager : MonoBehaviour
 
         WaveManager.Instance.waveController.StartFromWave(loadData.wave);
     }
-
-    public void SaveGameForUser()
+    //Saves user data to Saves.json
+    public void SaveGameForUser(string username, SaveData saveData)
     {
+        Dictionary<string, UserSaveData> userSaveData;
 
+        if (File.Exists(savesFilePath))
+        {
+            string loadedJson = File.ReadAllText(savesFilePath);
+            try
+            {
+                userSaveData = JsonConvert.DeserializeObject<Dictionary<string, UserSaveData>>(loadedJson);
+            }
+            catch (JsonReaderException)
+            {
+                Debug.LogError("Invalid JSON format in save file.  Creating a new file.");
+                userSaveData = new Dictionary<string, UserSaveData>();
+            }
+
+        }
+        else
+        {
+            userSaveData = new Dictionary<string, UserSaveData>();
+        }
+
+        if (userSaveData.ContainsKey(username))
+        {
+            userSaveData[username] = new UserSaveData(username, saveData);
+        }
+        else
+        {
+            userSaveData.Add(username, new UserSaveData(username, saveData));
+        }
+
+        string jsonToSave = JsonConvert.SerializeObject(userSaveData, Formatting.Indented);
+        File.WriteAllText(savesFilePath, jsonToSave); 
     }
-    public void LoadGameFromUser()
+    //loads gamedata into Save.json from user
+    public void LoadGameFromUser(string username)
     {
+        if (!File.Exists(savesFilePath))
+        {
+            Debug.LogError($"Save file not found: {savesFilePath}");
+            return;
+        }
+
+        string loadedJson = File.ReadAllText(savesFilePath);
         
+        Dictionary<string, UserSaveData> loadedData = JsonConvert.DeserializeObject<Dictionary<string, UserSaveData>>(loadedJson);
+
+        if (loadedData.ContainsKey(username))
+        {
+            UserSaveData userSave = loadedData[username];
+
+            SaveData saveData = userSave.saveData;
+            string json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
+            File.WriteAllText(saveFilePath, json);
+        }
+        else
+        {
+            Debug.LogWarning($"No save data found for user: {username}");
+        }
     }
 
 }

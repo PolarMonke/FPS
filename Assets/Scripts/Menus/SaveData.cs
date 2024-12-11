@@ -10,9 +10,7 @@ public class SaveData
     public string difficulty;
 
     public int playerHP;
-    //public Vector3 playerPos;
-    //public Quaternion playerRotation;
-
+    
     public string weaponSlot1;
     public string weaponSlot2;
 
@@ -37,4 +35,16 @@ public class SaveData
         return (totalPistolAmmo, totalRifleAmmo, totalShotgunAmmo, totalSniperRifleAmmo);
     }
     
+}
+
+public class UserSaveData
+{
+    public string username;
+    public SaveData saveData;
+
+    public UserSaveData(string username, SaveData saveData)
+    {
+        this.username = username;
+        this.saveData = saveData;
+    }
 }
