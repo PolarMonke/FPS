@@ -8,17 +8,17 @@
     "saveData": {
       "map": "Dust3",
       "difficulty": "Easy",
-      "playerHP": 100,
+      "playerHP": -10,
       "weaponSlot1": "AK74",
       "weaponSlot2": null,
-      "totalPistolAmmo": 100,
-      "totalRifleAmmo": 100,
-      "totalShotgunAmmo": 100,
+      "totalPistolAmmo": 236,
+      "totalRifleAmmo": 48,
+      "totalShotgunAmmo": 240,
       "totalSniperRifleAmmo": 100,
       "bonuses": {
         "Chill": 1
       },
-      "wave": 1
+      "wave": 2
     }
   },
   "Misha": {

@@ -13,6 +13,8 @@ public class LoginManager : MonoBehaviour
     public static LoginManager Instance { get; set; }
 
     [Header("Menus")]
+    public GameObject accountMenu;
+    public GameObject accountInfoMenu;
     public GameObject loginMenu;
     public GameObject registrationMenu;
 
@@ -41,6 +43,44 @@ public class LoginManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("EnterLogin");
+        passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("EnterPassword");
+        loginButton.GetComponentInChildren<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("LogIn");
+        newAccountButton.GetComponentInChildren<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("CreateNewAccount");
+
+        newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("EnterLogin");
+        newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("EnterPassword");
+        newPasswordConfirmInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("RepeatPassword");
+        createNewAccountButton.GetComponentInChildren<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("Registrate");
+    }
+
+    public void EnterAccoutMenu()
+    {
+        accountMenu.SetActive(true);
+        EnterAccountInfoMenu();
+    }
+    public void ExitAccoutMenu()
+    {
+        accountMenu.SetActive(false);
+    }
+    public void EnterAccountInfoMenu()
+    {
+        accountMenu.SetActive(true);
+        if (AccountManager.Instance.isLogged)
+        {
+            accountInfoMenu.SetActive(true);
+        }
+        else
+        {
+            loginMenu.SetActive(true);
+        }
+    }
+    public void ExitAccountInfoMenu()
+    {
+        accountInfoMenu.SetActive(false);
+    }
     public void EnterLogin()
     {
         loginMenu.SetActive(true);
@@ -70,14 +110,14 @@ public class LoginManager : MonoBehaviour
             {
                 loginInput.text = "";
                 passwordInput.text = "";
-                loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "No such user";
-                passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "No such user";
+                loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("NoUserException");
+                passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("NoUserException");
             }
         }
         else
         {
-            loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Input correct data";
-            passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Input correct data";
+            loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("WrongDataException");
+            passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("WrongDataException");
         }
     }
     public void LogIn(string login, string password)
@@ -101,20 +141,20 @@ public class LoginManager : MonoBehaviour
                 else
                 {
                     newLoginInput.text = "";
-                    newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "User already exists";
+                    newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("UserExistsException");
                 }
             }
             else if (!Regex.IsMatch(newPasswordInput.text, @"^(?=.*[A-Z])(?=.*\d).{8,}$"))
             {
                 newPasswordInput.text = "";
                 newPasswordInput.text = "";
-                newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Password is too weak";
+                newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("WeakPasswordException");
             }
             else
             {
                 newPasswordInput.text = "";
                 newPasswordInput.text = "";
-                newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Passwords don't match";
+                newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("DifferentPasswordsException");
             }
         }
         else
@@ -122,7 +162,7 @@ public class LoginManager : MonoBehaviour
             newLoginInput.text = "";
             newPasswordInput.text = "";
             newPasswordInput.text = "";
-            newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Please fill all data";
+            newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("WrongDataException");
         }
     }
 }

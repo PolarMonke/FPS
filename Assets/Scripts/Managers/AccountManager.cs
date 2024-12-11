@@ -9,8 +9,7 @@ public class AccountManager : MonoBehaviour
 {
     public static AccountManager Instance { get; set; }
 
-    public GameObject accountMenu;
-    public GameObject accountInfoMenu;
+    
     
     public bool isLogged;
     public string username;
@@ -28,45 +27,20 @@ public class AccountManager : MonoBehaviour
         }
         DontDestroyOnLoad(this);
     }
-    public void EnterAccoutMenu()
-    {
-        accountMenu.SetActive(true);
-        EnterAccountInfoMenu();
-    }
-    public void ExitAccoutMenu()
-    {
-        accountMenu.SetActive(false);
-    }
-
-    public void EnterAccountInfoMenu()
-    {
-        accountMenu.SetActive(true);
-        if (isLogged)
-        {
-            accountInfoMenu.SetActive(true);
-        }
-        else
-        {
-            LoginManager.Instance.loginMenu.SetActive(true);
-        }
-    }
-    public void ExitAccountInfoMenu()
-    {
-        accountInfoMenu.SetActive(false);
-    }
+    
     public void LogIn(string username)
     {
         this.username = username;
         isLogged = true;
         LoginManager.Instance.ExitLogin();
         LoginManager.Instance.ExitRegistration();
-        EnterAccountInfoMenu();
-        accountInfoMenu.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = username;
+        LoginManager.Instance.EnterAccountInfoMenu();
+        LoginManager.Instance.accountInfoMenu.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = username;
     }
     public void LogOut()
     {
         isLogged = false;
-        ExitAccountInfoMenu();
+        LoginManager.Instance.ExitAccountInfoMenu();
         LoginManager.Instance.EnterLogin();
     }
     public void DeleteAccount()
@@ -74,7 +48,7 @@ public class AccountManager : MonoBehaviour
         UsersDB.Instance.DeleteUser(username);
         SaveLoadManager.Instance.DeleteUserSaveData(username);
         ChractersDB.Instance.DeleteUser(username);
-        ExitAccountInfoMenu();
+        LoginManager.Instance.ExitAccountInfoMenu();
         LoginManager.Instance.EnterLogin();     
     }
 }
