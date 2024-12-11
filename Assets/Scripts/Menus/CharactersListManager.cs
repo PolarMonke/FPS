@@ -21,13 +21,29 @@ public class CharactersListManager : MonoBehaviour
 
     private void Start()
     {
-        PopulateCharacterList();
+        if (AccountManager.Instance.isLogged)
+        {
+            PopulateCharacterList(AccountManager.Instance.username);
+        }
+        else
+        {
+            PopulateCharacterList();
+        }
     }
 
     public void AddCharacter(string name, string weaponModel, string bonusType)
     {
         lastID = ChractersDB.Instance.GetLastID();
-        CharacterData character = new CharacterData(lastID + 1, name, weaponModel, bonusType);
+        CharacterData character = new CharacterData(lastID + 1, name, weaponModel, bonusType, null);
+        characters.Add(character);
+        ChractersDB.Instance.SaveCharacter(character);
+        
+        InstantiateCharacter(character);
+    }
+    public void AddCharacter(string name, string weaponModel, string bonusType, string owner)
+    {
+        lastID = ChractersDB.Instance.GetLastID();
+        CharacterData character = new CharacterData(lastID + 1, name, weaponModel, bonusType, owner);
         characters.Add(character);
         ChractersDB.Instance.SaveCharacter(character);
         
@@ -45,6 +61,18 @@ public class CharactersListManager : MonoBehaviour
             }
         }
     }
+    public void PopulateCharacterList(string username)
+    {
+        characters = ChractersDB.Instance.LoadCharacters(username);
+        if (characters.Count != 0)
+        {
+            foreach (var character in characters)
+            {
+                InstantiateCharacter(character);
+            }
+        }
+    }
+
 
     private void InstantiateCharacter(CharacterData character)
     {
@@ -88,9 +116,16 @@ public class CharactersListManager : MonoBehaviour
         characters.Clear();
         selectedCharacter = null;
 
-        lastID = 0; 
+        lastID = ChractersDB.Instance.GetLastID();//it was 0 for some reason. If something goes wront, it it's fault 
 
-        PopulateCharacterList();
+        if (AccountManager.Instance.isLogged)
+        {
+            PopulateCharacterList(AccountManager.Instance.username);
+        }
+        else
+        {
+            PopulateCharacterList();
+        }
     }
 
     private void SelectCharacter(int id)

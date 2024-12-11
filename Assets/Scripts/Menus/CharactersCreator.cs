@@ -60,6 +60,14 @@ public class CharacterCreator : MonoBehaviour
     public void AddCharacter()
     {
         GetSelectedOptions();
-        charactersListManager.AddCharacter(selectedName, selectedWeapon, selectedBonus);
+        if (AccountManager.Instance.isLogged)
+        {
+            charactersListManager.AddCharacter(selectedName, selectedWeapon, selectedBonus, AccountManager.Instance.username);
+        }
+        else
+        {
+            charactersListManager.AddCharacter(selectedName, selectedWeapon, selectedBonus);
+        }
+        
     }
 }

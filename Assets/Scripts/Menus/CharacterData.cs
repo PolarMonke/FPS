@@ -10,11 +10,13 @@ public class CharacterData
     public string Name;
     public string WeaponModel;
     public string BonusType;
+    public string Owner;
 
-    public CharacterData(int id, string name, string weaponModel, string bonusType){
+    public CharacterData(int id, string name, string weaponModel, string bonusType, string owner){
         ID = id;
         Name = name;
         WeaponModel = weaponModel;
         BonusType = bonusType;
+        Owner = owner;
     }
 }

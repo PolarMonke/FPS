@@ -73,6 +73,7 @@ public class AccountManager : MonoBehaviour
     {
         UsersDB.Instance.DeleteUser(username);
         SaveLoadManager.Instance.DeleteUserSaveData(username);
+        ChractersDB.Instance.DeleteUser(username);
         ExitAccountInfoMenu();
         LoginManager.Instance.EnterLogin();     
     }

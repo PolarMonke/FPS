@@ -15,6 +15,7 @@ public class ChractersDB : MonoBehaviour
     private const string COL_NAME = "Name";
     private const string COL_WEAPON = "Weapon";
     private const string COL_BONUS = "Bonus";
+    private const string COL_OWNER = "Owner";
 
     private string dbPath;
     private IDbConnection connection = null;
@@ -75,7 +76,42 @@ public class ChractersDB : MonoBehaviour
                         string name = reader.GetString(1);
                         string weapon = reader.GetString(2);
                         string bonus = reader.GetString(3);
-                        characterDatas.Add(new CharacterData(ID, name, weapon, bonus));
+                        string owner = reader.GetString(4);
+                        characterDatas.Add(new CharacterData(ID, name, weapon, bonus, owner));
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("GetAllBonusNames error: " + e.Message);
+        }
+
+        return characterDatas;
+    }
+
+    public List<CharacterData> LoadCharacters(string username)
+    {
+        List<CharacterData> characterDatas = new List<CharacterData>();
+        if (connection == null || connection.State != ConnectionState.Open)
+        {
+            if (!OpenConnection()) return null;
+        }
+        try
+        {
+            using (IDbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = $"SELECT {COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS}, {COL_OWNER} FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} = {username}";
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int ID = Int32.Parse(reader.GetString(0));
+                        string name = reader.GetString(1);
+                        string weapon = reader.GetString(2);
+                        string bonus = reader.GetString(3);
+                        string owner = reader.GetString(4);
+                        characterDatas.Add(new CharacterData(ID, name, weapon, bonus, owner));
                     }
                 }
             }
@@ -92,11 +128,12 @@ public class ChractersDB : MonoBehaviour
     {
         using (var command = connection.CreateCommand()) 
         {
-            command.CommandText = $"INSERT INTO {SQL_TABLE_NAME} ({COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS}) VALUES (@ID, @Name, @Weapon, @Bonus)";
+            command.CommandText = $"INSERT INTO {SQL_TABLE_NAME} ({COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS}, {COL_OWNER}) VALUES (@ID, @Name, @Weapon, @Bonus, @Owner)";
             command.Parameters.Add(new SqliteParameter("@ID", character.ID));
             command.Parameters.Add(new SqliteParameter("@Name", character.Name));
             command.Parameters.Add(new SqliteParameter("@Weapon", character.WeaponModel));
             command.Parameters.Add(new SqliteParameter("@Bonus", character.BonusType));
+            command.Parameters.Add(new SqliteParameter("@Owner", character.Owner));
             command.ExecuteNonQuery();
         }
     }
@@ -104,11 +141,21 @@ public class ChractersDB : MonoBehaviour
     {
         if (connection == null || connection.State != ConnectionState.Open)
         {
-            if (!OpenConnection()) return; // Handle connection failure
+            if (!OpenConnection()) return;
         }
         using (var command = connection.CreateCommand())
         {
-            command.CommandText = $"DELETE FROM {SQL_TABLE_NAME} WHERE ID = {id}";
+            command.CommandText = $"DELETE FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} = {id}";
+            command.ExecuteNonQuery();
+        }
+        RenumberIDs();
+    }
+
+    public void DeleteUser(string username)
+    {
+        using (var command = connection.CreateCommand())
+        {
+            command.CommandText = $"DELETE FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} = {username}";
             command.ExecuteNonQuery();
         }
         RenumberIDs();
