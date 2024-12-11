@@ -12,7 +12,7 @@ public class SaveLoadManager : MonoBehaviour
 
     private string highScoreKey = "BestWaveSavedValue";
 
-    private string filePath = "Save.json";
+    private string filePath = "Assets/Saves/Save.json";
 
     public GameObject loadingScreenPrefab;
 
@@ -119,6 +119,15 @@ public class SaveLoadManager : MonoBehaviour
         InventoryManager.Instance.SetBonuses(loadData.bonuses);
 
         WaveManager.Instance.waveController.StartFromWave(loadData.wave);
+    }
+
+    public void SaveGameForUser()
+    {
+
+    }
+    public void LoadGameFromUser()
+    {
+        
     }
 
 }

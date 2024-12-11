@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.Rendering;
+using System.Text.RegularExpressions;
 
 public class LoginManager : MonoBehaviour
 {
@@ -67,12 +68,16 @@ public class LoginManager : MonoBehaviour
             }
             else
             {
-                //inform user
+                loginInput.text = "";
+                passwordInput.text = "";
+                loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "No such user";
+                passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "No such user";
             }
         }
         else
         {
-            //inform user
+            loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Input correct data";
+            passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Input correct data";
         }
     }
     public void LogIn(string login, string password)
@@ -86,7 +91,7 @@ public class LoginManager : MonoBehaviour
     {
         if (newLoginInput.text != "" && newPasswordInput.text != "" && newPasswordConfirmInput.text != "")
         {
-            if (newPasswordInput.text == newPasswordConfirmInput.text)
+            if (newPasswordInput.text == newPasswordConfirmInput.text && Regex.IsMatch(newPasswordInput.text, @"^(?=.*[A-Z])(?=.*\d).{8,}$"))
             {
                 if (!UsersDB.Instance.SearchUser(newLoginInput.text))
                 {
@@ -95,17 +100,29 @@ public class LoginManager : MonoBehaviour
                 }
                 else
                 {
-                    //inform user
+                    newLoginInput.text = "";
+                    newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "User already exists";
                 }
+            }
+            else if (!Regex.IsMatch(newPasswordInput.text, @"^(?=.*[A-Z])(?=.*\d).{8,}$"))
+            {
+                newPasswordInput.text = "";
+                newPasswordInput.text = "";
+                newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Password is too weak";
             }
             else
             {
-                //inform user
+                newPasswordInput.text = "";
+                newPasswordInput.text = "";
+                newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Passwords don't match";
             }
         }
         else
         {
-            //inform user
+            newLoginInput.text = "";
+            newPasswordInput.text = "";
+            newPasswordInput.text = "";
+            newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = "Please fill all data";
         }
     }
 }

@@ -142,7 +142,9 @@ public class InteractionManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.F))
                 {
                     string weapon = hoveredWeaponCrate.weaponModel.ToString();
-                    Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weapon}.prefab"), objectHitByRaycast.gameObject.transform.position, objectHitByRaycast.gameObject.transform.rotation);
+                    Vector3 spawnPos = objectHitByRaycast.gameObject.transform.position;
+                    spawnPos.y += 1;
+                    Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weapon}.prefab"), spawnPos, objectHitByRaycast.gameObject.transform.rotation);
                     HUDManager.Instance.UnDisplayHint();
                     Destroy(objectHitByRaycast.gameObject);
                 }
