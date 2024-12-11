@@ -33,17 +33,40 @@ public class SaveLoadManager : MonoBehaviour
 
     public void SaveHighScore(int score)
     {
-        PlayerPrefs.SetInt(highScoreKey, score);
-    }
-    public int LoadHighScore()
-    {
-        if (PlayerPrefs.HasKey(highScoreKey)) 
+        if (AccountManager.Instance.isLogged)
         {
-            return PlayerPrefs.GetInt(highScoreKey);
+            HighScoreDB.Instance.SaveHighScore(AccountManager.Instance.username, score);
         }
         else
         {
-            return 0;
+            PlayerPrefs.SetInt(highScoreKey, score);
+        }
+        
+    }
+    public int LoadHighScore()
+    {
+        if (AccountManager.Instance.isLogged)
+        {
+            string username = AccountManager.Instance.username;
+            if (HighScoreDB.Instance.UserHasRecords(username))
+            {
+                return HighScoreDB.Instance.LoadUserScore(username);
+            }
+            else
+            {
+                return 0;
+            }
+        }
+        else
+        {
+            if (PlayerPrefs.HasKey(highScoreKey)) 
+            {
+                return PlayerPrefs.GetInt(highScoreKey);
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 
