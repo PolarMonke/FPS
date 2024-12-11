@@ -71,8 +71,8 @@ public class AccountManager : MonoBehaviour
     }
     public void DeleteAccount()
     {
-        username = accountInfoMenu.gameObject.GetComponentInChildren<TextMeshProUGUI>().text;
         UsersDB.Instance.DeleteUser(username);
+        SaveLoadManager.Instance.DeleteUserSaveData(username);
         ExitAccountInfoMenu();
         LoginManager.Instance.EnterLogin();     
     }

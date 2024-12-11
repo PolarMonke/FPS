@@ -192,4 +192,27 @@ public class SaveLoadManager : MonoBehaviour
         }
     }
 
+    public void DeleteUserSaveData(string username)
+    {
+        if (!File.Exists(savesFilePath))
+        {
+            Debug.LogError($"Save file not found: {savesFilePath}");
+            return;
+        }
+
+        string loadedJson = File.ReadAllText(savesFilePath);
+        
+        Dictionary<string, UserSaveData> loadedData = JsonConvert.DeserializeObject<Dictionary<string, UserSaveData>>(loadedJson);
+
+        if (loadedData.ContainsKey(username))
+        {
+            loadedData.Remove(username);
+            string jsonToSave = JsonConvert.SerializeObject(loadedData, Formatting.Indented);
+            File.WriteAllText(savesFilePath, jsonToSave); 
+        }
+        else
+        {
+            Debug.LogWarning($"No save data found for user: {username}");
+        }
+    }
 }
