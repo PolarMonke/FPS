@@ -63,8 +63,7 @@ public class ChractersDB : MonoBehaviour
         {
             if (!OpenConnection()) return null;
         }
-        try
-        {
+        
             using (IDbCommand command = connection.CreateCommand())
             {
                 command.CommandText = $"SELECT {COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS} FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} IS NULL";
@@ -76,16 +75,11 @@ public class ChractersDB : MonoBehaviour
                         string name = reader.GetString(1);
                         string weapon = reader.GetString(2);
                         string bonus = reader.GetString(3);
-                        string owner = reader.GetString(4);
-                        characterDatas.Add(new CharacterData(ID, name, weapon, bonus, owner));
+                        characterDatas.Add(new CharacterData(ID, name, weapon, bonus, null));
                     }
                 }
             }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("GetAllBonusNames error: " + e.Message);
-        }
+        
 
         return characterDatas;
     }
