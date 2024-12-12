@@ -67,7 +67,7 @@ public class ChractersDB : MonoBehaviour
         {
             using (IDbCommand command = connection.CreateCommand())
             {
-                command.CommandText = $"SELECT {COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS} FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} = NULL";
+                command.CommandText = $"SELECT {COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS} FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} IS NULL";
                 using (IDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())

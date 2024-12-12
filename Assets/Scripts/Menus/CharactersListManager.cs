@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.IO;
 
 
 public class CharactersListManager : MonoBehaviour
@@ -14,10 +15,12 @@ public class CharactersListManager : MonoBehaviour
     private int lastID;
 
     private Dictionary<int, GameObject> characterEntries = new Dictionary<int, GameObject>();
-    private CharacterData selectedCharacter;
+    public CharacterData selectedCharacter;
     private Image selectionHighlight;
     private Color selectedColor = Color.black;
     private Color defaultColor = Color.gray;
+
+    public TextMeshProUGUI errorField;
 
     private void Start()
     {
@@ -116,7 +119,8 @@ public class CharactersListManager : MonoBehaviour
         characters.Clear();
         selectedCharacter = null;
 
-        lastID = ChractersDB.Instance.GetLastID();//it was 0 for some reason. If something goes wront, it it's fault 
+        lastID = 0;//it was 0 for some reason. If something goes wrong, it it's fault
+        //it went wront and it was it's fault 
 
         if (AccountManager.Instance.isLogged)
         {

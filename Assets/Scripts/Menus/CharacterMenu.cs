@@ -11,10 +11,20 @@ using UnityEngine.SceneManagement;
 public class CharacterMenu : MonoBehaviour
 {
     private string newGameScene = "NewGameOptions";
+    public CharactersListManager charactersListManager;
 
     public void StartGame()
     {
-        SceneManager.LoadScene(DifficulltyAndMapManager.Instance.map);
+        if (charactersListManager.selectedCharacter != null)
+        {
+            charactersListManager.errorField.text = "";
+            SceneManager.LoadScene(DifficulltyAndMapManager.Instance.map);
+        }
+        else
+        {
+            charactersListManager.errorField.text = "Select a character";
+        }
+        
     }
 
     public void BackToMainMenu()
