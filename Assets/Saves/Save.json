@@ -1,15 +1,13 @@
 {
   "map": "TestMap",
   "difficulty": "Easy",
-  "playerHP": 20,
-  "weaponSlot1": "M107",
-  "weaponSlot2": "M107",
-  "totalPistolAmmo": 186,
-  "totalRifleAmmo": 70,
-  "totalShotgunAmmo": 89,
-  "totalSniperRifleAmmo": 85,
-  "bonuses": {
-    "Invincible": 1
-  },
-  "wave": 2
+  "playerHP": 80,
+  "weaponSlot1": null,
+  "weaponSlot2": null,
+  "totalPistolAmmo": 100,
+  "totalRifleAmmo": 100,
+  "totalShotgunAmmo": 100,
+  "totalSniperRifleAmmo": 100,
+  "bonuses": {},
+  "wave": 1
 }

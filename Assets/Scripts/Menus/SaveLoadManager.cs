@@ -111,7 +111,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         StartCoroutine(LoadGame());
     }
-    public IEnumerator LoadGame() //FIXME: game loads unactive. Goes normal after entering and exiting pause menu
+    public IEnumerator LoadGame()
     {
         if (AccountManager.Instance.isLogged)
         {
@@ -141,6 +141,7 @@ public class SaveLoadManager : MonoBehaviour
         print(loadData.map);
         SceneManager.LoadScene(loadData.map);
         yield return new WaitForSeconds(1);
+        print("Waited");
 
         int totalPistolAmmo, totalRifleAmmo, totalShotgunAmmo, totalSniperRifleAmmo;
         (totalPistolAmmo, totalRifleAmmo, totalShotgunAmmo, totalSniperRifleAmmo) = loadData.GetAmmo();

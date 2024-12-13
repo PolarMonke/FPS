@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     public void ExitToMainMenu()
     {
         SaveLoadManager.Instance.SaveGame();
+        PauseManager.Instance.ForceUnpauseGame();
         SceneManager.LoadScene("MainMenu");
     }
 }
