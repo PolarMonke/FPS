@@ -8,6 +8,6 @@ public class WeaponCrate : MonoBehaviour
 
     void Start()
     {
-        weaponModel = (Weapon.WeaponModel)Random.Range(0, System.Enum.GetValues(typeof(Weapon.WeaponModel)).Length);        
+        weaponModel = (Weapon.WeaponModel)Random.Range(0, System.Enum.GetValues(typeof(Weapon.WeaponModel)).Length-1);        
     }
 }

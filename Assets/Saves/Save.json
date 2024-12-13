@@ -1,15 +1,15 @@
 {
   "map": "TestMap",
   "difficulty": "Middle",
-  "playerHP": 100,
-  "weaponSlot1": "Colt1911",
-  "weaponSlot2": null,
-  "totalPistolAmmo": 97,
-  "totalRifleAmmo": 100,
-  "totalShotgunAmmo": 100,
-  "totalSniperRifleAmmo": 100,
+  "playerHP": 96,
+  "weaponSlot1": "AK74",
+  "weaponSlot2": "Colt1911",
+  "totalPistolAmmo": 284,
+  "totalRifleAmmo": 38,
+  "totalShotgunAmmo": 91,
+  "totalSniperRifleAmmo": 92,
   "bonuses": {
-    "Invincible": 1
+    "Chill": 2
   },
-  "wave": 1
+  "wave": 2
 }

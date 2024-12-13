@@ -151,6 +151,8 @@ public class SaveLoadManager : MonoBehaviour
         InventoryManager.Instance.SetBonuses(loadData.bonuses);
 
         WaveManager.Instance.waveController.StartFromWave(loadData.wave);
+
+        print("Game loaded");
     }
     //Saves user data to Saves.json
     public void SaveGameForUser(string username, SaveData saveData)
