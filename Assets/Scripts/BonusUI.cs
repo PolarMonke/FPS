@@ -16,7 +16,7 @@ public class BonusUI : MonoBehaviour
             {
                 bonusInstance.transform.SetParent(bonusSlots[i].transform);
                 ForceScale(bonusInstance, new Vector3(4f,4f,1f));
-                //bonusInstance.GetComponent<RectTransform>().localScale = new Vector3(2f,2f,1f);
+                bonusInstance.GetComponent<RectTransform>().localPosition = new Vector3(0,0,0);
             }
         }
     }
