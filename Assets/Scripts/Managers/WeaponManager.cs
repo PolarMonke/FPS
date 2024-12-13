@@ -120,7 +120,10 @@ public class WeaponManager : MonoBehaviour
         pickedupWeapon.GetComponent<Animator>().enabled = true;
         pickedupWeapon.GetComponent<Collider>().enabled = false;
         pickedupWeapon.GetComponent<Outline>().enabled = false;
-;
+        pickedupWeapon.GetComponent<Rigidbody>().useGravity = false;
+        pickedupWeapon.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        pickedupWeapon.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
         pickedupWeapon.transform.localPosition = new Vector3(weapon.spawnPosition.x, weapon.spawnPosition.y, weapon.spawnPosition.z);
         pickedupWeapon.transform.localRotation = Quaternion.Euler(weapon.spawnRotation.x, weapon.spawnRotation.y, weapon.spawnRotation.z);
 
@@ -138,6 +141,7 @@ public class WeaponManager : MonoBehaviour
             weaponToDrop.GetComponent<Animator>().enabled = false;
             weaponToDrop.GetComponent<Collider>().enabled = true;
             weaponToDrop.GetComponent<Outline>().enabled = true;
+            pickedupWeapon.GetComponent<Rigidbody>().useGravity = true;
 
 
             weaponToDrop.transform.SetParent(pickedupWeapon.transform.parent);
