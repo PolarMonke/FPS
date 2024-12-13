@@ -25,7 +25,7 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Update()//FIXME: hints don't display
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f,0.5f,0));
         RaycastHit hit;

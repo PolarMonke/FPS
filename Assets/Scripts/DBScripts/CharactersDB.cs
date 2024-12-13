@@ -139,7 +139,7 @@ public class ChractersDB : MonoBehaviour
         }
         using (var command = connection.CreateCommand())
         {
-            command.CommandText = $"DELETE FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} = {id}";
+            command.CommandText = $"DELETE FROM {SQL_TABLE_NAME} WHERE {COL_ID} = {id}";
             command.ExecuteNonQuery();
         }
         RenumberIDs();

@@ -1,15 +1,15 @@
 {
-  "map": "Dust3",
-  "difficulty": "Easy",
-  "playerHP": -10,
-  "weaponSlot1": "AK74",
+  "map": "TestMap",
+  "difficulty": "Middle",
+  "playerHP": 100,
+  "weaponSlot1": "Colt1911",
   "weaponSlot2": null,
-  "totalPistolAmmo": 236,
-  "totalRifleAmmo": 48,
-  "totalShotgunAmmo": 240,
+  "totalPistolAmmo": 97,
+  "totalRifleAmmo": 100,
+  "totalShotgunAmmo": 100,
   "totalSniperRifleAmmo": 100,
   "bonuses": {
-    "Chill": 1
+    "Invincible": 1
   },
-  "wave": 2
+  "wave": 1
 }

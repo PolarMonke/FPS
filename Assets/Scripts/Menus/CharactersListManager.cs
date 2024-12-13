@@ -84,11 +84,12 @@ public class CharactersListManager : MonoBehaviour
         characterEntry.transform.Find("WeaponImage").GetComponent<Image>().sprite = WeaponsDB.Instance.GetSpriteByName(character.WeaponModel);
         characterEntry.transform.Find("BonusImage").GetComponent<Image>().sprite = BonusesDB.Instance.GetSpriteByName(character.BonusType);
         
+        Transform deleteButtonContainer = characterEntry.transform.Find("DeleteButton");
         Button deleteButton = characterEntry.transform.Find("DeleteButton").GetComponent<Button>();
         if (deleteButton != null)
         {
             int charID = character.ID;
-            deleteButton.onClick.AddListener(() => DeleteCharacter(charID));
+            deleteButton.onClick.AddListener(() => DeleteCharacter(charID));//FIXME: no onClick
         }
 
         Button selectButton = characterEntry.GetComponent<Button>();
@@ -119,8 +120,7 @@ public class CharactersListManager : MonoBehaviour
         characters.Clear();
         selectedCharacter = null;
 
-        lastID = 0;//it was 0 for some reason. If something goes wrong, it it's fault
-        //it went wront and it was it's fault 
+        lastID = 0;
 
         if (AccountManager.Instance.isLogged)
         {

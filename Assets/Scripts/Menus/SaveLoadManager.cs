@@ -111,7 +111,7 @@ public class SaveLoadManager : MonoBehaviour
     {
         StartCoroutine(LoadGame());
     }
-    public IEnumerator LoadGame()
+    public IEnumerator LoadGame() //FIXME: weapons break and game starts on pause
     {
         if (AccountManager.Instance.isLogged)
         {
