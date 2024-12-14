@@ -66,8 +66,8 @@ public class Shotgun : Weapon
             ammoLeft += 1;
         }
         WeaponManager.Instance.DecreaseTotalAmmo(weaponModel, 1);
-
-        if (Input.GetKeyDown(KeyCode.Mouse0) || ammoToLoad == 0 || Input.GetKeyDown(KeyCode.Mouse1))
+        
+        if (Input.GetKeyDown(KeyCode.Mouse0) || ammoToLoad == 0 || Input.GetKeyDown(KeyCode.Mouse1) || Input.GetKeyUp(KeyCode.Mouse1))
         {
             StopReloading();
             SoundManager.Instance.PlayEndingReloadSound();
@@ -81,13 +81,13 @@ public class Shotgun : Weapon
     protected void StopReloading()
     {
         if (inScope)
-            {
-                animator.SetTrigger("ExitReloadingInScope");
-            }
-            else
-            {
-                animator.SetTrigger("ExitReloading");
-            }
+        {
+            animator.SetTrigger("ExitReloadingInScope");
+        }
+        else
+        {
+            animator.SetTrigger("ExitReloading");
+        }
         isReloading = false;
     }
 
