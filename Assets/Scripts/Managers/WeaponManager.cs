@@ -119,7 +119,6 @@ public class WeaponManager : MonoBehaviour
         weapon.enabled = true;
         pickedupWeapon.GetComponent<Animator>().enabled = true;
         pickedupWeapon.GetComponent<Collider>().enabled = false;
-        pickedupWeapon.GetComponent<Outline>().enabled = false;
         pickedupWeapon.GetComponent<Rigidbody>().isKinematic = true;
         pickedupWeapon.GetComponent<Rigidbody>().useGravity = false;
         pickedupWeapon.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -141,7 +140,6 @@ public class WeaponManager : MonoBehaviour
             weaponToDrop.GetComponent<Weapon>().enabled = false;
             weaponToDrop.GetComponent<Animator>().enabled = false;
             weaponToDrop.GetComponent<Collider>().enabled = true;
-            weaponToDrop.GetComponent<Outline>().enabled = true;
             pickedupWeapon.GetComponent<Rigidbody>().isKinematic = false;
             pickedupWeapon.GetComponent<Rigidbody>().useGravity = true;
 

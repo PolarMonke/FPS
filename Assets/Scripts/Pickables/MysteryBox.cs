@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MysteryBox : MonoBehaviour
+public class MysteryBox : MonoBehaviour, IHoverable
 {
     public Bonus.BonusTypes bonusType;
 

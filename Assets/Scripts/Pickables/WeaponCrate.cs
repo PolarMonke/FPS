@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponCrate : MonoBehaviour
+public class WeaponCrate : MonoBehaviour, IHoverable
 {
     public Weapon.WeaponModel weaponModel;
 

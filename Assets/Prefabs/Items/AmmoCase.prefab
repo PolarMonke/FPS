@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 501596858544061717}
   - component: {fileID: 1317832847062709205}
   - component: {fileID: 3818497596150830090}
-  - component: {fileID: 5141844881573514888}
   - component: {fileID: 2078954906469108076}
   m_Layer: 0
   m_Name: AmmoCase
@@ -100,24 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoAmount: 100
   ammoType: 0
---- !u!114 &5141844881573514888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3731647183462516603}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0, g: 1, b: 0.8525481, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!65 &2078954906469108076
 BoxCollider:
   m_ObjectHideFlags: 0

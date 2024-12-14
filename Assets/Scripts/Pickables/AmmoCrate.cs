@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmoCrate : MonoBehaviour
+public class AmmoCrate : MonoBehaviour, IHoverable
 {
     private int minAmmoAmount = 10;
     private int maxAmmoAmount = 150;

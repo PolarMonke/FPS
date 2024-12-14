@@ -8,12 +8,9 @@ public class InteractionManager : MonoBehaviour
 {
     public static InteractionManager Instance { get; set; }
 
-    private Weapon hoveredWeapon = null;
-    private AmmoCrate hoveredAmmoCrate = null;
-    private HealthKit hoveredHealthKit = null;
-    private MysteryBox hoveredMysteryBox = null;
-    private WeaponCrate hoveredWeaponCrate = null;
-    
+    private IHoverable hoveredItem = null;
+    private string currentHintText = "";
+
 
     private void Awake()
     {
@@ -21,125 +18,109 @@ public class InteractionManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else{
+        else
+        {
             Instance = this;
         }
     }
 
     private void Update()
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f,0.5f,0));
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
-        
+
         if (Physics.Raycast(ray, out hit))
         {
             GameObject objectHitByRaycast = hit.transform.gameObject;
-            if (objectHitByRaycast.GetComponent<Weapon>() && objectHitByRaycast.GetComponent<Weapon>().isActiveWeapon == false)
-            {
-                hoveredWeapon = objectHitByRaycast.GetComponent<Weapon>();
-                hoveredWeapon.GetComponent<Outline>().enabled = true;
-                hoveredWeapon.GetComponent<Rigidbody>().isKinematic  = true;
-                HUDManager.Instance.DisplayHint(hoveredWeapon.weaponModel.ToString());
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    HUDManager.Instance.UnDisplayHint();
-                    WeaponManager.Instance.PickupWeapon(objectHitByRaycast.gameObject);
-                }
-                
-            }
-            else if(hoveredWeapon == null) {}
-            else
-            {
-                hoveredWeapon.GetComponent<Outline>().enabled = false;
-                HUDManager.Instance.UnDisplayHint();
-            }
+            hoveredItem = GetHoverableItem(objectHitByRaycast);//works
 
-            if (objectHitByRaycast.GetComponent<AmmoCrate>())
-            {
+            UpdateHintText(hoveredItem);
 
-                hoveredAmmoCrate = objectHitByRaycast.GetComponent<AmmoCrate>();
-                hoveredAmmoCrate.GetComponent<Outline>().enabled = true;
-                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText(hoveredAmmoCrate.ammoType.ToString()) + "\n" + hoveredAmmoCrate.ammoAmount.ToString());
-                
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    WeaponManager.Instance.PickupAmmo(hoveredAmmoCrate);
-                    HUDManager.Instance.UnDisplayHint();
-                    Destroy(objectHitByRaycast.gameObject);
-                }
-                
-            }
-            else if(hoveredAmmoCrate == null) {}
-            else
+            if (Input.GetKeyDown(KeyCode.F) && hoveredItem != null)
             {
-                hoveredAmmoCrate.GetComponent<Outline>().enabled = false;
-                HUDManager.Instance.UnDisplayHint();
+                HandleInteraction(hoveredItem, objectHitByRaycast);
             }
-
-            if (objectHitByRaycast.GetComponent<HealthKit>())
-            {
-
-                hoveredHealthKit = objectHitByRaycast.GetComponent<HealthKit>();
-                hoveredHealthKit.GetComponent<Outline>().enabled = true;
-                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("HealthKit") + "\n" + hoveredHealthKit.healthAmount.ToString());
-                
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    HealthManager.Instance.player.Heal(hoveredHealthKit.healthAmount);
-                    HUDManager.Instance.UnDisplayHint();
-                    Destroy(objectHitByRaycast.gameObject);
-                }
-                
-            }
-            else if(hoveredHealthKit == null) {}
-            else
-            {
-                hoveredHealthKit.GetComponent<Outline>().enabled = false;
-                HUDManager.Instance.UnDisplayHint();
-            }
-            
-            if (objectHitByRaycast.GetComponent<MysteryBox>())
-            {
-
-                hoveredMysteryBox = objectHitByRaycast.GetComponent<MysteryBox>();
-                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("MysteryBox"));
-                
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    BonusManager.Instance.AddToInventory(hoveredMysteryBox.bonusType);
-                    HUDManager.Instance.UnDisplayHint();
-                    Destroy(objectHitByRaycast.gameObject);
-                }
-                
-            }
-            else if(hoveredMysteryBox == null) {}
-            else
-            {
-                HUDManager.Instance.UnDisplayHint();
-            }
-
-            if (objectHitByRaycast.GetComponent<WeaponCrate>())
-            {
-                hoveredWeaponCrate = objectHitByRaycast.GetComponent<WeaponCrate>();
-                HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("WeaponCrate"));
-                
-                if (Input.GetKeyDown(KeyCode.F))
-                {
-                    string weapon = hoveredWeaponCrate.weaponModel.ToString();
-                    Vector3 spawnPos = objectHitByRaycast.gameObject.transform.position;
-                    spawnPos.y += 1;
-                    Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weapon}.prefab"), spawnPos, objectHitByRaycast.gameObject.transform.rotation);
-                    HUDManager.Instance.UnDisplayHint();
-                    Destroy(objectHitByRaycast.gameObject);
-                }
-                
-            }
-            else if(hoveredWeaponCrate == null) {}
-            else
-            {
-                HUDManager.Instance.UnDisplayHint();
-            }
+        }
+        else
+        {
+            ClearHint();
         }
     }
 
+
+    private IHoverable GetHoverableItem(GameObject obj)
+    {
+        if (obj.TryGetComponent<Weapon>(out var weapon) && !weapon.isActiveWeapon) return weapon as IHoverable;
+        if (obj.TryGetComponent<AmmoCrate>(out var ammoCrate)) return ammoCrate as IHoverable;
+        if (obj.TryGetComponent<HealthKit>(out var healthKit)) return healthKit as IHoverable;
+        if (obj.TryGetComponent<MysteryBox>(out var mysteryBox)) return mysteryBox as IHoverable;
+        if (obj.TryGetComponent<WeaponCrate>(out var weaponCrate)) return weaponCrate as IHoverable;
+        return null;
+    }
+
+
+
+
+    private void UpdateHintText(IHoverable item)
+    {
+        if (item != null)
+        {
+            string newHint = "";
+            if (item is Weapon weapon) newHint = weapon.weaponModel.ToString();
+            else if (item is AmmoCrate ammoCrate) newHint = $"{LanguagesDB.Instance.GetText(ammoCrate.ammoType.ToString())}\n{ammoCrate.ammoAmount}";
+            else if (item is HealthKit healthKit) newHint = $"{LanguagesDB.Instance.GetText("HealthKit")}\n{healthKit.healthAmount}";
+            else if (item is MysteryBox mysteryBox) newHint = LanguagesDB.Instance.GetText("MysteryBox");
+            else if (item is WeaponCrate weaponCrate) newHint = LanguagesDB.Instance.GetText("WeaponCrate");
+
+            if (newHint != currentHintText)
+            {
+                currentHintText = newHint;
+                HUDManager.Instance.DisplayHint(currentHintText);
+            }
+        }
+        else
+        {
+            ClearHint();
+        }
+    }
+
+
+    private void HandleInteraction(IHoverable item, GameObject obj)
+    {
+        if (item is Weapon weapon) WeaponManager.Instance.PickupWeapon(obj);
+        else if (item is AmmoCrate ammoCrate)
+        {
+            WeaponManager.Instance.PickupAmmo(ammoCrate);
+            Destroy(obj);
+        }
+        else if (item is HealthKit healthKit)
+        {
+            HealthManager.Instance.player.Heal(healthKit.healthAmount);
+            Destroy(obj);
+        }
+        else if (item is MysteryBox mysteryBox)
+        {
+            BonusManager.Instance.AddToInventory(mysteryBox.bonusType);
+            Destroy(obj);
+        }
+        else if (item is WeaponCrate weaponCrate)
+        {
+            string weaponToSpawn = weaponCrate.weaponModel.ToString();
+            Vector3 spawnPos = obj.transform.position;
+            spawnPos.y += 1;
+            Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weaponToSpawn}.prefab"), spawnPos, obj.transform.rotation);
+            Destroy(obj);
+        }
+
+        ClearHint();
+    }
+
+    private void ClearHint()
+    {
+        currentHintText = "";
+        HUDManager.Instance.UnDisplayHint();
+        hoveredItem = null;
+    }
 }
+
+public interface IHoverable { }
