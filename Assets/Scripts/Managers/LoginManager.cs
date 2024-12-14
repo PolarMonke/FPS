@@ -24,12 +24,17 @@ public class LoginManager : MonoBehaviour
     public Button loginButton;
     public Button newAccountButton;
 
+    public TextMeshProUGUI loginErrorText;
+    public TextMeshProUGUI passwordErrorText;
+
     [Header("New account menu")]
     public TMP_InputField newLoginInput;
     public TMP_InputField newPasswordInput;
     public TMP_InputField newPasswordConfirmInput;
     public Button createNewAccountButton;
 
+    public TextMeshProUGUI newLoginErrorText;
+    public TextMeshProUGUI newPasswordErrorText;
 
     private void Awake()
     {
@@ -104,20 +109,20 @@ public class LoginManager : MonoBehaviour
         {
             if (UsersDB.Instance.CompareData(loginInput.text, passwordInput.text))
             {
+                loginErrorText.text = "";
+                passwordErrorText.text = "";
                 AccountManager.Instance.LogIn(loginInput.text);
             }
             else
             {
                 loginInput.text = "";
                 passwordInput.text = "";
-                loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("NoUserException");
-                passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("NoUserException");
+                loginErrorText.text = LanguagesDB.Instance.GetText("NoUserException");
             }
         }
         else
         {
-            loginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("WrongDataException");
-            passwordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("WrongDataException");
+            passwordErrorText.text = LanguagesDB.Instance.GetText("WrongDataException");
         }
     }
     public void LogIn(string login, string password)
@@ -135,34 +140,33 @@ public class LoginManager : MonoBehaviour
             {
                 if (!UsersDB.Instance.SearchUser(newLoginInput.text))
                 {
+                    newLoginErrorText.text = "";
+                    newPasswordErrorText.text = "";
                     UsersDB.Instance.AddUser(newLoginInput.text, newPasswordInput.text);
                     LogIn(newLoginInput.text, newPasswordInput.text);
                 }
                 else
                 {
                     newLoginInput.text = "";
-                    newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("UserExistsException");
+                    newLoginErrorText.text = LanguagesDB.Instance.GetText("UserExistsException");
                 }
             }
             else if (!Regex.IsMatch(newPasswordInput.text, @"^(?=.*[A-Z])(?=.*\d).{8,}$"))
             {
                 newPasswordInput.text = "";
-                newPasswordInput.text = "";
-                newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("WeakPasswordException");
+                newPasswordConfirmInput.text = "";
+                newPasswordErrorText.text = LanguagesDB.Instance.GetText("WeakPasswordException");
             }
             else
             {
                 newPasswordInput.text = "";
-                newPasswordInput.text = "";
-                newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("DifferentPasswordsException");
+                newPasswordConfirmInput.text = "";
+                newPasswordErrorText.text = LanguagesDB.Instance.GetText("DifferentPasswordsException");
             }
         }
         else
         {
-            newLoginInput.text = "";
-            newPasswordInput.text = "";
-            newPasswordInput.text = "";
-            newLoginInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("WrongDataException");
+            newPasswordErrorText.text = LanguagesDB.Instance.GetText("WrongDataException");
         }
     }
 }

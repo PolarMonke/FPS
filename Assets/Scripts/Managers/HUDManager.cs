@@ -66,13 +66,14 @@ public class HUDManager : MonoBehaviour
     }  
     public void DisplayHint(string text)
     {
+        KeyHintUI.gameObject.SetActive(true); 
+        KeyHintTextUI.gameObject.SetActive(true);
         KeyHintUI.sprite = fKeyHint;
         KeyHintTextUI.text = text;
     }
     public void UnDisplayHint()
     {
-        //print("unsdisplayed");
-        KeyHintUI.sprite = transparentUI;
-        KeyHintTextUI.text = "";
+        KeyHintUI.gameObject.SetActive(false);
+        KeyHintTextUI.gameObject.SetActive(false);
     }
 }

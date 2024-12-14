@@ -13,6 +13,7 @@ public class InteractionManager : MonoBehaviour
     private HealthKit hoveredHealthKit = null;
     private MysteryBox hoveredMysteryBox = null;
     private WeaponCrate hoveredWeaponCrate = null;
+    
 
     private void Awake()
     {
@@ -25,7 +26,7 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    private void Update()//FIXME: hints don't display
+    private void Update()
     {
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f,0.5f,0));
         RaycastHit hit;
@@ -35,12 +36,6 @@ public class InteractionManager : MonoBehaviour
             GameObject objectHitByRaycast = hit.transform.gameObject;
             if (objectHitByRaycast.GetComponent<Weapon>() && objectHitByRaycast.GetComponent<Weapon>().isActiveWeapon == false)
             {
-
-                if (hoveredWeapon)
-                {
-                    hoveredWeapon.GetComponent<Outline>().enabled = false;
-                }
-
                 hoveredWeapon = objectHitByRaycast.GetComponent<Weapon>();
                 hoveredWeapon.GetComponent<Outline>().enabled = true;
                 hoveredWeapon.GetComponent<Rigidbody>().isKinematic  = true;
@@ -61,11 +56,6 @@ public class InteractionManager : MonoBehaviour
 
             if (objectHitByRaycast.GetComponent<AmmoCrate>())
             {
-
-                if (hoveredAmmoCrate)
-                {
-                    hoveredAmmoCrate.GetComponent<Outline>().enabled = false;
-                }
 
                 hoveredAmmoCrate = objectHitByRaycast.GetComponent<AmmoCrate>();
                 hoveredAmmoCrate.GetComponent<Outline>().enabled = true;
@@ -88,11 +78,6 @@ public class InteractionManager : MonoBehaviour
 
             if (objectHitByRaycast.GetComponent<HealthKit>())
             {
-
-                if (hoveredHealthKit)
-                {
-                    hoveredHealthKit.GetComponent<Outline>().enabled = false;
-                }
 
                 hoveredHealthKit = objectHitByRaycast.GetComponent<HealthKit>();
                 hoveredHealthKit.GetComponent<Outline>().enabled = true;
@@ -135,7 +120,6 @@ public class InteractionManager : MonoBehaviour
 
             if (objectHitByRaycast.GetComponent<WeaponCrate>())
             {
-
                 hoveredWeaponCrate = objectHitByRaycast.GetComponent<WeaponCrate>();
                 HUDManager.Instance.DisplayHint(LanguagesDB.Instance.GetText("WeaponCrate"));
                 
