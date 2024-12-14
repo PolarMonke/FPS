@@ -41,7 +41,6 @@ public class PauseManager : MonoBehaviour
         Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = pause; 
     }
-
     public void ForceUnpauseGame()
     {
         Time.timeScale = 1f;

@@ -1,12 +1,12 @@
 {
   "map": "TestMap",
   "difficulty": "Easy",
-  "playerHP": 0,
-  "weaponSlot1": "AK74",
-  "weaponSlot2": null,
+  "playerHP": 80,
+  "weaponSlot1": "M4",
+  "weaponSlot2": "AK74",
   "totalPistolAmmo": 100,
-  "totalRifleAmmo": 100,
-  "totalShotgunAmmo": 228,
+  "totalRifleAmmo": 31,
+  "totalShotgunAmmo": 218,
   "totalSniperRifleAmmo": 100,
   "bonuses": {
     "Invincible": 2

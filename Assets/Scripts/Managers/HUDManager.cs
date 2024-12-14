@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour
 {
     public static HUDManager Instance { get; set; }
-
+    public bool isActive = true;
     
     public GameObject middleDot;
 
@@ -37,23 +37,33 @@ public class HUDManager : MonoBehaviour
 
     private void Update()
     {
-        Weapon activeWeapon = WeaponManager.Instance.activeWeaponSlot.GetComponentInChildren<Weapon>();
-        Weapon unactiveWeapon = WeaponManager.Instance.GetUnactiveWeaponSlot().GetComponentInChildren<Weapon>();
-        if (activeWeapon)
+        if (isActive)
         {
-            ammoUI.text = $"{activeWeapon.ammoLeft}/{WeaponManager.Instance.CheckAmmoLeft(activeWeapon.weaponModel)}";
-            ammoTypeUI.sprite = activeWeapon.ammoImage;
-            activeWeaponUI.sprite = activeWeapon.weaponImage;
-
-            //FIXME: Weapons are scaling with image
-            activeWeaponUI.transform.localScale = Vector3.one; //This did not fix it
-            ammoTypeUI.transform.localScale = Vector3.one;
-
-
-            if (unactiveWeapon)
+            Weapon activeWeapon = WeaponManager.Instance.activeWeaponSlot.GetComponentInChildren<Weapon>();
+            Weapon unactiveWeapon = WeaponManager.Instance.GetUnactiveWeaponSlot().GetComponentInChildren<Weapon>();
+            if (activeWeapon)
             {
-                unactiveWeaponUI.sprite = unactiveWeapon.weaponImage;
-                unactiveWeaponUI.transform.localScale = new Vector3(0.5f,0.5f,1);
+                ammoUI.text = $"{activeWeapon.ammoLeft}/{WeaponManager.Instance.CheckAmmoLeft(activeWeapon.weaponModel)}";
+                ammoTypeUI.sprite = activeWeapon.ammoImage;
+                activeWeaponUI.sprite = activeWeapon.weaponImage;
+
+                //FIXME: Weapons are scaling with image
+                activeWeaponUI.transform.localScale = Vector3.one; //This did not fix it
+                ammoTypeUI.transform.localScale = Vector3.one;
+
+
+                if (unactiveWeapon)
+                {
+                    unactiveWeaponUI.sprite = unactiveWeapon.weaponImage;
+                    unactiveWeaponUI.transform.localScale = new Vector3(0.5f,0.5f,1);
+                }
+            }
+            else
+            {
+                ammoTypeUI.sprite = transparentUI;
+                activeWeaponUI.sprite = transparentUI;
+                unactiveWeaponUI.sprite = transparentUI;
+                ammoUI.text = $"";
             }
         }
         else
@@ -63,6 +73,7 @@ public class HUDManager : MonoBehaviour
             unactiveWeaponUI.sprite = transparentUI;
             ammoUI.text = $"";
         }
+        
     }  
     public void DisplayHint(string text)
     {

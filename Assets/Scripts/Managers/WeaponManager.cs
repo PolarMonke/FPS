@@ -11,7 +11,7 @@ using static Weapon;
 public class WeaponManager : MonoBehaviour
 {
     public static WeaponManager Instance { get; set; }
-
+    
     public List<GameObject> WeaponSlots;
 
     public GameObject activeWeaponSlot;
@@ -163,7 +163,6 @@ public class WeaponManager : MonoBehaviour
         {
             Weapon newWeapon = activeWeaponSlot.transform.GetChild(0).GetComponent<Weapon>();
             newWeapon.isActiveWeapon = true;
-            newWeapon.GetComponent<Outline>().enabled = false;
         }
 
     }

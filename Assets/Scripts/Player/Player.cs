@@ -58,6 +58,15 @@ public class Player : MonoBehaviour
         isDead = true;
         playerHealthUI.gameObject.SetActive(false);
         GetComponent<DeathScreen>().StartFade();
+        SoundManager.Instance.StopAllSounds();
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Weapon[] weapons = GetComponentsInChildren<Weapon>(); 
+        foreach (Weapon weapon in weapons)
+        {
+            weapon.isActiveWeapon = false;
+        }
+        HUDManager.Instance.isActive = false;
         GetComponentInChildren<MouseMovement>().enabled = false;
         GetComponent<PlayerMovement>().enabled = false;
         GetComponentInChildren<Animator>().enabled = true;
