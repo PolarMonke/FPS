@@ -50,7 +50,12 @@ public class Player : MonoBehaviour
         if (other.CompareTag("ZombieHand") && !isDead)
         {
             TakeDamage(other.GetComponent<ZombieHand>().damage);
-        }    
+        }  
+        if (other.CompareTag("Underground") && !isDead)
+        {
+            SoundManager.Instance.playerChannel.PlayOneShot(SoundManager.Instance.playerDead);
+            KillPlayer();
+        }  
     }
 
     private void KillPlayer()

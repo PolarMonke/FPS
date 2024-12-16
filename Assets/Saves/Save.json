@@ -1,7 +1,7 @@
 {
   "map": "TestMap",
   "difficulty": "Easy",
-  "playerHP": 0,
+  "playerHP": 100,
   "weaponSlot1": "M107",
   "weaponSlot2": "AK74",
   "totalPistolAmmo": 152,
