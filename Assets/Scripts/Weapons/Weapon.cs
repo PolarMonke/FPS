@@ -122,6 +122,10 @@ public class Weapon : MonoBehaviour, IHoverable
         {
             SoundManager.Instance.emptyMagSound.Play();
         }
+        print("isShooting: " + isShooting);
+        print("readyToShoot: " + readyToShoot);
+        print("isReloading: " + isReloading);
+        print("can fire: " + (Time.time >= nextFireTime));
         if (isShooting && readyToShoot && !isReloading && Time.time >= nextFireTime)
         {
 
@@ -179,6 +183,7 @@ public class Weapon : MonoBehaviour, IHoverable
         int ammoToLoad = Mathf.Min(magSpace, WeaponManager.Instance.CheckAmmoLeft(weaponModel));
 
         yield return new WaitForSeconds(reloadTime);
+        print("reload complete");
 
         ammoLeft += ammoToLoad;
         WeaponManager.Instance.DecreaseTotalAmmo(weaponModel, ammoToLoad);
