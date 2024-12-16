@@ -73,7 +73,6 @@ public class ZombieSpawnController : MonoBehaviour
                 var skibidi = Instantiate(skibidiPrefab, spawnPosition, Quaternion.identity);
                 Enemy enemyScript = skibidi.GetComponent<SkibidiBoss>();
                 currentEnemiesAlive.Add(enemyScript);
-                //bossHPUI.enabled = true;
                 bossIsSpawned = true;
             }
             else if (Random.value < 0.3)
@@ -102,7 +101,6 @@ public class ZombieSpawnController : MonoBehaviour
             {
                 if (enemy.enemyType == Enemy.EnemyTypes.SkibidiBoss)
                 {
-                    //bossHPUI.enabled = false;
                     bossIsSpawned = false;
                 }
                 enemiesToRemove.Add(enemy);
@@ -113,6 +111,7 @@ public class ZombieSpawnController : MonoBehaviour
             currentEnemiesAlive.Remove(enemy);
         }
         enemiesToRemove.Clear();
+        print(currentEnemiesAlive.Count);
         if (currentEnemiesAlive.Count == 0 && !inCoolDown)
         {
             StartCoroutine(WaveCoolDown());
@@ -141,10 +140,12 @@ public class ZombieSpawnController : MonoBehaviour
 
     private void KillAllEnemies()
     {
-        foreach (Enemy zombie in currentEnemiesAlive)
+        foreach (Enemy enemy in currentEnemiesAlive)
         {
-            zombie.Die();    
+            enemy.Die();
+            //yield return new WaitForSeconds(0.05f);    
         }
+        
     }
 
     public void DoubleAndGiveItToTheNextWave()
@@ -153,7 +154,7 @@ public class ZombieSpawnController : MonoBehaviour
         initializeEnemiesPerWave *= 2;
     }
 
-     public void StartFromWave(int waveNumber)
+    public void StartFromWave(int waveNumber)
     {
         if (waveNumber <= 0)
         {
