@@ -11,11 +11,11 @@ public class SettingsManager : MonoBehaviour
     public GameObject settingsMenu;
     public MainMenu mainMenu;
 
-    private const string LANGUAGE_KEY = "MyString";
-    private const string VOLUME_KEY = "MyFloat";
+    private const string LANGUAGE_KEY = "Language";
+    private const string VOLUME_KEY = "Volume";
 
-    public string language;
-    public float volume;
+    public string language = "English";
+    public float volume = 1;
 
     public TMP_Dropdown languagesDropdown;
     public Slider volumeSlider;
@@ -65,6 +65,14 @@ public class SettingsManager : MonoBehaviour
         SoundManager.Instance.SetVolume(volume);
         LanguagesDB.Instance.SQL_TABLE_NAME = language;
         LanguagesDB.Instance.LoadLanguageData();
+        if (language == "Belarusian")
+        {
+            BonusesDB.Instance.SQL_TABLE_NAME = "BonusesBel";
+        }
+        else
+        {
+            BonusesDB.Instance.SQL_TABLE_NAME = "BonusesEng";
+        }
         mainMenu.UpdateLocalization();
     }
     public void SaveSettings()

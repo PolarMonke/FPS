@@ -108,7 +108,7 @@ public class InteractionManager : MonoBehaviour
             string weaponToSpawn = weaponCrate.weaponModel.ToString();
             Vector3 spawnPos = obj.transform.position;
             spawnPos.y += 1;
-            Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weaponToSpawn}.prefab"), spawnPos, obj.transform.rotation);
+            Instantiate(Resources.Load<GameObject>($"Prefabs/Weapons/{weaponToSpawn}.prefab"), spawnPos, obj.transform.rotation);
             Destroy(obj);
         }
 

@@ -19,6 +19,7 @@ public class BonusesDB : MonoBehaviour
     private const string COL_DURATION = "Duration";
     private const string COL_UNITED_NAME = "UnitedName";
 
+    private string dbName = "Bonuses1.sqlite";
     private string dbPath;
     private IDbConnection connection = null;
 
@@ -31,16 +32,41 @@ public class BonusesDB : MonoBehaviour
         else
         {
             Instance = this;
-            dbPath = Application.dataPath + "/DataBases/Bonuses.sqlite";
+            DontDestroyOnLoad(gameObject);
+
+            dbPath = Path.Combine(Application.persistentDataPath, "DataBases", dbName);
+            Directory.CreateDirectory(Path.GetDirectoryName(dbPath));
+
             if (!File.Exists(dbPath))
             {
-                Debug.LogError("Database file not found at: " + dbPath);
-                return;
+                CopyDatabaseFromStreamingAssets();
             }
             OpenConnection();
         }
-        DontDestroyOnLoad(this);
     }
+
+    private void CopyDatabaseFromStreamingAssets()
+    {
+        string sourcePath = Path.Combine(Application.streamingAssetsPath, "DataBases", dbName);
+
+        if (!File.Exists(sourcePath))
+        {
+            Debug.LogError($"Database file not found in StreamingAssets: {sourcePath}");
+            return;
+        }
+
+        try
+        {
+            File.Copy(sourcePath, dbPath, true);
+            Debug.Log($"Database copied to: {dbPath}");
+        }
+        catch (IOException e)
+        {
+            Debug.LogError($"Error copying database: {e.Message}");
+
+        }
+    }
+
     private bool OpenConnection()
     {
         string connectionString = $"URI=file:{dbPath}";
@@ -171,7 +197,7 @@ public class BonusesDB : MonoBehaviour
             Debug.LogError("GetAllBonusNames error: " + e.Message);
         }
 
-        bonusSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Textures/Bonuses/" + spritePath);
+        bonusSprite = Resources.Load<Sprite>("Textures/Bonuses/" + spritePath);
 
         return bonusSprite;
     }

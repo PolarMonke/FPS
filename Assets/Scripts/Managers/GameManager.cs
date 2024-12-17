@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
         if (CharacterPresetManager.Instance.characterData != null)
         {
             CharacterData character = CharacterPresetManager.Instance.characterData;
-            GameObject weapon = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{character.WeaponModel}.prefab");
+            GameObject weapon = Resources.Load<GameObject>($"Prefabs/Weapons/{character.WeaponModel}.prefab");
             WeaponManager.Instance.PickupWeapon(Instantiate(weapon));
 
             Bonus.BonusTypes bonusType;

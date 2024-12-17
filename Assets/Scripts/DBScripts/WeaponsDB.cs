@@ -1,15 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mono.Data.SqliteClient;
 using System.Data;
 using System.IO;
 using System;
-using Unity.Services.Analytics;
-using UnityEngine.UI;
 using UnityEditor;
-using UnityEditor.MPE;
-using UnityEngine.Rendering;
 
 public class WeaponsDB : MonoBehaviour
 {
@@ -20,6 +15,7 @@ public class WeaponsDB : MonoBehaviour
     private const string COL_AMMO_TYPE = "AmmoType";
     private const string COL_SPRITE = "Sprite";
 
+    private string dbName = "Weapons1.sqlite";
     private string dbPath;
     private IDbConnection connection = null;
 
@@ -32,15 +28,40 @@ public class WeaponsDB : MonoBehaviour
         else
         {
             Instance = this;
-            dbPath = Application.dataPath + "/DataBases/weapons.sqlite";
+            DontDestroyOnLoad(gameObject);
+
+            dbPath = Path.Combine(Application.persistentDataPath, "DataBases", dbName);
+            Directory.CreateDirectory(Path.GetDirectoryName(dbPath));
+
             if (!File.Exists(dbPath))
             {
-                Debug.LogError("Database file not found at: " + dbPath);
-                return;
+                CopyDatabaseFromStreamingAssets();
             }
             OpenConnection();
         }
        DontDestroyOnLoad(this);
+    }
+
+    private void CopyDatabaseFromStreamingAssets()
+    {
+        string sourcePath = Path.Combine(Application.streamingAssetsPath, "DataBases", dbName);
+
+        if (!File.Exists(sourcePath))
+        {
+            Debug.LogError($"Database file not found in StreamingAssets: {sourcePath}");
+            return;
+        }
+
+        try
+        {
+            File.Copy(sourcePath, dbPath, true);
+            Debug.Log($"Database copied to: {dbPath}");
+        }
+        catch (IOException e)
+        {
+            Debug.LogError($"Error copying database: {e.Message}");
+
+        }
     }
 
     private bool OpenConnection()
@@ -146,7 +167,7 @@ public class WeaponsDB : MonoBehaviour
             Debug.LogError("GetAllBonusNames error: " + e.Message);
         }
 
-        weaponSprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Textures/WeaponSprites/" + spritePath);
+        weaponSprite = Resources.Load<Sprite>("Textures/WeaponSprites/" + spritePath);
 
         return weaponSprite;
     }

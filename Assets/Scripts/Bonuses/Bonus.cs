@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
-using UnityEditor.MPE;
+
 
 public class Bonus : MonoBehaviour
 {
@@ -49,7 +47,7 @@ public class Bonus : MonoBehaviour
         {
             Name.text = _name;
             Description.text = _description;
-            BGImage.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Textures/Bonuses/" + _imagePath);
+            BGImage.sprite = Resources.Load<Sprite>("Bonuses/" + _imagePath);
             Duration.text = _duration.ToString();
 
             pickedUp = !pickedUp;

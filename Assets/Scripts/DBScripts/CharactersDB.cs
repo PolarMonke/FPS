@@ -17,6 +17,7 @@ public class ChractersDB : MonoBehaviour
     private const string COL_BONUS = "Bonus";
     private const string COL_OWNER = "Owner";
 
+    private string dbName = "Characters1.sqlite";
     private string dbPath;
     private IDbConnection connection = null;
 
@@ -29,16 +30,41 @@ public class ChractersDB : MonoBehaviour
         else
         {
             Instance = this;
-            dbPath = Application.dataPath + "/DataBases/Characters.sqlite";
+            DontDestroyOnLoad(this);
+
+            dbPath = Path.Combine(Application.persistentDataPath, "DataBases", dbName);
+            Directory.CreateDirectory(Path.GetDirectoryName(dbPath));
+            
             if (!File.Exists(dbPath))
             {
-                Debug.LogError("Database file not found at: " + dbPath);
-                return;
+                CopyDatabaseFromStreamingAssets();
             }
             OpenConnection();
         }
-        DontDestroyOnLoad(this);
     }
+
+    private void CopyDatabaseFromStreamingAssets()
+    {
+        string sourcePath = Path.Combine(Application.streamingAssetsPath, "DataBases", dbName);
+
+        if (!File.Exists(sourcePath))
+        {
+            Debug.LogError($"Database file not found in StreamingAssets: {sourcePath}");
+            return;
+        }
+
+        try
+        {
+            File.Copy(sourcePath, dbPath, true);
+            Debug.Log($"Database copied to: {dbPath}");
+        }
+        catch (IOException e)
+        {
+            Debug.LogError($"Error copying database: {e.Message}");
+
+        }
+    }
+
     private bool OpenConnection()
     {
         string connectionString = $"URI=file:{dbPath}";

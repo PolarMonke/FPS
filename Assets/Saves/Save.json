@@ -1,19 +1,13 @@
 {
-  "map": "TestMap",
+  "map": "Dust3",
   "difficulty": "Easy",
   "playerHP": 100,
-  "weaponSlot1": "M107",
-  "weaponSlot2": "AK74",
-  "totalPistolAmmo": 152,
-  "totalRifleAmmo": 104,
-  "totalShotgunAmmo": 327,
-  "totalSniperRifleAmmo": 399,
-  "bonuses": {
-    "Chill": 7,
-    "Invincible": 2,
-    "Those": 3,
-    "Cheese": 3,
-    "Double": 1
-  },
-  "wave": 2
+  "weaponSlot1": null,
+  "weaponSlot2": null,
+  "totalPistolAmmo": 100,
+  "totalRifleAmmo": 100,
+  "totalShotgunAmmo": 100,
+  "totalSniperRifleAmmo": 100,
+  "bonuses": {},
+  "wave": 1
 }

@@ -71,12 +71,12 @@ public class WeaponManager : MonoBehaviour
     {
         if (weapon1 != null)
         {
-            GameObject weapon = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weapon1}.prefab");
+            GameObject weapon = Resources.Load<GameObject>($"Prefabs/Weapons/{weapon1}.prefab");
             PickupWeapon(Instantiate(weapon));
         }
         if (weapon2 != null)
         {
-            GameObject weapon = AssetDatabase.LoadAssetAtPath<GameObject>($"Assets/Prefabs/Weapons/{weapon2}.prefab");
+            GameObject weapon = Resources.Load<GameObject>($"Prefabs/Weapons/{weapon2}.prefab");
             SwitchActiveSlot(1);
             PickupWeapon(Instantiate(weapon));
             SwitchActiveSlot(0);
