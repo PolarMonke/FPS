@@ -197,7 +197,7 @@ public class BonusesDB : MonoBehaviour
             Debug.LogError("GetAllBonusNames error: " + e.Message);
         }
 
-        bonusSprite = Resources.Load<Sprite>("Textures/Bonuses/" + spritePath);
+        bonusSprite = AssetsReferences.Instance.GetBonusBackground(Path.GetFileNameWithoutExtension(spritePath));
 
         return bonusSprite;
     }

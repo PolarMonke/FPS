@@ -81,7 +81,7 @@ public class CharactersListManager : MonoBehaviour
     {
         GameObject characterEntry = Instantiate(characterPrefab, characterListContent);
         characterEntry.transform.Find("NameText").GetComponent<TextMeshProUGUI>().text = character.Name;
-        characterEntry.transform.Find("WeaponImage").GetComponent<Image>().sprite = WeaponsDB.Instance.GetSpriteByName(character.WeaponModel);
+        characterEntry.transform.Find("WeaponImage").GetComponent<Image>().sprite = AssetsReferences.Instance.GetWeaponSprite(character.WeaponModel);
         characterEntry.transform.Find("BonusImage").GetComponent<Image>().sprite = BonusesDB.Instance.GetSpriteByName(character.BonusType);
         
         Transform deleteButtonContainer = characterEntry.transform.Find("DeleteButton");

@@ -38,7 +38,6 @@ public class HighScoreDB : MonoBehaviour
             }
             OpenConnection();
         }
-        DontDestroyOnLoad(this);
     }
 
     private void CopyDatabaseFromStreamingAssets()

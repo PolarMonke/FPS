@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using System.IO;
 
 
 public class Bonus : MonoBehaviour
@@ -47,7 +48,7 @@ public class Bonus : MonoBehaviour
         {
             Name.text = _name;
             Description.text = _description;
-            BGImage.sprite = Resources.Load<Sprite>("Bonuses/" + _imagePath);
+            BGImage.sprite = AssetsReferences.Instance.GetBonusBackground(Path.GetFileNameWithoutExtension(_imagePath));
             Duration.text = _duration.ToString();
 
             pickedUp = !pickedUp;
