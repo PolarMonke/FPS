@@ -1,7 +1,7 @@
 {
   "map": "TestMap",
   "difficulty": "Easy",
-  "playerHP": 100,
+  "playerHP": 60,
   "weaponSlot1": "M107",
   "weaponSlot2": null,
   "totalPistolAmmo": 100,
@@ -12,8 +12,7 @@
     "Invincible": 12,
     "Double": 11,
     "Those": 6,
-    "Cheese": 7,
-    "Chill": 1
+    "Cheese": 7
   },
   "wave": 1
 }

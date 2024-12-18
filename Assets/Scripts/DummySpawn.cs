@@ -30,10 +30,6 @@ public class DummySpawn : MonoBehaviour
                 dummies.RemoveAt(0);
             }
         }
-        else
-        {
-            Debug.LogWarning("No dummies to remove!");
-        }
     }
     public void SpawnGun()
     {
@@ -43,9 +39,11 @@ public class DummySpawn : MonoBehaviour
     }
     public void DestroyGun()
     {
-        if (guns.Count > 0) {
+        if (guns.Count > 0)
+        {
             GameObject gun = guns[0];
-            if (gun != null && gun.GetComponent<Weapon>() != null) {
+            if (gun != null && gun.GetComponent<Weapon>() != null)
+            {
                 gun.GetComponent<Weapon>().WeaponDespawn();
                 Destroy(gun);
                 guns.RemoveAt(0);

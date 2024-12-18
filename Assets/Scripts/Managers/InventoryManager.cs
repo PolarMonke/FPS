@@ -93,6 +93,7 @@ public class InventoryManager : MonoBehaviour
                 Debug.LogError($"Invalid bonus type: {bonusTypeString}. Skipping.");
             }
         }
+        UpdateUI();
     }
     
     private void CreateInventoryGrid()
