@@ -1,18 +1,19 @@
 {
   "map": "TestMap",
-  "difficulty": "Middle",
+  "difficulty": "Easy",
   "playerHP": 100,
   "weaponSlot1": "M107",
-  "weaponSlot2": "Colt1911",
-  "totalPistolAmmo": 233,
-  "totalRifleAmmo": 383,
-  "totalShotgunAmmo": 293,
-  "totalSniperRifleAmmo": 190,
+  "weaponSlot2": null,
+  "totalPistolAmmo": 100,
+  "totalRifleAmmo": 53,
+  "totalShotgunAmmo": 100,
+  "totalSniperRifleAmmo": 87,
   "bonuses": {
-    "Chill": 1,
-    "Cheese": 2,
-    "Those": 2,
-    "Invincible": 1
+    "Invincible": 12,
+    "Double": 11,
+    "Those": 6,
+    "Cheese": 7,
+    "Chill": 1
   },
   "wave": 1
 }
