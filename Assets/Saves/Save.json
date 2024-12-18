@@ -1,17 +1,18 @@
 {
   "map": "TestMap",
   "difficulty": "Middle",
-  "playerHP": 120,
-  "weaponSlot1": "TvorahGun",
-  "weaponSlot2": "AK74",
+  "playerHP": 50,
+  "weaponSlot1": null,
+  "weaponSlot2": null,
   "totalPistolAmmo": 172,
   "totalRifleAmmo": 275,
   "totalShotgunAmmo": 282,
   "totalSniperRifleAmmo": 91,
   "bonuses": {
-    "Invincible": 3,
-    "Double": 2,
-    "Those": 2
+    "Chill": 1,
+    "Cheese": 2,
+    "Those": 2,
+    "Invincible": 1
   },
-  "wave": 3
+  "wave": 1
 }

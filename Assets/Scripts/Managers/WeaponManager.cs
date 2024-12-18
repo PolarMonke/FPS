@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
 using static Weapon;
+using System;
+using System.Linq;
 
 
 
@@ -35,6 +37,12 @@ public class WeaponManager : MonoBehaviour
         return (totalPistolAmmo, totalRifleAmmo, totalShotgunAmmo, totalSniperRifleAmmo);
     }
 
+    private static bool IsWeapon(string value)
+    {
+        var enumValues = Enum.GetValues(typeof(WeaponModel)).Cast<WeaponModel>();
+        return enumValues.Take(4).Any(e => e.ToString() == value);
+    }
+
     private void Awake()
     {   
         if (Instance != null && Instance != this)
@@ -59,10 +67,18 @@ public class WeaponManager : MonoBehaviour
         if (WeaponSlots[0].transform.childCount != 0)
         {
             weaponSlot1 = WeaponSlots[0].transform.GetChild(0).GetComponent<Weapon>().weaponModel.ToString();
+            if (!IsWeapon(weaponSlot1))
+            {
+                weaponSlot1 = null;
+            }
         }
-        if (WeaponSlots[1].transform.childCount != 0)
+        if (WeaponSlots[1].transform.childCount != 0 )
         {
             weaponSlot2 = WeaponSlots[1].transform.GetChild(0).GetComponent<Weapon>().weaponModel.ToString();
+            if (!IsWeapon(weaponSlot1))
+            {
+                weaponSlot2 = null;
+            }
         }
         return (weaponSlot1, weaponSlot2);
     }
