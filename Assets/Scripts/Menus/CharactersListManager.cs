@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System.IO;
+using System.Reflection;
 
 
 public class CharactersListManager : MonoBehaviour
@@ -11,7 +12,8 @@ public class CharactersListManager : MonoBehaviour
     public GameObject characterPrefab;
     public Transform characterListContent;
 
-    private List<CharacterData> characters = new List<CharacterData>();
+    //private List<CharacterData> characters = new List<CharacterData>();
+    private Dictionary<int, CharacterData> characters = new Dictionary<int, CharacterData>();
     private int lastID;
 
     private Dictionary<int, GameObject> characterEntries = new Dictionary<int, GameObject>();
@@ -38,7 +40,7 @@ public class CharactersListManager : MonoBehaviour
     {
         lastID = ChractersDB.Instance.GetLastID();
         CharacterData character = new CharacterData(lastID + 1, name, weaponModel, bonusType, null);
-        characters.Add(character);
+        characters.Add(lastID+1, character);
         ChractersDB.Instance.SaveCharacter(character);
         
         InstantiateCharacter(character);
@@ -47,7 +49,7 @@ public class CharactersListManager : MonoBehaviour
     {
         lastID = ChractersDB.Instance.GetLastID();
         CharacterData character = new CharacterData(lastID + 1, name, weaponModel, bonusType, owner);
-        characters.Add(character);
+        characters.Add(lastID+1, character);
         ChractersDB.Instance.SaveCharacter(character);
         
         InstantiateCharacter(character);
@@ -58,7 +60,7 @@ public class CharactersListManager : MonoBehaviour
         characters = ChractersDB.Instance.LoadCharacters();
         if (characters.Count != 0)
         {
-            foreach (var character in characters)
+            foreach (var character in characters.Values)
             {
                 InstantiateCharacter(character);
             }
@@ -69,7 +71,7 @@ public class CharactersListManager : MonoBehaviour
         characters = ChractersDB.Instance.LoadCharacters(username);
         if (characters.Count != 0)
         {
-            foreach (var character in characters)
+            foreach (var character in characters.Values)
             {
                 InstantiateCharacter(character);
             }
@@ -89,7 +91,7 @@ public class CharactersListManager : MonoBehaviour
         if (deleteButton != null)
         {
             int charID = character.ID;
-            deleteButton.onClick.AddListener(() => DeleteCharacter(charID));//FIXME: no onClick
+            deleteButton.onClick.AddListener(() => DeleteCharacter(charID));
         }
 
         Button selectButton = characterEntry.GetComponent<Button>();
@@ -134,6 +136,7 @@ public class CharactersListManager : MonoBehaviour
 
     private void SelectCharacter(int id)
     {
+        print(id);
         if (selectedCharacter != null)
         {
             if (characterEntries.TryGetValue(selectedCharacter.ID, out GameObject prevSelectedEntry))
@@ -146,7 +149,7 @@ public class CharactersListManager : MonoBehaviour
             }
         }
 
-        selectedCharacter = characters.Find(c => c.ID == id);
+        selectedCharacter = characters[id];
         if (selectedCharacter != null)
         {
             if (characterEntries.TryGetValue(selectedCharacter.ID, out GameObject selectedEntry))
@@ -156,14 +159,10 @@ public class CharactersListManager : MonoBehaviour
                 {
                     selectionHighlight.color = selectedColor;
                 }
-                CharacterPresetManager.Instance.characterData = characters[id-1];
-                print(characters[id-1].Name);
+                CharacterPresetManager.Instance.characterData = characters[id];
             }
             else
             {
-                print(characters[id-1].Name);
-                print(characters[id].Name);
-                print(characters[id+1].Name);
                 Debug.LogError($"Could not find GameObject for character ID: {selectedCharacter.ID}");
             }
 

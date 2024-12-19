@@ -111,7 +111,6 @@ public class ZombieSpawnController : MonoBehaviour
             currentEnemiesAlive.Remove(enemy);
         }
         enemiesToRemove.Clear();
-        print(currentEnemiesAlive.Count);
         if (currentEnemiesAlive.Count == 0 && !inCoolDown)
         {
             StartCoroutine(WaveCoolDown());

@@ -82,17 +82,18 @@ public class ChractersDB : MonoBehaviour
         }
     }
 
-    public List<CharacterData> LoadCharacters()
+    public Dictionary<int, CharacterData> LoadCharacters()
     {
-        List<CharacterData> characterDatas = new List<CharacterData>();
+        Dictionary<int, CharacterData> characterDatas = new Dictionary<int, CharacterData>();
         if (connection == null || connection.State != ConnectionState.Open)
         {
             if (!OpenConnection()) return null;
         }
-        
+        try
+        {
             using (IDbCommand command = connection.CreateCommand())
             {
-                command.CommandText = $"SELECT {COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS} FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} IS NULL";
+                command.CommandText = $"SELECT {COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS}, {COL_OWNER} FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} IS NULL";
                 using (IDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -101,18 +102,23 @@ public class ChractersDB : MonoBehaviour
                         string name = reader.GetString(1);
                         string weapon = reader.GetString(2);
                         string bonus = reader.GetString(3);
-                        characterDatas.Add(new CharacterData(ID, name, weapon, bonus, null));
+                        string owner = null;
+                        characterDatas.Add(ID, new CharacterData(ID, name, weapon, bonus, owner));
                     }
                 }
             }
-        
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("GetAllBonusNames error: " + e.Message);
+        }
 
         return characterDatas;
     }
 
-    public List<CharacterData> LoadCharacters(string username)
+    public Dictionary<int, CharacterData> LoadCharacters(string username)
     {
-        List<CharacterData> characterDatas = new List<CharacterData>();
+        Dictionary<int, CharacterData> characterDatas = new Dictionary<int, CharacterData>();
         if (connection == null || connection.State != ConnectionState.Open)
         {
             if (!OpenConnection()) return null;
@@ -131,7 +137,7 @@ public class ChractersDB : MonoBehaviour
                         string weapon = reader.GetString(2);
                         string bonus = reader.GetString(3);
                         string owner = reader.GetString(4);
-                        characterDatas.Add(new CharacterData(ID, name, weapon, bonus, owner));
+                        characterDatas.Add(ID, new CharacterData(ID, name, weapon, bonus, owner));
                     }
                 }
             }
@@ -143,6 +149,8 @@ public class ChractersDB : MonoBehaviour
 
         return characterDatas;
     }
+
+
 
     public void SaveCharacter(CharacterData character)
     {
