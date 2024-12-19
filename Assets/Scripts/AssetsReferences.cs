@@ -41,7 +41,6 @@ public class AssetsReferences : MonoBehaviour
                     if (!bonuses.ContainsKey(spriteName))
                     {
                          bonuses.Add(spriteName, sprite);
-                         print(spriteName);
                     }
                     else
                     {

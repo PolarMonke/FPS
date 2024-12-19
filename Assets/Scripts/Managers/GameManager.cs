@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
             Bonus.BonusTypes bonusType;
             Enum.TryParse(character.BonusType, true, out bonusType);
             BonusManager.Instance.AddToInventory(bonusType);
-            print("Game started");
         }
     }
 

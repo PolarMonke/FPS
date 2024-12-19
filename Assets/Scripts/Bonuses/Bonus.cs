@@ -88,7 +88,7 @@ public class Bonus : MonoBehaviour
     public void OnBonusClicked()
     {
         SetActive();
-        print("bonus clicked");
+
     }
 
     protected virtual void DoItsThing()

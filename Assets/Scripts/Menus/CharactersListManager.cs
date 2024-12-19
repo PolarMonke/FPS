@@ -136,7 +136,6 @@ public class CharactersListManager : MonoBehaviour
 
     private void SelectCharacter(int id)
     {
-        print(id);
         if (selectedCharacter != null)
         {
             if (characterEntries.TryGetValue(selectedCharacter.ID, out GameObject prevSelectedEntry))

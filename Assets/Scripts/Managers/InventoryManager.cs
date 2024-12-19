@@ -166,7 +166,6 @@ public class InventoryManager : MonoBehaviour
 
         foreach (KeyValuePair<Bonus.BonusTypes, int> kvp in bonuses)
         {
-            print(kvp);
             int slotIndex = FindEmptySlot();
             if (slotIndex != -1)
             {
