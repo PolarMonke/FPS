@@ -38,5 +38,26 @@
       },
       "wave": 1
     }
+  },
+  "SigmaBoy": {
+    "username": "SigmaBoy",
+    "saveData": {
+      "map": "TestMap",
+      "difficulty": "Easy",
+      "playerHP": 100,
+      "weaponSlot1": "M107",
+      "weaponSlot2": "M107",
+      "totalPistolAmmo": 100,
+      "totalRifleAmmo": 29,
+      "totalShotgunAmmo": 100,
+      "totalSniperRifleAmmo": 227,
+      "bonuses": {
+        "Those": 1,
+        "Chill": 1,
+        "Double": 1,
+        "Cheese": 3
+      },
+      "wave": 2
+    }
   }
 }
