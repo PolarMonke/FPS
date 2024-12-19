@@ -37,18 +37,5 @@ public class AccountManager : MonoBehaviour
         LoginManager.Instance.EnterAccountInfoMenu();
         LoginManager.Instance.accountInfoMenu.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = username;
     }
-    public void LogOut()
-    {
-        isLogged = false;
-        LoginManager.Instance.ExitAccountInfoMenu();
-        LoginManager.Instance.EnterLogin();
-    }
-    public void DeleteAccount()
-    {
-        UsersDB.Instance.DeleteUser(username);
-        SaveLoadManager.Instance.DeleteUserSaveData(username);
-        UsersDB.Instance.DeleteUser(username);
-        LoginManager.Instance.ExitAccountInfoMenu();
-        LoginManager.Instance.EnterLogin();     
-    }
+    
 }

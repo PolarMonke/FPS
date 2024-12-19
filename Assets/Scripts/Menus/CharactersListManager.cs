@@ -161,6 +161,9 @@ public class CharactersListManager : MonoBehaviour
             }
             else
             {
+                print(characters[id-1].Name);
+                print(characters[id].Name);
+                print(characters[id+1].Name);
                 Debug.LogError($"Could not find GameObject for character ID: {selectedCharacter.ID}");
             }
 

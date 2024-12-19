@@ -169,4 +169,19 @@ public class LoginManager : MonoBehaviour
             newPasswordErrorText.text = LanguagesDB.Instance.GetText("WrongDataException");
         }
     }
+
+    public void LogOut()
+    {
+        AccountManager.Instance.isLogged = false;
+        Instance.ExitAccountInfoMenu();
+        Instance.EnterLogin();
+    }
+    public void DeleteAccount()
+    {
+        UsersDB.Instance.DeleteUser(AccountManager.Instance.username);
+        SaveLoadManager.Instance.DeleteUserSaveData(AccountManager.Instance.username);
+        UsersDB.Instance.DeleteUser(AccountManager.Instance.username);
+        ExitAccountInfoMenu();
+        Instance.EnterLogin();     
+    }
 }
