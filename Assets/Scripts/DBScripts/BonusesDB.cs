@@ -103,14 +103,29 @@ public class BonusesDB : MonoBehaviour
                         bonusName = reader.GetString(0);
                     }
                 }
-                command.CommandText = $"SELECT {COL_DESCRIPTION} FROM {SQL_TABLE_NAME} WHERE {COL_UNITED_NAME} = '{name}'";
-                using (IDataReader reader = command.ExecuteReader())
+                try
                 {
-                    if (reader.Read())
+                    command.CommandText = $"SELECT {COL_DESCRIPTION} FROM {SQL_TABLE_NAME} WHERE {COL_UNITED_NAME} = '{name}'";
+                    using (IDataReader reader = command.ExecuteReader())
                     {
-                        bonusDesc = reader.GetString(0);
+                        if (reader.Read())
+                        {
+                            bonusDesc = reader.GetString(0);
+                        }
                     }
                 }
+                catch
+                {
+                    command.CommandText = $"SELECT Descripiton FROM {SQL_TABLE_NAME} WHERE {COL_UNITED_NAME} = '{name}'";
+                    using (IDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            bonusDesc = reader.GetString(0);
+                        }
+                    }
+                }
+                
                 command.CommandText = $"SELECT {COL_IMAGE} FROM {SQL_TABLE_NAME} WHERE {COL_UNITED_NAME} = '{name}'";
                 using (IDataReader reader = command.ExecuteReader())
                 {
@@ -131,7 +146,20 @@ public class BonusesDB : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError("GetAmmoTypeByWeapon error: " + e.Message);
+            Debug.LogError("Get bonus name error: " + e.Message);
+            using (IDbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = $"PRAGMA table_info({SQL_TABLE_NAME})";
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                    string columnName = reader.GetString(1);
+                    Debug.Log("Column Name: " + columnName);
+                    }
+                }
+            }
+            
         }
 
         return (bonusName, bonusDesc, bonusSprite, bonusDuration);

@@ -4,12 +4,12 @@
   "playerHP": 100,
   "weaponSlot1": "M4",
   "weaponSlot2": null,
-  "totalPistolAmmo": 195,
+  "totalPistolAmmo": 100,
   "totalRifleAmmo": 100,
-  "totalShotgunAmmo": 179,
+  "totalShotgunAmmo": 99,
   "totalSniperRifleAmmo": 100,
   "bonuses": {
     "Double": 1
   },
-  "wave": 2
+  "wave": 1
 }
