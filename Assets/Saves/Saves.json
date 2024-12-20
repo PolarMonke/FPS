@@ -59,5 +59,41 @@
       },
       "wave": 2
     }
+  },
+  "Test": {
+    "username": "Test",
+    "saveData": {
+      "map": "TestMap",
+      "difficulty": "Easy",
+      "playerHP": 100,
+      "weaponSlot1": "M107",
+      "weaponSlot2": null,
+      "totalPistolAmmo": 100,
+      "totalRifleAmmo": 100,
+      "totalShotgunAmmo": 100,
+      "totalSniperRifleAmmo": 231,
+      "bonuses": {
+        "Chill": 1
+      },
+      "wave": 1
+    }
+  },
+  "Popka": {
+    "username": "Popka",
+    "saveData": {
+      "map": "Dust3",
+      "difficulty": "Middle",
+      "playerHP": 100,
+      "weaponSlot1": "M107",
+      "weaponSlot2": null,
+      "totalPistolAmmo": 100,
+      "totalRifleAmmo": 100,
+      "totalShotgunAmmo": 100,
+      "totalSniperRifleAmmo": 100,
+      "bonuses": {
+        "Double": 1
+      },
+      "wave": 1
+    }
   }
 }

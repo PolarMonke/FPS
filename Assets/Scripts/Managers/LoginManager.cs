@@ -59,6 +59,11 @@ public class LoginManager : MonoBehaviour
         newPasswordInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("EnterPassword");
         newPasswordConfirmInput.placeholder.gameObject.GetComponent<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("RepeatPassword");
         createNewAccountButton.GetComponentInChildren<TextMeshProUGUI>().text = LanguagesDB.Instance.GetText("Registrate");
+
+        if (AccountManager.Instance.isLogged)
+        {
+            accountInfoMenu.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = AccountManager.Instance.username;
+        }
     }
 
     public void EnterAccoutMenu()

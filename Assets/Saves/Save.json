@@ -1,15 +1,15 @@
 {
   "map": "TestMap",
-  "difficulty": "Middle",
+  "difficulty": "Easy",
   "playerHP": 100,
-  "weaponSlot1": "M4",
+  "weaponSlot1": "M107",
   "weaponSlot2": null,
   "totalPistolAmmo": 100,
   "totalRifleAmmo": 100,
-  "totalShotgunAmmo": 99,
-  "totalSniperRifleAmmo": 100,
+  "totalShotgunAmmo": 100,
+  "totalSniperRifleAmmo": 231,
   "bonuses": {
-    "Double": 1
+    "Chill": 1
   },
   "wave": 1
 }

@@ -127,7 +127,12 @@ public class ChractersDB : MonoBehaviour
         {
             using (IDbCommand command = connection.CreateCommand())
             {
-                command.CommandText = $"SELECT {COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS}, {COL_OWNER} FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} = {username}";
+                command.CommandText = $"SELECT {COL_ID}, {COL_NAME}, {COL_WEAPON}, {COL_BONUS}, {COL_OWNER} FROM {SQL_TABLE_NAME} WHERE {COL_OWNER} = @Username";
+                IDbDataParameter param = command.CreateParameter();
+                param.ParameterName = "@Username";
+                param.Value = username;
+                param.DbType = DbType.String;
+                command.Parameters.Add(param);
                 using (IDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
