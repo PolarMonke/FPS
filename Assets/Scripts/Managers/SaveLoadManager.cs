@@ -12,8 +12,11 @@ public class SaveLoadManager : MonoBehaviour
 
     private string highScoreKey = "BestWaveSavedValue";
 
-    private string saveFilePath = "Assets/Saves/Save.json";
-    public string savesFilePath = "Assets/Saves/Saves.json";
+    //private string saveFilePath = "Assets/Saves/Save.json";
+    //public string savesFilePath = "Assets/Saves/Saves.json";
+
+    private string saveFilePath = "Save.json";
+    public string savesFilePath = "Saves.json";
 
     public GameObject loadingScreenPrefab;
 
@@ -93,7 +96,7 @@ public class SaveLoadManager : MonoBehaviour
 
         try
         {
-            File.WriteAllText(saveFilePath, json);
+            File.WriteAllText(Path.Combine(Application.streamingAssetsPath, saveFilePath), json);
             Debug.Log("Game saved successfully to: " + saveFilePath);
         }
         catch (Exception e)
@@ -121,11 +124,11 @@ public class SaveLoadManager : MonoBehaviour
         SaveData loadData = new SaveData();
         try
         {
-            if (!File.Exists(saveFilePath))
+            if (!File.Exists(Path.Combine(Application.streamingAssetsPath, saveFilePath)))
             {
-                Debug.LogError($"File not found: {saveFilePath}");
+                Debug.LogError($"File not found: {Path.Combine(Application.streamingAssetsPath, saveFilePath)}");
             }
-            string json = File.ReadAllText(saveFilePath);
+            string json = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, saveFilePath));
             loadData = JsonConvert.DeserializeObject<SaveData>(json);
         }
         catch (Exception e)
@@ -160,9 +163,9 @@ public class SaveLoadManager : MonoBehaviour
     {
         Dictionary<string, UserSaveData> userSaveData;
 
-        if (File.Exists(savesFilePath))
+        if (File.Exists(Path.Combine(Application.streamingAssetsPath, savesFilePath)))
         {
-            string loadedJson = File.ReadAllText(savesFilePath);
+            string loadedJson = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, savesFilePath));
             try
             {
                 userSaveData = JsonConvert.DeserializeObject<Dictionary<string, UserSaveData>>(loadedJson);
@@ -189,18 +192,18 @@ public class SaveLoadManager : MonoBehaviour
         }
 
         string jsonToSave = JsonConvert.SerializeObject(userSaveData, Formatting.Indented);
-        File.WriteAllText(savesFilePath, jsonToSave); 
+        File.WriteAllText(Path.Combine(Application.streamingAssetsPath, savesFilePath), jsonToSave); 
     }
     //loads gamedata into Save.json from user
     public void LoadGameFromUser(string username)
     {
-        if (!File.Exists(savesFilePath))
+        if (!File.Exists(Path.Combine(Application.streamingAssetsPath, savesFilePath)))
         {
-            Debug.LogError($"Save file not found: {savesFilePath}");
+            Debug.LogError($"Save file not found: {Path.Combine(Application.streamingAssetsPath, savesFilePath)}");
             return;
         }
 
-        string loadedJson = File.ReadAllText(savesFilePath);
+        string loadedJson = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, savesFilePath));
         
         Dictionary<string, UserSaveData> loadedData = JsonConvert.DeserializeObject<Dictionary<string, UserSaveData>>(loadedJson);
 
@@ -210,7 +213,7 @@ public class SaveLoadManager : MonoBehaviour
 
             SaveData saveData = userSave.saveData;
             string json = JsonConvert.SerializeObject(saveData, Formatting.Indented);
-            File.WriteAllText(saveFilePath, json);
+            File.WriteAllText(Path.Combine(Application.streamingAssetsPath, saveFilePath), json);
         }
         else
         {
@@ -220,13 +223,13 @@ public class SaveLoadManager : MonoBehaviour
 
     public void DeleteUserSaveData(string username)
     {
-        if (!File.Exists(savesFilePath))
+        if (!File.Exists(Path.Combine(Application.streamingAssetsPath, savesFilePath)))
         {
-            Debug.LogError($"Save file not found: {savesFilePath}");
+            Debug.LogError($"Save file not found: {Path.Combine(Application.streamingAssetsPath, savesFilePath)}");
             return;
         }
 
-        string loadedJson = File.ReadAllText(savesFilePath);
+        string loadedJson = File.ReadAllText(Path.Combine(Application.streamingAssetsPath, savesFilePath));
         
         Dictionary<string, UserSaveData> loadedData = JsonConvert.DeserializeObject<Dictionary<string, UserSaveData>>(loadedJson);
 
@@ -234,7 +237,7 @@ public class SaveLoadManager : MonoBehaviour
         {
             loadedData.Remove(username);
             string jsonToSave = JsonConvert.SerializeObject(loadedData, Formatting.Indented);
-            File.WriteAllText(savesFilePath, jsonToSave); 
+            File.WriteAllText(Path.Combine(Application.streamingAssetsPath, savesFilePath), jsonToSave); 
         }
         else
         {
