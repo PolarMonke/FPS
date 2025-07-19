@@ -1,6 +1,6 @@
 Yet another FPS game
 
-A zombie-shooter game with bonuses and skibidi toilets
+A zombie-shooter game with bonuses and skibidi toilets that is way to cringe to be a public repository
 
 Trailer:
 
